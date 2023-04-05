@@ -28,16 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") :
 
 elseif (
     !isset($data->name)
-    || !isset($data->email)
     || !isset($data->password)
     || !isset($data->userName)
     || empty(trim($data->name))
-
     || empty(trim($data->password))
     || empty(trim($data->userName))
 ) :
 
-    $fields = ['fields' => ['name', 'email', 'password', 'userName']];
+    $fields = ['fields' => ['name', 'password', 'userName']];
     $returnData = msg(0, 422, 'Vui lòng điền tất cả các trường!!!', $fields);
 
 // IF THERE ARE NO EMPTY FIELDS THEN-
