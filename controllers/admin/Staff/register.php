@@ -28,23 +28,26 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") :
 
 elseif (
     !isset($data->name)
-
+    || !isset($data->email)
     || !isset($data->password)
     || !isset($data->userName)
     || empty(trim($data->name))
+
     || empty(trim($data->password))
     || empty(trim($data->userName))
 ) :
 
-    $fields = ['fields' => ['name', 'password', 'userName']];
+    $fields = ['fields' => ['name', 'email', 'password', 'userName']];
     $returnData = msg(0, 422, 'Vui lòng điền tất cả các trường!!!', $fields);
 
 // IF THERE ARE NO EMPTY FIELDS THEN-
 else :
 
     $name = trim($data->name);
+
     $password = trim($data->password);
     $userName = trim($data->userName);
+
 
     if (strlen($password) < 8) :
         $returnData = msg(0, 422, 'Mật khẩu không được nhỏ hơn 8 ký tự!!!');
@@ -57,7 +60,7 @@ else :
     else :
         try {
 
-            $check_email = "SELECT `userName` FROM `nhanvien` WHERE  `userName`=:userName";
+            $check_email = "SELECT `userName` FROM `nhanvien` WHERE `userName`=:userName";
             $check_email_stmt = $conn->prepare($check_email);
             $check_email_stmt->bindValue(':userName', $userName, PDO::PARAM_STR);
             $check_email_stmt->execute();

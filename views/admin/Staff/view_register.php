@@ -2,11 +2,13 @@
 session_start();
 $token = $_SESSION['token'];
 $name = $_POST['name'];
+
 $password = $_POST['password'];
 $userName = $_POST['userName'];
 $url = 'http://localhost:8000/website_openshare/controllers/admin/staff/register.php';
 $data = array(
     'name' => $name,
+
     'password' => $password,
     'userName' => $userName,
 );

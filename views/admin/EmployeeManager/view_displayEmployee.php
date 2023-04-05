@@ -102,7 +102,10 @@ curl_close($curl);
 
                             </div>
                         </div>
-
+                        <div class="form-group ">
+                            <label for="Them_Email">Email</label>
+                            <input required value="" required type="text" name="Them_Email" class="form-control" id="Them_Email" placeholder="Nhập điện thoại">
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -324,6 +327,7 @@ curl_close($curl);
     }
 
     const usernameEl = document.getElementById("Them_TaiKhoan");
+
     const passwordEl = document.getElementById("Them_MatKhau");
     const nameEl = document.getElementById("Them_HoTen");
 
