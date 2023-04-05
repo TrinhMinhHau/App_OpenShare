@@ -1,11 +1,13 @@
 <?php
 session_start();
 $token = $_SESSION['token'];
-if (isset($_POST['addItem'])) {
-    $nameType = $_POST['Them_LoaiDoDung'];
+if (isset($_POST['updateItem'])) {
+    $idType = $_POST['idType'];
+    $nameType = $_POST['CapNhat_LoaiDoDung'];
 
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
+        'idType' => $idType,
         'nameType' => $nameType,
 
     );
@@ -14,7 +16,7 @@ if (isset($_POST['addItem'])) {
     $json_data = json_encode($data);
 
     // URL của API
-    $url = 'http://localhost:8000/website_openshare/controllers/admin/ItemType/addItem.php';
+    $url = 'http://localhost:8000/website_openshare/controllers/admin/ItemType/updateItem.php';
 
     // Khởi tạo một session cURL
     $curl = curl_init($url);
@@ -37,12 +39,12 @@ if (isset($_POST['addItem'])) {
         echo 'Có lỗi xảy ra khi gửi yêu cầu POST đến API';
     } else {
         $response = json_decode($result, true);
-        if ($response[1] === 'ItemType is Inserted') {
-            $_SESSION['status_success'] = "Thêm mới loại đồ dùng thành công";
+        if ($response[1] === 'ItemType is Updated') {
+            $_SESSION['status_update_success'] = "Cập nhật loại đồ dùng thành công";
             header('location: ./view_displayItem.php');
             exit();
         } else {
-            $_SESSION['status_error'] = "Loại đồ dùng này đã tồn tại";
+            $_SESSION['status_update_error'] = "Cập nhật loại đồ dùng thất bại";
             header('location: ./view_displayItem.php');
             exit();
         }

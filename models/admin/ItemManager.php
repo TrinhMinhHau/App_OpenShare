@@ -40,6 +40,23 @@ class ItemManager
             }
         endif;
     }
+    public function updateItem()
+    {
+        $query = "UPDATE doanhmuc SET nameType =:nameType WHERE idType=:idType";
+        $stmt = $this->conn->prepare($query);
+
+        //Bind data
+        $stmt->bindValue(':nameType', $this->nameType, PDO::PARAM_STR);
+        $stmt->bindValue(':idType', $this->idType, PDO::PARAM_INT);
+
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            echo "Error", $stmt->error;
+            return false;
+        }
+    }
     public function deleteItem()
     {
         // Delete Baiviet

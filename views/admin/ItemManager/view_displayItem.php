@@ -1,12 +1,6 @@
 <?php include('../Layout/view_header.php') ?>
 <?php include('../Layout/view_sidebar.php') ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<style>
-    #err_ms1 {
-        font-size: .875em;
-        color: red;
-    }
-</style>
+
 <?php
 
 $token = $_SESSION['token'];
@@ -71,6 +65,16 @@ curl_close($curl);
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
         </div>
+    <?php } ?>
+    <?php if (isset($_SESSION['status_update_success'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['status_update_success'];
+            unset($_SESSION['status_update_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+
     <?php } ?>
     <div class="pagetitle">
         <h1>Quản lý loại đồ dùng</h1>
@@ -138,6 +142,7 @@ curl_close($curl);
                                     <th scope="col">Mã số</th>
                                     <th scope="col">Tên loại đồ dùng</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,6 +157,45 @@ curl_close($curl);
             </div>
         </div>
         </td>
+        <!-- UPDATE -->
+        <td>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalUpdate<?php echo ($data1[$i]['idType']) ?>">
+                Cập nhật
+            </button>
+            <div class="modal fade" id="ModalUpdate<?php echo ($data1[$i]['idType']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                <div class="modal-dialog modal-lg ">
+                    <!-- modal-xl -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="Label_Edit">Cập nhật</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="./view_updateItem.php" method="post">
+                            <div class="modal-body">
+
+
+                                <input type="hidden" name="idType" id="idType" value="<?php echo ($data1[$i]['idType']) ?>">
+                                <div class="form-group ">
+                                    <label for="CapNhat_LoaiDoDung">Tên loại đồ dùng</label>
+                                    <input required value="<?php echo $data1[$i]['nameType'] ?>" required type="text" name="CapNhat_LoaiDoDung" class="form-control" id="CapNhat_LoaiDoDung" placeholder="Nhập tên loại đồ dùng">
+                                </div>
+                                </br>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="submit" name="updateItem" class="btn btn-primary">Cập nhật</button>
+
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </td>
+        <!-- ENDUPDATE -->
         <!-- DELETE  -->
         <td>
             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idType']) ?>">
@@ -204,27 +248,3 @@ curl_close($curl);
 
 
 <?php include('../Layout/view_footer.php') ?>
-
-
-<!-- <script>
-    $(document).ready(function() {
-        $("#Them_Moi").click(function() {
-            const password = $('#Them_MatKhau').val();
-            if (password.length < 8) {
-                $('#err_ms1').html('Mật khẩu phải lớn hơn 7 ký tự');
-            } else {
-                $('#err_ms1').html('');
-                $.post("../Staff/view_register.php", {
-                    userName: $('#Them_TaiKhoan').val(),
-                    password: $("#Them_MatKhau").val(),
-                    email: $("#Them_Email").val(),
-                    name: $("#Them_HoTen").val()
-
-                }, function(data) {
-                    $("#dl_rs").html(data);
-                })
-            }
-
-        });
-    });
-</script> -->
