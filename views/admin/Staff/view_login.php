@@ -81,7 +81,7 @@
 
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Đăng nhập bằng tài khoản của bạn</h5>
-                                        <p class="text-center small">Nhập mật khẩu và password để đăng nhập</p>
+                                        <p class="text-center small">Nhập tài khoản và mật khẩu để đăng nhập</p>
                                     </div>
 
                                     <form class="row g-3 needs-validation" method="get" novalidate>
@@ -90,14 +90,14 @@
                                             <label for="yourUsername" class="form-label">Tên đăng nhập</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="text" name="userName" class="form-control" id="yourUsername" required>
+                                                <input type="text" name="userName" class="form-control" id="yourUsername" autocomplete="off" required>
                                                 <div class="invalid-feedback">Vui lòng nhập tên đăng nhập</div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="yourPassword" class="form-label">Mật khẩu</label>
-                                            <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                            <input type="password" name="password" class="form-control" id="yourPassword" autocomplete="off" required>
                                             <div class="invalid-feedback">Vui lòng nhập mật khẩu!</div>
                                         </div>
 

@@ -20,7 +20,7 @@ class Auth extends JwtHandler
             $data = $this->jwtDecodeData($matches[1]);
             if (
                 isset($data->user_id) &&
-                $user = $this->fetchUser($data->user_id)
+                $user = $this->fetchStaff($data->user_id)
             ) :
                 return [
                     "success" => 1,
@@ -40,7 +40,7 @@ class Auth extends JwtHandler
         }
     }
 
-    protected function fetchUser($idStaff)
+    protected function fetchStaff($idStaff)
     {
         try {
             $fetch_user_by_id = "SELECT * FROM `nhanvien` WHERE `idStaff`=:id";
