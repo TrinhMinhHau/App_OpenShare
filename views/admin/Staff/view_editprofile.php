@@ -1,27 +1,27 @@
 <?php
 session_start();
 $token = $_SESSION['token'];
-
 if (isset($_POST['editprofile'])) {
     $id = $_POST['id'];
     $name = $_POST['fullName'];
     $email = $_POST['email'];
     $phoneNumber = $_POST['phone'];
     $address = $_POST['address'];
-    $img = $_POST['img'];
+    $img_old = $_POST['img'];
     if (isset($_FILES["fileToUpload"]["tmp_name"]) && !empty($_FILES["fileToUpload"]["tmp_name"])) {
         $image = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
         $image_base64 = base64_encode($image);
+        $img =  "data:image/" . strtolower(pathinfo($image, PATHINFO_EXTENSION)) . ";base64," . $image_base64;
     } else {
-        $img_old = substr($img, 19, strlen($img) - 1);
-        $image_base64 = $img_old;
+        // $img_old = substr($img, 19, strlen($img) - 1);
+        $img = $img_old;
     }
     //echo "12" . $img_old;
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idStaff' => $id,
         'name' => $name,
-        'photoURL' => $image_base64,
+        'photoURL' => $img,
         'address' => $address,
         'email' => $email,
         'phoneNumber' => $phoneNumber,

@@ -112,8 +112,8 @@
                                     <div class="row mb-3">
                                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Ảnh đại diện</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <img src="<?= $result['user']['photoURL'] ?>" alt="Profile">
-                                            <input type="hidden" value="<?= $result['user']['photoURL'] ?>" name="img">
+                                            <img src="<?= $result['user']['photoURL'] ?>" alt="Profile" id="img">
+                                            <input type="hidden" value="<?= $result['user']['photoURL'] ?>" name="img" id="img_onchange">
                                             <!-- <div class="pt-2">
                                                 <input type="file" name="fileToUpload" id="fileToUpload">
                                             </div> -->
@@ -241,4 +241,13 @@
 
         });
     });
+    imgInpEl = document.getElementById('fileToUpload');
+    imgEL = document.getElementById('img');
+
+    imgInpEl.onchange = evt => {
+        const [file] = imgInpEl.files
+        if (file) {
+            imgEL.src = URL.createObjectURL(file)
+        }
+    }
 </script>

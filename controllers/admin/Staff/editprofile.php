@@ -36,10 +36,10 @@ if ($auth_info['success']) {
         $image_data = $request_body['photoURL'];
         var_dump($request_body);
         // decode image data from base64
-        $image = base64_decode($image_data);
+        // $image = base64_decode($image_data);
 
         // create image MIME type based on file extension
-        $image_mime = "data:image/" . strtolower(pathinfo($image_data, PATHINFO_EXTENSION)) . ";base64," . $image_data;
+        // $image_mime = "data:image/" . strtolower(pathinfo($image_data, PATHINFO_EXTENSION)) . ";base64," . $image_data;
 
         // update user record in database
         $update_query = "UPDATE nhanvien SET name=:name,photoURL=:image,address=:address,email=:email,phoneNumber=:phoneNumber WHERE idStaff=:id";
@@ -47,7 +47,7 @@ if ($auth_info['success']) {
 
         // bind parameters to statement
         $update_stmt->bindValue(':name', $name, PDO::PARAM_STR);
-        $update_stmt->bindValue(':image', $image_mime, PDO::PARAM_LOB);
+        $update_stmt->bindValue(':image', $image_data, PDO::PARAM_LOB);
         $update_stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $update_stmt->bindValue(':address', $address, PDO::PARAM_STR);
         $update_stmt->bindValue(':email', $email, PDO::PARAM_STR);
