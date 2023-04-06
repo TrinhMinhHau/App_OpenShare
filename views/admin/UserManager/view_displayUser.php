@@ -1,16 +1,10 @@
 <?php include('../Layout/view_header.php') ?>
 <?php include('../Layout/view_sidebar.php') ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<style>
-    #err_ms1 {
-        font-size: .875em;
-        color: red;
-    }
-</style>
+
 <?php
 
 $token = $_SESSION['token'];
-$url = 'http://localhost:8000/website_openshare/controllers/admin/EmployeeManager/displayEmployee.php';
+$url = 'http://localhost:8000/website_openshare/controllers/admin/UserManager/displayUser.php';
 
 // Khởi tạo một cURL session
 $curl = curl_init();
@@ -52,69 +46,18 @@ curl_close($curl);
         </div>
     <?php } ?>
     <div class="pagetitle">
-        <h1>Quản lý nhân viên</h1>
+        <h1>Quản lý người dùng</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../Trangchu/Trangchu.php">Trangchu</a></li>
-                <li class="breadcrumb-item">Quản lý nhân viên</li>
-                <li class="breadcrumb-item active">Nhân viên</li>
+                <li class="breadcrumb-item">Quản lý người dùng</li>
+                <li class="breadcrumb-item active">Người dùng</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <section class="section">
-        <!--add -->
 
-
-        <div class="card">
-            <div class="card-body d-flex flex-row justify-content-between align-items-center pt-3">
-
-                <button type="button" class="btn btn-primary p-3" data-bs-toggle="modal" data-bs-target="#addmodal">
-                    <i class="bi bi-plus-lg"></i>Thêm mới
-                </button>
-
-            </div>
-        </div>
-        <div class="modal fade" id="addmodal" tabindex="-1" aria-labelledby="Label_Add" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div id="dl_rs"></div>
-                    <div class="modal-header">
-
-                        <h5 class="modal-title" id="Label_Add">Thêm mới</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group ">
-                            <label for="Them_TaiKhoan">Tài khoản</label>
-                            <input required value="" required type="text" name="Them_TaiKhoan" class="form-control" id="Them_TaiKhoan" placeholder="Nhập tài khoản">
-                        </div>
-
-                        <div class="form-group ">
-                            <label for="Them_MatKhau">Mật khẩu</label>
-                            <input required value="" required type="password" name="Them_MatKhau" class="form-control" id="Them_MatKhau" placeholder="Nhập mật khẩu">
-                            <small id="err_ms1"></small>
-
-                        </div>
-                        <div class="form-group ">
-                            <label for="Them_HoTen">Họ tên</label>
-                            <div class="form-group">
-                                <input required value="" required type="text" name="Them_HoTen" class="form-control" id="Them_HoTen" placeholder="Nhập họ tên">
-
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Đóng</button>
-                        <button type="reset" name="reset" class="btn btn-warning" id="reset">Xoá dữ liệu</button>
-                        <button type="submit" name="insertdata" class="btn btn-primary" id="Them_Moi">Thêm mới</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end add -->
         <div class="row">
             <div class="col-lg-12">
 
@@ -142,16 +85,16 @@ curl_close($curl);
                                 for ($i = 0; $i < count($data1); $i++) { ?>
                                     <tr>
                                         <th scope="col"><?= $i + 1 ?></td>
-                                        <td><?= ($data1[$i]['idStaff']) ?></td>
+                                        <td><?= ($data1[$i]['idUser']) ?></td>
                                         <td><?= ($data1[$i]['name']) ?></td>
                                         <td><?= ($data1[$i]['userName']) ?></td>
                                         <td><img src="<?= ($data1[$i]['photoURL']) ?>" alt="" srcset="" width="50px" height="20px" style="border-radius:50%"></td>
                                         <td>
                                             <!-- DETAIL  -->
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Modal_Detail<?php echo ($data1[$i]['idStaff']) ?>">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Modal_Detail<?php echo ($data1[$i]['idUser']) ?>">
                                                 Chi tiết
                                             </button>
-                                            <div class="modal fade" id="Modal_Detail<?php echo ($data1[$i]['idStaff']) ?>" tabindex="-1" aria-labelledby="LabelModal" aria-hidden="true">
+                                            <div class="modal fade" id="Modal_Detail<?php echo ($data1[$i]['idUser']) ?>" tabindex="-1" aria-labelledby="LabelModal" aria-hidden="true">
                                                 <div class="modal-dialog modal-xl ">
                                                     <!-- modal-xl -->
                                                     <div class="modal-content">
@@ -187,8 +130,7 @@ curl_close($curl);
 
                                                                                     </ul>
 
-                                                                                    <p class="mb-3"><span class="font-weight-bold"> Địa chỉ: </span> <?php if ($data1[$i]["address"] != null) echo $data1[$i]["address"];
-                                                                                                                                                        else echo "Chưa cập nhật"; ?></p>
+
                                                                                     <p class="mb-3"><span class="font-weight-bold"> Email: </span> <?php if ($data1[$i]["email"] != null) echo $data1[$i]["email"];
                                                                                                                                                     else echo "Chưa cập nhật"; ?></p>
 
@@ -226,11 +168,11 @@ curl_close($curl);
         </td>
         <!-- DELETE  -->
         <td>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idStaff']) ?>">
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idUser']) ?>">
                 <?php if ($data1[$i]['isBan'] == 1) echo "Mở Khóa";
                                     else echo "Khóa" ?>
             </button>
-            <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idStaff']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+            <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idUser']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                 <div class="modal-dialog modal-lg ">
                     <!-- modal-xl -->
                     <div class="modal-content">
@@ -240,14 +182,14 @@ curl_close($curl);
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <?php if ($data1[$i]['isBan'] == 0) { ?>
-                            <form action="./view_banEmployee.php" method="post">
+                            <form action="./view_banUser.php" method="post">
                                 <div class="modal-body">
 
 
-                                    <input type="hidden" name="Ban_Employee" id="Ban_Employee" value="<?php echo ($data1[$i]['idStaff']) ?>">
+                                    <input type="hidden" name="Ban_User" id="Ban_User" value="<?php echo ($data1[$i]['idUser']) ?>">
 
                                     <div class="form-group">
-                                        <label>Bạn có chắc khóa nhân viên <span class="text-danger font-weight-bold"> <?php echo ($data1[$i]['name']) ?></span> hay không?</label>
+                                        <label>Bạn có chắc khóa người dùng <span class="text-danger font-weight-bold"> <?php echo ($data1[$i]['name']) ?></span> hay không?</label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -257,13 +199,13 @@ curl_close($curl);
                                 </div>
                             </form>
                         <?php } else { ?>
-                            <form action="./view_unbanEmployee.php" method="post">
+                            <form action="./view_unbanUser.php" method="post">
                                 <div class="modal-body">
 
-                                    <input type="hidden" name="Ban_Employee" id="Ban_Employee" value="<?php echo ($data1[$i]['idStaff']) ?>">
+                                    <input type="hidden" name="UnBan_User" id="UnBan_User" value="<?php echo ($data1[$i]['idUser']) ?>">
 
                                     <div class="form-group">
-                                        <label>Bạn có chắc mở khóa nhân viên <span class="text-danger font-weight-bold"> <?php echo ($data1[$i]['name']) ?></span> hay không?</label>
+                                        <label>Bạn có chắc mở khóa người dùng <span class="text-danger font-weight-bold"> <?php echo ($data1[$i]['name']) ?></span> hay không?</label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -295,43 +237,3 @@ curl_close($curl);
 
 
 <?php include('../Layout/view_footer.php') ?>
-
-
-<script>
-    $(document).ready(function() {
-        $("#Them_Moi").click(function() {
-            const password = $('#Them_MatKhau').val();
-            if (password.length < 8) {
-                $('#err_ms1').html('Mật khẩu phải lớn hơn 7 ký tự');
-            } else {
-                $('#err_ms1').html('');
-                $.post("../Staff/view_register.php", {
-                    userName: $('#Them_TaiKhoan').val(),
-                    password: $("#Them_MatKhau").val(),
-                    name: $("#Them_HoTen").val()
-
-                }, function(data) {
-                    $("#dl_rs").html(data);
-                })
-            }
-
-        });
-    });
-
-    const close = document.getElementById("close");
-    close.onclick = function() {
-        window.location.href = './view_displayEmployee.php';
-
-    }
-
-    const usernameEl = document.getElementById("Them_TaiKhoan");
-
-    const passwordEl = document.getElementById("Them_MatKhau");
-    const nameEl = document.getElementById("Them_HoTen");
-
-    document.getElementById("reset").onclick = function() {
-        usernameEl.value = '';
-        passwordEl.value = '';
-        nameEl.value = '';
-    }
-</script>

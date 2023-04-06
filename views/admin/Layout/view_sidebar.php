@@ -114,22 +114,28 @@
                 </li>
             </ul>
         </li><!-- End Forms Nav -->
-        <?php if ($result['user']['idRole'] == 1) { ?>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-people-fill"></i><span>Nhân viên</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-people-fill"></i><span>Quản lý Tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <?php if ($result['user']['idRole'] == 1) { ?>
                     <li>
                         <a href="../EmployeeManager/view_displayEmployee.php">
                             <i class="bi bi-circle"></i><span>Quản lý nhân viên</span>
                         </a>
                     </li>
-                </ul>
-            </li><!-- End Tables Nav -->
-        <?php } else {
-        } ?>
+                <?php } else {
+                } ?>
+                <li>
+                    <a href="../UserManager/view_displayUser.php">
+                        <i class="bi bi-circle"></i><span>Quản lý người dùng</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Tables Nav -->
+
         <!-- LoaiDoDung -->
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav1" data-bs-toggle="collapse" href="#">
