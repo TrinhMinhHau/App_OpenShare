@@ -83,7 +83,8 @@ else :
                         $returnData = [
                             'success' => 1,
                             'message' => 'Bạn đã đăng nhập thành công.',
-                            'token' => $token
+                            'token' => $token,
+
                         ];
 
                     // IF INVALID PASSWORD
