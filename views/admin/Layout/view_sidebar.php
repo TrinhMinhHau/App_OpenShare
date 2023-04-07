@@ -151,6 +151,26 @@
             </ul>
         </li>
         <!-- EndLoaiDoDung -->
+        <!-- Quanlybaiviet-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav2" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-file-earmark-post"></i></i><span>Quản lý bài viết</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                <li>
+                    <a href="../PostManager/view_displayUnapprovedPost.php">
+                        <i class="bi bi-circle"></i><span>Đang đợi duyệt</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../PostManager/view_displayPost.php">
+                        <i class="bi bi-circle"></i><span>Bài viết</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- EndLoaiDoDung -->
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>

@@ -11,7 +11,7 @@ if (isset($_POST['editprofile'])) {
     if (isset($_FILES["fileToUpload"]["tmp_name"]) && !empty($_FILES["fileToUpload"]["tmp_name"])) {
         $image = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
         $image_base64 = base64_encode($image);
-        $img =  "data:image/" . strtolower(pathinfo($image, PATHINFO_EXTENSION)) . ";base64," . $image_base64;
+        $img =  "data:image/" . strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION)) . ";base64," . $image_base64;
     } else {
         // $img_old = substr($img, 19, strlen($img) - 1);
         $img = $img_old;
