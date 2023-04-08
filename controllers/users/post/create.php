@@ -27,7 +27,6 @@ $auth_info = $auth->isValid();
         $itemPost->address = $data->address;
         $itemPost->photos = $data->photos;
     
-    
         if ($itemPost->addItem()) {
             echo json_encode(array('message', 'ItemType is Inserted'));
         } else {
@@ -40,5 +39,4 @@ $auth_info = $auth->isValid();
             'message' => 'Token request not found',
         ]);
     }
-
 

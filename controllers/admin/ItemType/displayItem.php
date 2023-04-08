@@ -29,13 +29,12 @@ if ($auth_info['success']) {
             $ManagerType_item = array(
                 'idType' =>  $idType,
                 'nameType' => $nameType,
-
-
             );
             array_push($question_array['data'], $ManagerType_item);
         }
         echo json_encode($question_array);
     }
+    
 } else {
     // Return error response if the token is invalid
     echo json_encode([
