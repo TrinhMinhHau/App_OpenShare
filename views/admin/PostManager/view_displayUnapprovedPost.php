@@ -53,8 +53,8 @@ curl_close($curl);
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../Trangchu/Trangchu.php">Trangchu</a></li>
-                <li class="breadcrumb-item ">Quản lý loại đồ dùng</li>
-                <li class="breadcrumb-item active">Loại đồ dùng</li>
+                <li class="breadcrumb-item ">Quản lý bài viết</li>
+                <li class="breadcrumb-item active">Bài viết chưa duyệt</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -82,6 +82,7 @@ curl_close($curl);
                             </thead>
                             <tbody>
                                 <?php
+
                                 if ($data1 == null) {
                                 } else {
                                     for ($i = 0; $i < count($data1); $i++) { ?>
