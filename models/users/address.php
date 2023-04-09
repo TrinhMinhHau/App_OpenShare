@@ -1,16 +1,12 @@
 <?php
-class Post
+class Address
 {
     private $conn;
 
     //property
-    public $title;
-    public $description;
     public $address;
-    public $photos;
     public $idUser;
-    public $idType;
-
+ 
 
     // connect db
     public function __construct($db)
@@ -20,13 +16,9 @@ class Post
 
     public function addItem()
     {
-            $query = "INSERT INTO `baiviet` SET title=:title,description=:description,address=:address,photos=:photos,idType=:idType,idUser=:idUser";
+            $query = "INSERT INTO `diachi` SET address=:address,idUser=:idUser";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
-            $stmt->bindValue(':description',$this->description, PDO::PARAM_STR);
-            $stmt->bindValue(':address',$this->address, PDO::PARAM_STR);
-            $stmt->bindValue(':photos', $this->photos, PDO::PARAM_STR);
-            $stmt->bindValue(':idType',$this->idType, PDO::PARAM_INT);
+            $stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
             $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
@@ -39,17 +31,18 @@ class Post
     
     public function displayItem()
     {
-        $query = "SELECT * FROM `baiviet`";
+        $query = "SELECT * FROM `diachi` WHERE idUser=:idUser";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt;
     }
 
     public function deleteItem()
     {
-        $query_2 = "DELETE FROM baiviet WHERE idPost=:idPost";
+        $query_2 = "DELETE FROM diachi WHERE idAdress=:idAdress";
         $stmt2 = $this->conn->prepare($query_2);
-        $stmt2->bindParam(':idPost', $this->idPost, PDO::PARAM_INT);
+        $stmt2->bindParam(':idAdress', $this->idAdress, PDO::PARAM_INT);
 
         if ($stmt2->execute()) {
             return true;

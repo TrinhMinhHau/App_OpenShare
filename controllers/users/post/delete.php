@@ -22,14 +22,10 @@ $auth_info = $auth->isValid();
         $itemPost = new Post($connect);
     
         $data = json_decode(file_get_contents("php://input"));
-        $itemPost->title = $data->title;
-        $itemPost->description = $data->description;
-        $itemPost->address = $data->address;
-        $itemPost->photos = $data->photos;
-        $itemPost->idType = $data->idType;
-        $itemPost->idUser = $data->idUser;
+        $itemPost->idPost = $data->idPost;
+ 
     
-        if ($itemPost->addItem()) {
+        if ($itemPost->deleteItem()) {
             echo json_encode(array('message', 'ItemType is Inserted'));
         } else {
             echo json_encode(array('message', 'ItemType is not Inserted'));
