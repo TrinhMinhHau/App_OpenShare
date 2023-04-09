@@ -11,6 +11,6 @@ require __DIR__ . '../../../AuthMiddleWareUsers.php';
 $allHeaders = getallheaders();
 $db_connection = new db();
 $conn = $db_connection->connect();
-$auth = new Auth($conn, $allHeaders);
+$auth = new AuthUsers($conn, $allHeaders);
 
 echo json_encode($auth->isValid());
