@@ -70,7 +70,7 @@ class PostManager
         $stmt1 = $this->conn->prepare($query_1);
 
         //Bind value
-        $stmt1->bindParam(':idPost', $this->idPost, PDO::PARAM_INT);
+        $stmt1->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
 
         // Delete Loaibaiviet
 
