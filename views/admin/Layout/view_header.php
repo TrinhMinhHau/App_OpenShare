@@ -94,12 +94,8 @@
                 } else {
                     // Xử lý kết quả trả về
                     $data = json_decode($response, true);
-                    $data1 = [];
-                    if ($data1 == null) {
-                    } else
-                        $data1 = $data['data'];
+                    $data1 = isset($data['data']) ? $data['data'] : null;
                 }
-
                 // Đóng cURL session
                 curl_close($curl);
                 ?>
@@ -117,12 +113,17 @@
                         <li class="dropdown-header">
                             Bạn có <?php if ($data1 === null) echo 0;
                                     else echo count($data1) ?> bài viết mới cần duyệt
+                            <a href="../PostManager/view_displayUnapprovedPost.php"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
                         </li>
                         <?php
                         if ($data1 === null) {
                         } else {
-
-                            for ($i = 0; $i < count($data1); $i++) { ?> <li>
+                            if (count($data1) > 3) {
+                                $count = 3;
+                            } else {
+                                $count = count($data1);
+                            }
+                            for ($i = 0; $i < $count; $i++) { ?> <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li class="notification-item">
@@ -131,14 +132,16 @@
                                         <div>
                                             <h4><?= $data1[$i]['name'] ?></h4>
                                             <p><?= $data1[$i]['title'] ?></p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['postDate'])) / 3600, 0) ?> giờ trước </p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['postDate'])) / 3600, 0) + 5 ?> giờ trước </p>
                                         </div>
                                     </a>
                                 </li> <?php }
                                 } ?> <li>
                             <hr class="dropdown-divider">
                         </li>
-
+                        <li class="dropdown-footer">
+                            <a href="../PostManager/view_displayUnapprovedPost.php">Xem tất cả thông báo</a>
+                        </li>
 
                     </ul><!-- End Notification Dropdown Items -->
 

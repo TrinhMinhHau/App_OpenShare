@@ -60,13 +60,14 @@ class ItemManager
     public function deleteItem()
     {
         // Delete Baiviet
-        $query_1 = "DELETE FROM baiviet WHERE idType=:idType";
+        $query_1 = " UPDATE baiviet SET idType = NULL WHERE idType = :idType";
         $stmt1 = $this->conn->prepare($query_1);
 
         //Bind value
         $stmt1->bindParam(':idType', $this->idType, PDO::PARAM_INT);
 
         // Delete Loaibaiviet
+
         $query_2 = "DELETE FROM doanhmuc WHERE idType=:idType";
         $stmt2 = $this->conn->prepare($query_2);
 

@@ -164,18 +164,7 @@ curl_close($curl);
 
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <form action="./view_approvPost.php" method="post">
-                                                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="Duyet">Duyệt</button>
-                                                                    <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
-                                                                    <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
 
-                                                                </form>
-                                                                <form action="./view_rejectPost.php" method="post">
-                                                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="Tuchoi">Từ chối</button>
-                                                                    <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
-                                                                    <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
-
-                                                                </form>
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                                             </div>
                                                         </div>
