@@ -40,10 +40,16 @@ class PostManager
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->bindValue(':idStaffApprove', $this->idStaffApprove, PDO::PARAM_INT);
-        if ($stmt->execute()) {
+        // Thong bao cho nguoi dung ve bai da duyet
+        $query1 = "INSERT INTO thongbaoduyetbai (user_id, post_id, message, created_at) 
+        VALUES (:user_id,:post_id, 'Bài viết của bạn đã được duyệt', NOW())";
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt1->bindValue(':post_id', $this->idPost, PDO::PARAM_INT);
+        $stmt1->bindValue(':user_id', $this->idUser, PDO::PARAM_INT);
+        if ($stmt->execute() && $stmt1->execute()) {
             return true;
         } else {
-            echo "Error", $stmt->error;
+            echo "Duyệt thất bại";
             return false;
         }
     }
@@ -55,11 +61,16 @@ class PostManager
         $stmt->bindValue(':idStaffApprove', $this->idStaffApprove, PDO::PARAM_INT);
 
 
-
-        if ($stmt->execute()) {
+        // Thong bao cho nguoi dung ve bai da duyet
+        $query1 = "INSERT INTO thongbaoduyetbai (user_id, post_id, message, created_at) 
+        VALUES (:user_id,:post_id, 'Cảm ơn bạn đã đóng góp đồ dùng cho cộng đồng, tuy nhiên đồ dùng của bạn không phù hợp với tiêu chuẩn cộng đồng ', NOW())";
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt1->bindValue(':post_id', $this->idPost, PDO::PARAM_INT);
+        $stmt1->bindValue(':user_id', $this->idUser, PDO::PARAM_INT);
+        if ($stmt->execute() && $stmt1->execute()) {
             return true;
         } else {
-            echo "Error", $stmt->error;
+            echo "Duyệt thất bại";
             return false;
         }
     }

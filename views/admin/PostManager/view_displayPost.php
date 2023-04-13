@@ -58,12 +58,12 @@ curl_close($curl);
         </div>
     <?php } ?>
     <div class="pagetitle">
-        <h1>Quản lý loại đồ dùng</h1>
+        <h1>Quản lý bài cho</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../Trangchu/Trangchu.php">Trangchu</a></li>
-                <li class="breadcrumb-item ">Quản lý bài viết</li>
-                <li class="breadcrumb-item active">Bài viết</li>
+                <li class="breadcrumb-item ">Quản lý bài cho</li>
+                <li class="breadcrumb-item active">Bài cho</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->

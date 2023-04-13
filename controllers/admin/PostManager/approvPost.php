@@ -22,6 +22,7 @@ if ($auth_info['success']) {
     $data = json_decode(file_get_contents("php://input"));
     $itemPost->idPost = $data->idPost;
     $itemPost->idStaffApprove = $data->idStaff;
+    $itemPost->idUser = $data->idUser;
 
 
     if ($itemPost->approvPost()) {

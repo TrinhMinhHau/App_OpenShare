@@ -4,11 +4,13 @@ $token = $_SESSION['token'];
 if (isset($_POST['Tuchoi'])) {
     $idPost = $_POST['idPost'];
     $idStaff = $_POST['idStaff'];
+    $idUser = ($_POST['idUser']);
 
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idPost' => $idPost,
         'idStaff' => $idStaff,
+        'idUser' => $idUser,
     );
 
     // Chuyển dữ liệu sang định dạng JSON
