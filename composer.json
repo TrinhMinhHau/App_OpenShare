@@ -1,5 +1,6 @@
 {
-    "require": {
-        "firebase/php-jwt": "5.5.1"
-    }
+  "require": {
+    "firebase/php-jwt": "5.5.1",
+    "phpoffice/phpspreadsheet": "1.17.0"
+  }
 }

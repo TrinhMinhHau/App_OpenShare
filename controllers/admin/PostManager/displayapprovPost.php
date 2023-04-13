@@ -28,6 +28,7 @@ if ($auth_info['success']) {
             extract($row);
             $ManagerType_item = array(
                 'idPost' =>  $idPost,
+                'idUser' =>  $idUser,
                 'title' => $title,
                 'description' => $description,
                 'isShow' => $isShow,

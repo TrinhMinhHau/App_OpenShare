@@ -4,6 +4,8 @@ $token = $_SESSION['token'];
 if (isset($_POST['Duyet'])) {
     $idPost = $_POST['idPost'];
     $idStaff = ($_POST['idStaff']);
+    $idUser = ($_POST['idUser']);
+
     echo ($idPost);
     echo ($idStaff);
     var_dump($idPost);
@@ -12,6 +14,7 @@ if (isset($_POST['Duyet'])) {
     $data = array(
         'idPost' => $idPost,
         'idStaff' => $idStaff,
+        'idUser' => $idUser,
     );
 
     // Chuyển dữ liệu sang định dạng JSON

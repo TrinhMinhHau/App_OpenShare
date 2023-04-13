@@ -37,12 +37,12 @@ curl_close($curl);
 ?>
 <main id="main" class="main">
 
-    <?php if (isset($_SESSION['status_approv_success'])) {
+    <?php if (isset($_SESSION['status_reject_success'])) {
     ?>
 
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['status_approv_success'];
-            unset($_SESSION['status_approv_success']); ?>
+            <?= $_SESSION['status_reject_success'];
+            unset($_SESSION['status_reject_success']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
         </div>
@@ -157,12 +157,13 @@ curl_close($curl);
                                                                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="Duyet">Duyệt</button>
                                                                     <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
                                                                     <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
-
+                                                                    <input type="hidden" name="idUser" id="idUser" value="<?php echo ($data1[$i]['idUser']) ?>">
                                                                 </form>
                                                                 <form action="./view_rejectPost.php" method="post">
                                                                     <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="Tuchoi">Từ chối</button>
                                                                     <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
                                                                     <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
+                                                                    <input type="hidden" name="idUser" id="idUser" value="<?php echo ($data1[$i]['idUser']) ?>">
 
                                                                 </form>
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
