@@ -77,8 +77,8 @@ curl_close($curl);
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table datatable">
-                            <thead>
+                        <table class="table datatable table-striped table-bordered" border="1">
+                            <thead class="  ">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Mã số</th>
@@ -86,8 +86,7 @@ curl_close($curl);
                                     <th scope="col">Tiêu đề</th>
                                     <th scope="col">Ngày đăng</th>
                                     <th scope="col">Mã NV duyệt</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th colspan=2>Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,7 +105,7 @@ curl_close($curl);
                                             <td>
                                                 <!-- DETAIL  -->
                                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Modal_Detail<?php echo ($data1[$i]['idPost']) ?>">
-                                                    Chi tiết
+                                                    <i class="bi bi-info-circle"></i> Chi tiết
                                                 </button>
                                                 <div class="modal fade" id="Modal_Detail<?php echo ($data1[$i]['idPost']) ?>" tabindex="-1" aria-labelledby="LabelModal" aria-hidden="true">
                                                     <div class="modal-dialog modal-xl ">
@@ -172,53 +171,54 @@ curl_close($curl);
                                                 </div>
 
                                                 <!-- END-DETAIL  -->
-                                            </td>
+
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idPost']) ?>">
+                                                    <i class="bi bi-trash-fill"></i> Xóa
+                                                </button>
+                                                <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idPost']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg ">
+                                                        <!-- modal-xl -->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="Label_Edit">Xóa</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="./view_deletePost.php" method="post">
+                                                                <div class="modal-body">
 
 
+                                                                    <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
+
+                                                                    <div class="form-group">
+                                                                        <label>Bạn có chắc chắn xóa bài viết này hay không?</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" name="deletePost" class="btn btn-primary">Xóa</button>
+
+                                                                </div>
+                                                            </form>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                     </div>
+
+                    </td>
+
 
                 </div>
 
             </div>
+
+        </div>
         </div>
         </td>
         <!-- DELETE  -->
-        <td>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idPost']) ?>">
-                Xóa
-            </button>
-            <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idPost']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                <div class="modal-dialog modal-lg ">
-                    <!-- modal-xl -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="Label_Edit">Xóa</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="./view_deletePost.php" method="post">
-                            <div class="modal-body">
 
-
-                                <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
-
-                                <div class="form-group">
-                                    <label>Bạn có chắc chắn xóa bài viết này hay không?</label>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="submit" name="deletePost" class="btn btn-primary">Xóa</button>
-
-                            </div>
-                        </form>
-
-
-                    </div>
-
-                </div>
-            </div>
-            </div>
-        </td>
         <!-- END-DELETE  -->
 
         </tr>
@@ -236,3 +236,10 @@ curl_close($curl);
 
 
 <?php include('../Layout/view_footer.php') ?>
+
+<style>
+    table thead {
+        background-color: #333;
+        color: #fff;
+    }
+</style>
