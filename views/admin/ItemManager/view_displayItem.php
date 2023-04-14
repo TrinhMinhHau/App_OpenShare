@@ -135,14 +135,14 @@ curl_close($curl);
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table datatable">
+                        <table class="table datatable table-striped table-bordered" border="1">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Mã số</th>
                                     <th scope="col">Tên loại đồ dùng</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th colspan="2">Chức năng</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -160,7 +160,7 @@ curl_close($curl);
         <!-- UPDATE -->
         <td>
             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalUpdate<?php echo ($data1[$i]['idType']) ?>">
-                Cập nhật
+                <i class="ri-refresh-line"></i> Cập nhật
             </button>
             <div class="modal fade" id="ModalUpdate<?php echo ($data1[$i]['idType']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                 <div class="modal-dialog modal-lg ">
@@ -194,12 +194,12 @@ curl_close($curl);
                 </div>
             </div>
             </div>
-        </td>
-        <!-- ENDUPDATE -->
-        <!-- DELETE  -->
-        <td>
+
+            <!-- ENDUPDATE -->
+            <!-- DELETE  -->
+
             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idType']) ?>">
-                Xóa
+                <i class="bi bi-trash-fill"></i> Xóa
             </button>
             <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idType']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                 <div class="modal-dialog modal-lg ">
@@ -221,7 +221,7 @@ curl_close($curl);
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="submit" name="deleteItem" class="btn btn-primary">Xóa</button>
+                                <button type="submit" name="deleteItem" class="btn btn-danger">Xóa</button>
 
                             </div>
                         </form>
@@ -248,3 +248,10 @@ curl_close($curl);
 
 
 <?php include('../Layout/view_footer.php') ?>
+
+<style>
+    table thead {
+        background-color: #333;
+        color: #fff;
+    }
+</style>

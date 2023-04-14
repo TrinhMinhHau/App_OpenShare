@@ -68,7 +68,7 @@ curl_close($curl);
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table datatable">
+                        <table class="table datatable table-striped table-bordered" border="1">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -76,7 +76,7 @@ curl_close($curl);
                                     <th scope="col">Tên người đăng</th>
                                     <th scope="col">Tiêu đề</th>
                                     <th scope="col">Ngày đăng</th>
-                                    <th></th>
+                                    <th scope="col">Chức năng</th>
 
                                 </tr>
                             </thead>
@@ -95,7 +95,7 @@ curl_close($curl);
                                             <td>
                                                 <!-- DETAIL  -->
                                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Modal_Detail<?php echo ($data1[$i]['idPost']) ?>">
-                                                    Chi tiết
+                                                    <i class="bi bi-info-circle"></i> Chi tiết
                                                 </button>
                                                 <div class="modal fade" id="Modal_Detail<?php echo ($data1[$i]['idPost']) ?>" tabindex="-1" aria-labelledby="LabelModal" aria-hidden="true">
                                                     <div class="modal-dialog modal-xl ">
@@ -202,3 +202,10 @@ curl_close($curl);
 
 
 <?php include('../Layout/view_footer.php') ?>
+
+<style>
+    table thead {
+        background-color: #333;
+        color: #fff;
+    }
+</style>
