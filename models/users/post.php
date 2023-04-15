@@ -10,12 +10,44 @@ class Post
     public $photos;
     public $idUser;
     public $idType;
+    public $idPost;
+    public $idUserRequest;
+    public $postDate;
+    public $requestDate;
 
 
     // connect db
     public function __construct($db)
     {
         $this->conn = $db;
+    }
+
+  
+
+    public function displayRequest()
+    {
+            $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message,
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType
+            FROM yeucau yc 
+            JOIN baiviet p ON yc.idPost = p.idPost 
+            WHERE yc.idUserRequest =:idUser";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function displayManegerRequest()
+    {
+        $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest,
+        p.title, p.description, p.postDate, p.address, p.photos, p.idType
+        FROM yeucau yc
+        JOIN baiviet p ON yc.idPost = p.idPost
+        WHERE p.idUser =:idUser";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
     }
 
     public function addItem()
@@ -36,6 +68,22 @@ class Post
                 return false;
             }
     }
+
+      public function requestPost() {
+        $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idPost',$this->idPost, PDO::PARAM_INT);
+        $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            echo "Error", $stmt->error;
+            echo $stmt->error;
+            return false;
+        }
+    }
+
     
     public function displayItem()
     {
