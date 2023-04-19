@@ -43,7 +43,7 @@ if ($auth_info['success']) {
           );
           array_push($question_array['data'], $ManagerType_item);
       }
-      echo json_encode($question_array);
+      echo json_encode($question_array);  
   }
   
 } else {
