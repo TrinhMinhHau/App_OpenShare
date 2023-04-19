@@ -87,8 +87,18 @@ class Post
     
     public function displayItem()
     {
-        $query = "SELECT * FROM `baiviet`";
+        $query = "SELECT * FROM `baiviet` where isShow=1";
         $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function displayItemWithType()
+    {
+        $query = "SELECT * FROM `baiviet` where idType=:idType";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idType', $this->idType, PDO::PARAM_INT);
+
         $stmt->execute();
         return $stmt;
     }

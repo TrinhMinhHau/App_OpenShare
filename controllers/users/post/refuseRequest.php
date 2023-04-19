@@ -5,11 +5,11 @@ header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: PUT");
 header("Content-Type: application/json; charset=UTF-8");
 require __DIR__ . '/../../../configs/database.php';
-require __DIR__ . '../../../AuthMiddleWare.php';
+require __DIR__ . '../../../AuthMiddleWareUsers.php';
 $headers = getallheaders();
 $db_connection = new db();
 $conn = $db_connection->connect();
-$auth = new Auth($conn, $headers);
+$auth = new AuthUsers($conn, $headers);
 $auth_info = $auth->isValid();
 
 if ($auth_info['success']) {
@@ -38,11 +38,11 @@ if ($auth_info['success']) {
         // $image_mime = "data:image/" . strtolower(pathinfo($image_data, PATHINFO_EXTENSION)) . ";base64," . $image_data;
 
         // update user record in database
-        $update_query = "UPDATE yeucau SET status=1 WHERE idRequest=:idRequest";
+        $update_query = "UPDATE yeucau SET status=2 WHERE idRequest=:idRequest";
         $update_stmt = $conn->prepare($update_query);
 
         // bind parameters to statement
-        $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_STR);
+        $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
        
         // execute statement
         if ($update_stmt->execute()) {
