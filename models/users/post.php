@@ -26,7 +26,7 @@ class Post
 
     public function displayRequest()
     {
-            $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message,
+            $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
             p.title, p.description, p.postDate, p.address, p.photos, p.idType
             FROM yeucau yc 
             JOIN baiviet p ON yc.idPost = p.idPost 
@@ -39,7 +39,7 @@ class Post
 
     public function displayManegerRequest()
     {
-        $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest,
+        $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest, yc.requestDate, yc.status,
         p.title, p.description, p.postDate, p.address, p.photos, p.idType
         FROM yeucau yc
         JOIN baiviet p ON yc.idPost = p.idPost
