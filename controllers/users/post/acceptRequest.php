@@ -38,14 +38,35 @@ if ($auth_info['success']) {
         // $image_mime = "data:image/" . strtolower(pathinfo($image_data, PATHINFO_EXTENSION)) . ";base64," . $image_data;
 
         // update user record in database
-        $update_query = "UPDATE yeucau SET status=2 WHERE idRequest=:idRequest";
+        $update_query = "UPDATE yeucau SET status=1 WHERE idRequest=$idRequest";
         $update_stmt = $conn->prepare($update_query);
 
         // bind parameters to statement
-        $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_STR);
+        $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
+
+        $query2= "UPDATE yeucau SET status = 2 WHERE idRequest <> $idRequest";
+
+        $query2_stmt = $conn->prepare($query2);
+
+        // $query2_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_STR);
+
+        $query3="UPDATE baiviet SET status = 1 WHERE idPost IN (
+          SELECT idPost
+          FROM yeucau
+          WHERE idRequest = $idRequest
+        )";
+         $query3_stmt = $conn->prepare($query3);
+
+        //  $query3_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_STR);
+
+        $query4="INSERT INTO `chitietyeucau` SET idRequest=$idRequest";
+
+        $query4_stmt = $conn->prepare($query4);
+
+        // $query4_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_STR);
        
         // execute statement
-        if ($update_stmt->execute()) {
+        if ($update_stmt->execute() && $query2_stmt->execute() && $query3_stmt->execute() && $query4_stmt->execute()) {
             http_response_code(200);
             echo json_encode(['message' => $success_message]);
         } else {
