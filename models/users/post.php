@@ -14,7 +14,11 @@ class Post
     public $idUserRequest;
     public $postDate;
     public $requestDate;
-
+    public $statusPost;
+    public $name;
+    public $photoURL;
+    public $nameType;
+    public $id_Userget;
 
     // connect db
     public function __construct($db)
@@ -22,11 +26,11 @@ class Post
         $this->conn = $db;
     }
 
-  
+
 
     public function displayRequest()
     {
-            $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
+        $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
             p.title, p.description, p.postDate, p.address, p.photos, p.idType
             FROM yeucau yc 
             JOIN baiviet p ON yc.idPost = p.idPost 
@@ -52,27 +56,28 @@ class Post
 
     public function addItem()
     {
-            $query = "INSERT INTO `baiviet` SET title=:title,description=:description,address=:address,photos=:photos,idType=:idType,idUser=:idUser";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
-            $stmt->bindValue(':description',$this->description, PDO::PARAM_STR);
-            $stmt->bindValue(':address',$this->address, PDO::PARAM_STR);
-            $stmt->bindValue(':photos', $this->photos, PDO::PARAM_STR);
-            $stmt->bindValue(':idType',$this->idType, PDO::PARAM_INT);
-            $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $query = "INSERT INTO `baiviet` SET title=:title,description=:description,address=:address,photos=:photos,idType=:idType,idUser=:idUser";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+        $stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
+        $stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
+        $stmt->bindValue(':photos', $this->photos, PDO::PARAM_STR);
+        $stmt->bindValue(':idType', $this->idType, PDO::PARAM_INT);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
 
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                echo "Error", $stmt->error;
-                return false;
-            }
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            echo "Error", $stmt->error;
+            return false;
+        }
     }
 
-      public function requestPost() {
+    public function requestPost()
+    {
         $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':idPost',$this->idPost, PDO::PARAM_INT);
+        $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
@@ -84,15 +89,24 @@ class Post
         }
     }
 
-    
+
     public function displayItem()
     {
-        $query = "SELECT * FROM `baiviet` where isShow=1";
+
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and statusPost=0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType order by baiviet.idPost desc";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
+    public function displayPostbyidUser()
+    {
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and statusPost=0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType and baiviet.idUser =:id_Userget  order by baiviet.idPost desc";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':id_Userget', $this->id_Userget, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
     public function displayItemWithType()
     {
         $query = "SELECT * FROM `baiviet` where idType=:idType";
@@ -117,4 +131,3 @@ class Post
         }
     }
 }
-

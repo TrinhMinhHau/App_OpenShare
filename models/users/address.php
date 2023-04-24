@@ -6,7 +6,8 @@ class Address
     //property
     public $address;
     public $idUser;
- 
+    public $idAdress;
+
 
     // connect db
     public function __construct($db)
@@ -16,19 +17,19 @@ class Address
 
     public function addItem()
     {
-            $query = "INSERT INTO `diachi` SET address=:address,idUser=:idUser";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
-            $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $query = "INSERT INTO `diachi` SET address=:address,idUser=:idUser";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
 
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                echo "Error", $stmt->error;
-                return false;
-            }
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            echo "Error", $stmt->error;
+            return false;
+        }
     }
-    
+
     public function displayItem()
     {
         $query = "SELECT * FROM `diachi` WHERE idUser=:idUser";
@@ -52,4 +53,3 @@ class Address
         }
     }
 }
-

@@ -76,7 +76,7 @@ else :
 
                         $jwt = new JwtHandler();
                         $token = $jwt->jwtEncodeData(
-                            'http://localhost/App_OpenShare/',
+                            'http://localhost/WEBSITE_OPENSHARE/',
                             array("user_id" => $row['idUser'])
                         );
 
