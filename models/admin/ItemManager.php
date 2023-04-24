@@ -60,7 +60,7 @@ class ItemManager
     public function deleteItem()
     {
         // Delete Baiviet
-        $query_1 = " UPDATE baiviet SET idType = NULL WHERE idType = :idType";
+        $query_1 = " UPDATE baiviet SET idType = 8 WHERE idType = :idType";
         $stmt1 = $this->conn->prepare($query_1);
 
         //Bind value
