@@ -18,9 +18,7 @@ $auth_info = $auth->isValid();
 // If the token is valid
     //code...
     if ($auth_info['success']) {
-
         $itemPost = new Post($connect);
-    
         $data = json_decode(file_get_contents("php://input"));
         $itemPost->title = $data->title;
         $itemPost->description = $data->description;
