@@ -52,7 +52,7 @@ try {
              $query3_stmt = $conn->prepare($query3);
     
     
-            $query4="INSERT INTO `chitietyeucau` SET idRequest=:idRequest";
+            $query4="INSERT INTO `chitietyeucau` SET idRequest=:idRequest,message=:message";
     
             $query4_stmt = $conn->prepare($query4);
     
@@ -60,6 +60,8 @@ try {
             $query3_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
             $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
             $query4_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
+            $query4_stmt->bindValue(':message', $message, PDO::PARAM_STR);
+
            
             // execute statement
             if ($update_stmt->execute() && $query2_stmt->execute() && $query3_stmt->execute() && $query4_stmt->execute()) {

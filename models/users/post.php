@@ -19,6 +19,7 @@ class Post
     public $photoURL;
     public $nameType;
     public $id_Userget;
+    public $message;
 
     // connect db
     public function __construct($db)
@@ -75,10 +76,11 @@ class Post
 
     public function requestPost()
     {
-        $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost";
+        $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost,message=:message";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+        $stmt->bindValue(':message', $this ->message, PDO::PARAM_STR)
 
         if ($stmt->execute()) {
             return true;
