@@ -24,10 +24,8 @@ $auth_info = $auth->isValid();
         $data = json_decode(file_get_contents("php://input"));
         $itemPost->idPost = $data->idPost;
         $itemPost->idUserRequest = $data->idUserRequest;
-        $itemPost->message = $data->$message;
+        $itemPost->message = $data->message;
 
-     
-    
         if ($itemPost->requestPost()) {
             echo json_encode(array('message', 'ItemType is Inserted'));
         } else {
