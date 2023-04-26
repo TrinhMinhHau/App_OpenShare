@@ -158,6 +158,7 @@ curl_close($curl);
 
         <?php } ?>
         <button type="button" class="load-more-btn">Load More</button>
+        <?php include('../post/view_post.php') ?>
     </div>
     <!-- right-sidebar -->
     <div class="right-sidebar">
@@ -240,5 +241,6 @@ curl_close($curl);
             <p>Alison Mina</p>
         </div>
     </div>
+
 </div>
 <?php include('../layout/footer.php'); ?>

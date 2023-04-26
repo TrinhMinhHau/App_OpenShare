@@ -17,17 +17,26 @@ class Address
 
     public function addItem()
     {
-        $query = "INSERT INTO `diachi` SET address=:address,idUser=:idUser";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
-        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $check_address = "SELECT `address` FROM `diachi` WHERE  `address`=:address";
+        $check_address_stmt = $this->conn->prepare($check_address);
+        $check_address_stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
+        $check_address_stmt->execute();
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            echo "Error", $stmt->error;
-            return false;
-        }
+        if ($check_address_stmt->rowCount()) :
+            echo "Địa chỉ này đã tồn tại";
+        else :
+            $query = "INSERT INTO `diachi` SET address=:address,idUser=:idUser";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':address', $this->address, PDO::PARAM_STR);
+            $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                echo "Error", $stmt->error;
+                return false;
+            }
+        endif;
     }
 
     public function displayItem()

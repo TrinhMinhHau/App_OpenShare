@@ -49,17 +49,24 @@
     ?>
     <nav>
         <div class="nav-left">
-            <a href="./index.html">
+            <a href="../TrangChu/index.php">
                 <img src="../assests/images/openshare_logo.png" alt="" height="41px" class="logo" /></a>
             <ul>
                 <li>
-                    <a href="#"><img src="../assests/images/house-icon-black-and-white-home-vector-24922033-removebg-preview.png" alt="" srcset="" /></a>
+                    <a href="../TrangChu/index.php" class="active1"><img src="../assests/images/house-icon-black-and-white-home-vector-24922033-removebg-preview.png" alt="" srcset="" /></a>
                 </li>
                 <li>
                     <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" />
                 </li>
-                <li><img src="../assests/images/inbox.png" alt="" srcset="" /></li>
-                <li><img src="../assests/images/video.png" alt="" srcset="" /></li>
+
+                <li><a href="#"> Thú cưng</a></li>
+                <li><a href="#"> Thú cưng</a></li>
+                <li><a href="#"> Thú cưng</a></li>
+                <li><a href="#"> Thú cưng</a></li>
+
+
+
+
             </ul>
             <!-- settings-notice -->
             <div class="settings-notice">
@@ -152,3 +159,16 @@
             </div>
         </div>
     </nav>
+    <script>
+        const lis = document.querySelectorAll('.nav-left ul li a');
+        for (let i = 0; i < lis.length; i++) {
+            lis[i].addEventListener('click', function() {
+                // Xóa lớp active1 từ tất cả các phần tử li
+                for (let j = 0; j < lis.length; j++) {
+                    lis[j].classList.remove('active1');
+                }
+                // Thêm lớp active1 vào phần tử li được click
+                this.classList.add('active1');
+            });
+        }
+    </script>
