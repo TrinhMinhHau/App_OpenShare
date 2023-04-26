@@ -80,7 +80,7 @@ class Post
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
-        $stmt->bindValue(':message', $this ->message, PDO::PARAM_STR)
+        $stmt->bindValue(':message', $this->message, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             return true;
@@ -103,7 +103,7 @@ class Post
 
     public function displayPostbyidUser()
     {
-        $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and statusPost=0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType and baiviet.idUser =:id_Userget  order by baiviet.idPost desc";
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType and baiviet.idUser =:id_Userget  order by baiviet.idPost desc";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':id_Userget', $this->id_Userget, PDO::PARAM_INT);
         $stmt->execute();

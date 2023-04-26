@@ -47,6 +47,24 @@ curl_close($curl);
 ?>
 <!--Profile Page-->
 <div class="profile-container">
+    <?php if (isset($_SESSION['post_success'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['post_success'];
+            unset($_SESSION['post_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
+    <?php if (isset($_SESSION['status_delete_post'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['status_delete_post'];
+            unset($_SESSION['status_delete_post']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
     <?php if (isset($_SESSION['status_delete'])) {
     ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -61,6 +79,15 @@ curl_close($curl);
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= $_SESSION['status_success'];
             unset($_SESSION['status_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
+    <?php if (isset($_SESSION['status_error'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['status_error'];
+            unset($_SESSION['status_error']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php
@@ -108,9 +135,8 @@ curl_close($curl);
             <div class="profile-intro">
                 <div class="update-info">
                     <h3>Thông tin cơ bản</h3>
-                    <button type="button" class="btn btn-primary btn-sm address_user" data-bs-toggle="modal" data-bs-target="#capnhat">
-                        Cập nhật
-                    </button>
+                    <a href="#" class="address_user" data-bs-toggle="modal" data-bs-target="#capnhat" role="button">Cập nhật</a>
+
                     <div class="modal fade" id="capnhat" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                         <div class="modal-dialog modal-lg ">
                             <!-- modal-xl -->
@@ -186,9 +212,11 @@ curl_close($curl);
                 <hr />
                 <div class="update-info">
                     <h3>Địa chỉ</h3>
-                    <button type="button" class="btn btn-primary btn-sm address_user" data-bs-toggle="modal" data-bs-target="#them">
+                    <!-- <button type="button" class="btn btn-primary btn-sm address_user" data-bs-toggle="modal" data-bs-target="#them">
                         Thêm
-                    </button>
+                    </button> -->
+                    <a href="#" class="address_user" data-bs-toggle="modal" data-bs-target="#them" role="button">Thêm</a>
+
                     <div class="modal fade" id="them" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                         <div class="modal-dialog modal-lg ">
                             <!-- modal-xl -->
@@ -215,7 +243,7 @@ curl_close($curl);
                                                         </select>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <input type="text" placeholder="Nhập số nhà" class="input-group p-1" id="street">
+                                                        <input type="text" placeholder="Nhập số nhà" class="input-group p-1" id="street" required>
 
                                                     </div>
                                                     <input type="hidden" name="result" id="result" value="" />
@@ -292,9 +320,9 @@ curl_close($curl);
                         for ($i = 0; $i < count($data2); $i++) { ?>
                             <li>
                                 <img src="../assests/images/profile-location.png" alt="" /><?= $data2[$i]['address'] ?>
-                                <button type="button" class="btn btn-danger btn-sm address_user" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data2[$i]['idAdress']) ?>">
-                                    Xóa
-                                </button>
+
+                                <a href="#" class="address_user" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data2[$i]['idAdress']) ?>" role="button">xóa</a>
+
                                 <div class="modal fade" id="ModalDelete<?php echo ($data2[$i]['idAdress']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                                     <div class="modal-dialog modal-lg ">
                                         <!-- modal-xl -->
@@ -364,10 +392,39 @@ curl_close($curl);
                                         <p><?= $data1[$i]['nameType'] ?></p>
                                     </a>
                                 </div>
+                                <div class="status_post">
+                                    <p><?php if ($data1[$i]['isShow'] == 0) {
+                                            echo "Đang đợi duyệt";
+                                        } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 0) {
+                                            echo "Đang cho";
+                                        } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 1) {
+                                            echo "Duyệt thàng công";
+                                        } else {
+                                            echo "Cho thành công";
+                                        }
+                                        ?></p>
+                                </div>
                             </div>
-                            <a href="#"><i class="fas fa-ellipsis-v"></i></a>
+                            <i class="fas fa-ellipsis-v toggle<?= $i ?>" style="cursor:pointer"></i>
+                            <div class="menu-child menu<?= $i ?>">
+                                <ul class="child">
+                                    <li>
+
+                                        <form action="../post/view_deletePost.php" method="post" id="form_delete">
+                                            <a href="#" onclick="document.getElementById('form_delete').submit()">Xoá bài cho</a>
+                                            <input type="hidden" name="deletePost" value="<?= $data1[$i]['idPost'] ?>">
+                                        </form>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <script>
+                                document.querySelector('.toggle<?= $i ?>').addEventListener('click', function() {
+                                    document.querySelector('.menu<?= $i ?>').classList.toggle('active');
+                                });
+                            </script>
+
                         </div>
-                        <p class="title"><?= $data1[$i]['title'] ?></p>
                         <p class="post-text">
                             <?= $data1[$i]['description'] ?>
                         </p>
@@ -429,6 +486,7 @@ curl_close($curl);
             <?php } ?>
         </div>
     </div>
+    <?php include('../post/view_post.php') ?>
 </div>
 <script>
     imgInpEl = document.getElementById('fileToUpload');

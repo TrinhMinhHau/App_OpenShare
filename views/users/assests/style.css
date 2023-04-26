@@ -6,7 +6,7 @@
 }
 :root {
   --body-color: #efefef;
-  --nav-color: #1876f2;
+  --nav-color: #ffa925;
   --bg-color: #fff;
 }
 .dark-theme {
@@ -43,6 +43,19 @@ nav {
 .nav-left ul li {
   list-style: none;
   display: inline-block;
+  padding: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.nav-left ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+.nav-left ul li:hover {
+  border-bottom: solid 3px #4cc47b;
+}
+.active1 {
+  color: red !important;
 }
 .nav-left ul li img {
   width: 28px;
@@ -340,6 +353,7 @@ nav {
   padding: 20px;
   color: #626262;
   margin: 0 0 20px 0;
+  position: relative;
 }
 
 .user-profile {
@@ -362,7 +376,7 @@ nav {
   margin-left: 10px;
 }
 .address p {
-  color: #4257b2;
+  color: #ffa925;
   font-weight: bold;
   font-size: 15px;
 }
@@ -371,13 +385,54 @@ nav {
   color: #fff;
   border-radius: 2px;
   font-weight: bold;
-  background: #1876f2;
+  background: #ffa925;
   padding: 0 5px;
+}
+.status_post p {
+  margin-left: 20px;
+  font-weight: bold;
+  color: #1876f2;
 }
 .post-text span {
   color: #626262;
   font-weight: bold;
 }
+.menu-child {
+  background-color: var(--bg-color);
+  padding: 3px;
+  box-sizing: border-box;
+  border-radius: 1px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  right: -90px;
+  display: none;
+  border-radius: 5px;
+  transition-property: display; /*  Thiết lập thuộc tính width động nếu giá trị của nó thay đổi */
+  transition-duration: 2s;
+}
+.menu-child ul {
+  padding: 0px !important;
+}
+.menu-child ul li {
+  list-style: none;
+  cursor: pointer;
+}
+.menu-child ul li a {
+  color: #1876f2;
+  text-decoration: none;
+}
+.menu-child ul li a:hover {
+  text-decoration: underline;
+}
+
+.active {
+  display: block;
+
+  transition-property: display; /*  Thiết lập thuộc tính width động nếu giá trị của nó thay đổi */
+  transition-duration: 2s; /*  Hiệu ứng động xảy ra trong 2s */
+}
+
 /* .post-img {
   width: 100%;
   border-radius: 4px;
@@ -540,6 +595,14 @@ nav {
   font-size: 15px;
 }
 
+.post i {
+  font-size: 20px;
+  position: fixed;
+  bottom: 50px;
+  right: 100px;
+  z-index: 10000;
+  cursor: pointer;
+}
 /* Profile page */
 .profile-container {
   padding: 20px 15%;
@@ -665,8 +728,11 @@ nav {
 }
 .address_user {
   margin-left: 20px;
+  text-decoration: none;
 }
-
+.address_user:hover {
+  text-decoration: underline;
+}
 .update-info {
   display: flex;
   justify-content: space-around;
