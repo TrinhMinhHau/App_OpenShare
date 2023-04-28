@@ -44,8 +44,8 @@ curl_close($curl);
     <div class="left-sidebar">
         <div class="imp-links">
             <a href="../quanlytaikhoan/view_profile.php"><img src="<?= $result['user']['photoURL'] ?>" alt="" style="border-radius: 50%" /><?= $result['user']['name'] ?></a>
-            <a href="#"><img src="../assests/images/news.png" alt="" />Lastest News</a>
-            <a href="#"><img src="../assests/images/friends.png" alt="" />Friends</a>
+            <a href="../post/view_displaySendRequest.php"><img src="../assests/images/hand3-removebg-preview.png" alt="" />Yêu cầu đã gửi</a>
+            <a href="#"><img src="../assests/images/Acceptrequest_icon.png" alt="" />Yêu cầu đã nhận</a>
             <a href="#"><img src="../assests/images/group.png" alt="" />Group</a>
             <a href="#"><img src="../assests/images/marketplace.png" alt="" />Marketplace</a>
             <a href="#"><img src="../assests/images/watch.png" alt="" />Watch</a>
@@ -70,6 +70,15 @@ curl_close($curl);
             </div>
         <?php
         } ?>
+        <?php if (isset($_SESSION['send_request_error'])) {
+        ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= $_SESSION['send_request_error'];
+                unset($_SESSION['send_request_error']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php
+        } ?>
         <?php
         if ($data1 == null) {
         } else {
@@ -87,7 +96,7 @@ curl_close($curl);
                                     </a> <span><?= $data1[$i]['postDate'] ?></span>
                                 </div>
                                 <div class="address">
-                                    <p><i class="fa-solid fa-location-dot"></i> <?= $data1[$i]['address'] ?></p>
+                                    <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                                 </div>
                                 <div class="type">
                                     <a href="#">
@@ -119,18 +128,56 @@ curl_close($curl);
                                 <img src="../assests/images/like-blue.png" alt="" />
                                 120
                             </div>
+
                             <div>
-                                <img src="../assests/images/comments.png" alt="" />
-                                45
-                            </div>
-                            <div>
-                                <img src="../assests/images/share.png" alt="" />
+                                <img src="../assests/images/hand3-removebg-preview.png" alt="" />
                                 20
                             </div>
+
                         </div>
-                        <div class="post-profile-icon">
-                            <img src="../assests/images/profile-pic.png" alt="" />
-                        </div>
+                        <?php if ($data1[$i]['idUser'] === $result['user']['idUser']) {
+                        } else {
+                        ?>
+                            <div class="post-profile-icon">
+
+                                <div style="cursor:pointer">
+                                    <div data-bs-toggle="modal" data-bs-target="#request<?php echo $data1[$i]['idPost'] ?>"><img src="../assests/images/send-icon.jpg"> <small> Gửi yêu cầu </small></div>
+                                    <div class=" modal fade" id="request<?php echo $data1[$i]['idPost'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg ">
+                                            <!-- modal-xl -->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="Label_Edit">Gửi yêu cầu</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form action="../post/view_sendRequest.php" method="post">
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="idPost" id="idPost" value="<?php echo $data1[$i]['idPost'] ?>">
+                                                        <input type="hidden" name="idUserRequest" id="idPost" value="<?php echo $result['user']['idUser'] ?>">
+
+                                                        <div class="row mb-3">
+                                                            <label for="message" class="col-md-4 col-lg-3 col-form-label">Tin nhắn</label>
+                                                            <div class="col-md-8 col-lg-9">
+                                                                <textarea class="form-control" id="message" name="message" placeholder="Mô tả ..." rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                        <button type="submit" name="sendRequest" class="btn btn-primary">Gửi</button>
+                                                    </div>
+                                                </form>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        <?php  } ?>
+
                     </div>
                 </div>
                 <script>
@@ -158,7 +205,7 @@ curl_close($curl);
 
         <?php } ?>
         <button type="button" class="load-more-btn">Load More</button>
-        <?php include('../post/view_post.php') ?>
+
     </div>
     <!-- right-sidebar -->
     <div class="right-sidebar">
@@ -244,3 +291,4 @@ curl_close($curl);
 
 </div>
 <?php include('../layout/footer.php'); ?>
+<?php include('../post/view_post.php') ?>

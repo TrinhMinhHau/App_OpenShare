@@ -29,8 +29,8 @@ if ($auth_info['success']) {
 
         // extract request parameters
         $idChiTietYC = $request_body['idChiTietYC'];
-        $date = $request_body['date']
-      
+        $date = $request_body['date'];
+
         var_dump($request_body);
         // decode image data from base64
         // $image = base64_decode($image_data);
@@ -46,7 +46,7 @@ if ($auth_info['success']) {
         $update_stmt->bindValue(':idChiTietYC', $idChiTietYC, PDO::PARAM_INT);
         $update_stmt->bindValue(':idChiTietYC', $idChiTietYC, PDO::PARAM_INT);
 
-       
+
         // execute statement
         if ($update_stmt->execute()) {
             http_response_code(200);

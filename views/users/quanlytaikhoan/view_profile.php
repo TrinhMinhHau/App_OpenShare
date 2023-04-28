@@ -1,5 +1,6 @@
 <?php include('../layout/header.php'); ?>
 <script src="//code.jquery.com/jquery.min.js"></script>
+
 <!-- CSS của Images Grid -->
 <script src="https://cdn.jsdelivr.net/gh/taras-d/images-grid/src/images-grid.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/taras-d/images-grid/src/images-grid.min.css" />
@@ -101,7 +102,6 @@ curl_close($curl);
         </div>
     <?php
     } ?>
-    <img src="../assests/images/background-profile1.jpg" alt="" class="cover-img" />
     <div class="profile-details">
         <div class="pd-left">
             <div class="pd-row">
@@ -385,7 +385,7 @@ curl_close($curl);
                                     <span><?= $data1[$i]['postDate'] ?></span>
                                 </div>
                                 <div class="address">
-                                    <p><i class="fa-solid fa-location-dot"></i> <?= $data1[$i]['address'] ?></p>
+                                    <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                                 </div>
                                 <div class="type">
                                     <a href="#">
@@ -399,6 +399,8 @@ curl_close($curl);
                                             echo "Đang cho";
                                         } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 1) {
                                             echo "Duyệt thàng công";
+                                        } else if ($data1[$i]['isShow'] == 2) {
+                                            echo "Bị từ chối";
                                         } else {
                                             echo "Cho thành công";
                                         }
@@ -482,7 +484,6 @@ curl_close($curl);
                     </script>
 
                 <?php } ?>
-
             <?php } ?>
         </div>
     </div>
@@ -501,5 +502,4 @@ curl_close($curl);
 </script>
 <?php include('../layout/footer.php'); ?>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="../assests/handle_address.js"></script>

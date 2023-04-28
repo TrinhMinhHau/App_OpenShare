@@ -444,7 +444,7 @@ nav {
   justify-content: space-between;
 }
 .activity-icons div img {
-  width: 18px;
+  width: 26px;
   margin-right: 10px;
 }
 .activity-icons div {
@@ -800,6 +800,23 @@ nav {
   .post-input-container {
     padding-left: 0;
   }
+}
+/*CSS displaySendRequest */
+.displayRequest {
+  margin-left: 15%;
+  margin-top: 15px;
+  width: 70%;
+}
+.page {
+  width: 70%;
+  margin-left: 15%;
+}
+.page ol li a {
+  color: #1c1e21;
+  text-decoration: none;
+}
+.page ol li a:hover {
+  text-decoration: underline;
 }
 /* media query for profile page */
 @media (max-width: 900px) {

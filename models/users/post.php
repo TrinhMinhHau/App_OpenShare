@@ -32,9 +32,11 @@ class Post
     public function displayRequest()
     {
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
-            p.title, p.description, p.postDate, p.address, p.photos, p.idType
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL
             FROM yeucau yc 
-            JOIN baiviet p ON yc.idPost = p.idPost 
+            JOIN baiviet p ON yc.idPost = p.idPost
+            JOIN user u ON u.idUser= p.idUser
+            JOIN doanhmuc d ON d.idType = p.idType
             WHERE yc.idUserRequest =:idUser";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
@@ -45,9 +47,11 @@ class Post
     public function displayManegerRequest()
     {
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest, yc.requestDate, yc.status,
-        p.title, p.description, p.postDate, p.address, p.photos, p.idType
+        p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL
         FROM yeucau yc
         JOIN baiviet p ON yc.idPost = p.idPost
+        JOIN user u ON u.idUser= yc.idUserRequest
+        JOIN doanhmuc d ON d.idType = p.idType
         WHERE p.idUser =:idUser";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
@@ -76,12 +80,21 @@ class Post
 
     public function requestPost()
     {
-        $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost,message=:message";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
-        $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
-        $stmt->bindValue(':message', $this->message, PDO::PARAM_STR);
+        $check_requestPost = "SELECT idUserRequest,idPost FROM `yeucau` WHERE  `idUserRequest`=:idUserRequest and `idPost`=:idPost";
+        $check_requestPost_stmt = $this->conn->prepare($check_requestPost);
+        $check_requestPost_stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+        $check_requestPost_stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+        $check_requestPost_stmt->execute();
 
+        if ($check_requestPost_stmt->rowCount()) :
+            echo "Người dùng này đã yêu cầu";
+        else :
+            $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost,message=:message";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+            $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+            $stmt->bindValue(':message', $this->message, PDO::PARAM_STR);
+        endif;
         if ($stmt->execute()) {
             return true;
         } else {
