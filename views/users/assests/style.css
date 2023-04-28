@@ -818,6 +818,11 @@ nav {
 .page ol li a:hover {
   text-decoration: underline;
 }
+/* Css displayreceiveRequest */
+.profile-request {
+  display: flex;
+  justify-content: space-between;
+}
 /* media query for profile page */
 @media (max-width: 900px) {
   .profile-container {

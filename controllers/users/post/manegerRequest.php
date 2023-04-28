@@ -42,7 +42,7 @@ if ($auth_info['success']) {
         'idType' => $idType,
         'name' => $name,
         'nameType' => $nameType,
-        'photo' => $photoURL,
+        'photoURL' => $photoURL,
       );
       array_push($question_array['data'], $ManagerType_item);
     }
