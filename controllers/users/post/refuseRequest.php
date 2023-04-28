@@ -29,7 +29,7 @@ if ($auth_info['success']) {
 
         // extract request parameters
         $idRequest = $request_body['idRequest'];
-      
+
         var_dump($request_body);
         // decode image data from base64
         // $image = base64_decode($image_data);
@@ -43,7 +43,8 @@ if ($auth_info['success']) {
 
         // bind parameters to statement
         $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
-       
+
+
         // execute statement
         if ($update_stmt->execute()) {
             http_response_code(200);

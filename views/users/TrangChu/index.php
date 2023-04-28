@@ -45,7 +45,7 @@ curl_close($curl);
         <div class="imp-links">
             <a href="../quanlytaikhoan/view_profile.php"><img src="<?= $result['user']['photoURL'] ?>" alt="" style="border-radius: 50%" /><?= $result['user']['name'] ?></a>
             <a href="../post/view_displaySendRequest.php"><img src="../assests/images/hand3-removebg-preview.png" alt="" />Yêu cầu đã gửi</a>
-            <a href="#"><img src="../assests/images/Acceptrequest_icon.png" alt="" />Yêu cầu đã nhận</a>
+            <a href="../post/view_displayReceiveRequest.php"><img src="../assests/images/Acceptrequest_icon.png" alt="" />Yêu cầu đã nhận</a>
             <a href="#"><img src="../assests/images/group.png" alt="" />Group</a>
             <a href="#"><img src="../assests/images/marketplace.png" alt="" />Marketplace</a>
             <a href="#"><img src="../assests/images/watch.png" alt="" />Watch</a>
@@ -106,7 +106,6 @@ curl_close($curl);
                         </div>
                         <a href="#"><i class="fas fa-ellipsis-v"></i></a>
                     </div>
-                    <p class="title"><?= $data1[$i]['title'] ?></p>
                     <p class="post-text">
                         <?= $data1[$i]['description'] ?>
                     </p>
