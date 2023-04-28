@@ -43,16 +43,10 @@ if ($auth_info['success']) {
 
         // bind parameters to statement
         $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
-        $query3 = "UPDATE baiviet SET statusPost = 2 WHERE idPost IN (
-            SELECT idPost
-            FROM yeucau
-            WHERE idRequest =:idRequest
-          )";
-        $query3_stmt = $conn->prepare($query3);
-        $query3_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
+
 
         // execute statement
-        if ($update_stmt->execute() && $query3_stmt->execute()) {
+        if ($update_stmt->execute()) {
             http_response_code(200);
             echo json_encode(['message' => $success_message]);
         } else {

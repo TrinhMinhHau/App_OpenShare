@@ -399,7 +399,7 @@ curl_close($curl);
                                             echo "Đang cho";
                                         } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 1) {
                                             echo "Duyệt thàng công";
-                                        } else if ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 2) {
+                                        } else if ($data1[$i]['isShow'] == 2) {
                                             echo "Bị từ chối";
                                         } else {
                                             echo "Cho thành công";
