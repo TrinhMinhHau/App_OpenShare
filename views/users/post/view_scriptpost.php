@@ -65,22 +65,3 @@ if (isset($_POST['post'])) {
     // Đóng session cURL
     curl_close($curl);
 }
-?>
-<script>
-    function previewMultiple(event) {
-        var saida = document.getElementById("fileToUploadmul");
-        var quantos = saida.files.length;
-        var galeria = document.getElementById("galeria");
-        for (var i = 0; i < quantos; i++) {
-            var urls = URL.createObjectURL(event.target.files[i]);
-            var img = document.createElement("img");
-            img.src = urls;
-            img.width = "85";
-            img.height = "85";
-            img.style.borderRadius = "10px";
-            img.style.boxShadow = "0 0 8px rgba(0, 0, 0, 0.2)";
-            img.style.opacity = "85%";
-            galeria.appendChild(img);
-        }
-    }
-</script>

@@ -14,7 +14,7 @@
                             <div class="row mb-3">
                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tiêu đề</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input name="title" type="text" class="form-control" id="fullName" placeholder="Bếp ga cũ cầm cho ...">
+                                    <input name="title" type="text" class="form-control" id="fullName" placeholder="Bếp ga cũ cầm cho ..." required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -30,7 +30,8 @@
                                     </div>
                                     <div class="mb-3 pt-2">
                                         <label for="formFileMultiple" class="form-label"></label>
-                                        <input class="form-control" type="file" id="fileToUploadmul" name="fileToUpload[]" onchange="previewMultiple(event)" multiple>
+                                        <input class="form-control" type="file" id="fileToUploadmul" required name="fileToUpload[]" onchange="
+                                        previewMultiple(event)" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -182,4 +183,23 @@
             </div>
         </div>
     </div>
+    <script>
+        function previewMultiple(event) {
+            var saida = document.getElementById("fileToUploadmul");
+            var quantos = saida.files.length;
+            var galeria = document.getElementById("galeria");
+            for (var i = 0; i < quantos; i++) {
+                var urls = URL.createObjectURL(event.target.files[i]);
+                var img = document.createElement("img");
+                img.src = urls;
+                img.width = "85";
+                img.height = "85";
+                img.style.borderRadius = "10px";
+                img.style.boxShadow = "0 0 8px rgba(0, 0, 0, 0.2)";
+                img.style.opacity = "85%";
+                galeria.appendChild(img);
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../assests/handle_address_post.js"></script>

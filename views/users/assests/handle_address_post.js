@@ -5,12 +5,12 @@ var callAPI = (api) => {
   });
 };
 callAPI("https://provinces.open-api.vn/api/?depth=1");
-var callApiDistrict = (api) => {
+var callApiDistrict1 = (api) => {
   return axios.get(api).then((response) => {
     renderData(response.data.districts, "district_post");
   });
 };
-var callApiWard = (api) => {
+var callApiWard1 = (api) => {
   return axios.get(api).then((response) => {
     renderData(response.data.wards, "ward_post");
   });
@@ -25,20 +25,20 @@ var renderData = (array, select) => {
 };
 console.log(renderData);
 $("#province_post").change(() => {
-  callApiDistrict(host1 + "p/" + $("#province_post").val() + "?depth=2");
-  printResult();
+  callApiDistrict1(host1 + "p/" + $("#province_post").val() + "?depth=2");
+  printResult1();
 });
 $("#district_post").change(() => {
-  callApiWard(host1 + "d/" + $("#district_post").val() + "?depth=2");
-  printResult();
+  callApiWard1(host1 + "d/" + $("#district_post").val() + "?depth=2");
+  printResult1();
 });
 $("#ward_post").change(() => {
-  printResult();
+  printResult1();
 });
 $("#street_post").on("input", () => {
-  printResult();
+  printResult1();
 });
-var printResult = () => {
+var printResult1 = () => {
   if (
     $("#district_post").val() != "" &&
     $("#province_post").val() != "" &&
