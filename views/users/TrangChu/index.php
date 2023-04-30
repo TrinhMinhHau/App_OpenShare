@@ -33,7 +33,7 @@ if (curl_error($curl)) {
 } else {
     // Xử lý kết quả trả về
     $data = json_decode($response, true);
-    $data1 = $data['data'];
+    $data1 = $data ? $data['data'] : null;
 }
 
 // Đóng cURL session
@@ -91,7 +91,7 @@ curl_close($curl);
                         <div class="user-profile">
                             <a href="#"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
                                 <div>
-                                    <a href="#">
+                                    <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUser'] ?>">
                                         <p><?= $data1[$i]['name'] ?></p>
                                     </a> <span><?= $data1[$i]['postDate'] ?></span>
                                 </div>
@@ -209,83 +209,60 @@ curl_close($curl);
     <!-- right-sidebar -->
     <div class="right-sidebar">
         <div class="sidebar-title">
-            <h4>Events</h4>
-            <a href="">See All</a>
-        </div>
-
-        <div class="event">
-            <div class="left-event">
-                <h3>18</h3>
-                <span>March</span>
-            </div>
-            <div class="right-event">
-                <h4>Social Media</h4>
-                <p>
-                    <i class="fa-sharp fa-solid fa-location-dot"></i> Willson Tech
-                    Park
-                </p>
-                <a href="#">More info</a>
-            </div>
-        </div>
-        <div class="event">
-            <div class="left-event">
-                <h3>22</h3>
-                <span>June</span>
-            </div>
-            <div class="right-event">
-                <h4>Mobile Marketing</h4>
-                <p>
-                    <i class="fa-sharp fa-solid fa-location-dot"></i> Willson Tech
-                    Park
-                </p>
-                <a href="#">More info</a>
-            </div>
-        </div>
-        <div class="sidebar-title">
-            <h4>Advertisment</h4>
-            <a href="">Close</a>
+            <h4 class="text-warning">Quảng cáo</h4>
         </div>
         <img src="../assests/images/advertisement.png" alt="" srcset="" class="sidebar-ads" />
         <div class="sidebar-title">
-            <h4>Conversation</h4>
-            <a href="">Hide chat</a>
+            <h4 class="text-success">Top nhà hảo tâm</h4>
         </div>
-        <div class="online-list">
-            <div class="online">
-                <img src="../assests/images/member-1.png" alt="" srcset="" />
+        <?php
+
+        $token = $_SESSION['token'];
+        $url = 'http://localhost:8000/website_openshare/controllers/users/post/displaytop10.php';
+
+        // Khởi tạo một cURL session
+        $curl = curl_init();
+
+        // Thiết lập các tùy chọn cho cURL session
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                "Accept: application/json",
+                "Authorization: Bearer {$token}",
+            )
+        ));
+
+        // Thực hiện yêu cầu cURL và lấy kết quả trả về
+        $response = curl_exec($curl);
+
+        // Kiểm tra nếu có lỗi xảy ra
+        if (curl_error($curl)) {
+            echo 'Error: ' . curl_error($curl);
+        } else {
+            // Xử lý kết quả trả về
+            $data = json_decode($response, true);
+            $data2 = $data ? $data['data'] : null;
+        }
+
+        // Đóng cURL session
+        curl_close($curl);
+        ?>
+        <?php for ($i = 0; $i < count($data2); $i++) { ?>
+            <div class="online-list">
+                <div class="online">
+                    <img src="<?= $data2[$i]['photoURL'] ?>" alt="" srcset="" />
+                    <p><?= $data2[$i]['name'] ?></p>
+                </div>
+
+                <div class="TopDongGop">
+                    <p>
+                    <p class="text-danger"><?= $data2[$i]['SoluongdochoTC'] ?></p>
+                    </p>
+                </div>
             </div>
-            <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-            <div class="online">
-                <img src="../assests/images/member-2.png" alt="" srcset="" />
-            </div>
-            <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-            <div class="online">
-                <img src="../assests/images/member-3.png" alt="" srcset="" />
-            </div>
-            <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-            <div class="online">
-                <img src="../assests/images/member-1.png" alt="" srcset="" />
-            </div>
-            <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-            <div class="online">
-                <img src="../assests/images/member-2.png" alt="" srcset="" />
-            </div>
-            <p>Alison Mina</p>
-        </div>
-        <div class="online-list">
-            <div class="online">
-                <img src="../assests/images/member-3.png" alt="" srcset="" />
-            </div>
-            <p>Alison Mina</p>
-        </div>
+        <?php } ?>
     </div>
 
 </div>

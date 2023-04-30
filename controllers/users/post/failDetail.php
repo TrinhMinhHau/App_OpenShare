@@ -28,9 +28,9 @@ if ($auth_info['success']) {
         $request_body = json_decode(file_get_contents('php://input'), true);
 
         // extract request parameters
-        $idChiTietYC = $request_body['idChiTietYC'];
+        // $idChiTietYC = $request_body['idChiTietYC'];
         $idRequest = $request_body['idRequest'];
-      
+
         var_dump($request_body);
         // decode image data from base64
         // $image = base64_decode($image_data);
@@ -39,17 +39,26 @@ if ($auth_info['success']) {
         // $image_mime = "data:image/" . strtolower(pathinfo($image_data, PATHINFO_EXTENSION)) . ";base64," . $image_data;
 
         // update user record in database
-        $update_query = "UPDATE chitietyeucau SET status=2 WHERE idChiTietYC=:idChiTietYC";
-        $update_stmt = $conn->prepare($update_query);
+        // $update_query = "UPDATE chitietyeucau SET status=2 WHERE idChiTietYC=:idChiTietYC";
+        // $update_stmt = $conn->prepare($update_query);
 
-        $query3="UPDATE baiviet SET statusPost = 0 WHERE idPost IN (SELECT idPost FROM chitietyeucau WHERE idRequest =:idRequest)";
-         $query3_stmt = $conn->prepare($query3);
+        // $query3="UPDATE baiviet SET statusPost = 0 WHERE idPost IN (SELECT idPost FROM chitietyeucau WHERE idRequest =:idRequest)";
+        //  $query3_stmt = $conn->prepare($query3);
 
         // bind parameters to statement
-        $update_stmt->bindValue(':idChiTietYC', $idChiTietYC, PDO::PARAM_INT);
+
+        // $update_stmt->bindValue(':idChiTietYC', $idChiTietYC, PDO::PARAM_INT);
+        $query3 = "UPDATE baiviet SET soluongdocho = soluongdocho+ 1 WHERE idPost IN (
+            SELECT idPost
+            FROM yeucau
+            WHERE idRequest =:idRequest
+          )";
+        $query3_stmt = $conn->prepare($query3);
         $query3_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
 
-       
+        $update_query = "UPDATE yeucau SET status=4,successDay=now() WHERE idRequest=:idRequest ";
+        $update_stmt = $conn->prepare($update_query);
+        $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
         // execute statement
         if ($update_stmt->execute() && $query3_stmt->execute()) {
             http_response_code(200);

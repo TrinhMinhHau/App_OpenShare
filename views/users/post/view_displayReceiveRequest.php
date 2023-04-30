@@ -48,11 +48,38 @@ curl_close($curl);
 ?>
 <!--Profile Page-->
 <div class="profile-container">
+    <?php if (isset($_SESSION['give_Error'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['give_Error'];
+            unset($_SESSION['give_Error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
+    <?php if (isset($_SESSION['give_success'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['give_success'];
+            unset($_SESSION['give_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
     <?php if (isset($_SESSION['requestApprove_success'])) {
     ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= $_SESSION['requestApprove_success'];
             unset($_SESSION['requestApprove_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
+    <?php if (isset($_SESSION['requestApprove_error'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['requestApprove_error'];
+            unset($_SESSION['requestApprove_error']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php
@@ -219,7 +246,9 @@ curl_close($curl);
                                     } elseif ($data1[$i]['status'] == 2) {
                                         echo "Từ chối";
                                     } else if ($data1[$i]['status'] == 3) {
-                                        echo "Đã nhận";
+                                        echo "Đã cho thành công";
+                                    } else if ($data1[$i]['status'] == 4) {
+                                        echo "Đã cho thất bại";
                                     }
                                     ?></p>
                             </div>
@@ -297,7 +326,7 @@ curl_close($curl);
                             <div>
                                 <button class=" btn btn-primary" data-bs-toggle="modal" data-bs-target="#chothanhcong<?= $data1[$i]['idUserRequest'] ?>">Cho thành công</button>
 
-                                <div class="modal fade" id="tuchoi<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                <div class="modal fade" id="chothanhcong<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                                     <div class="modal-dialog modal-lg ">
                                         <!-- modal-xl -->
                                         <div class="modal-content">
@@ -305,7 +334,7 @@ curl_close($curl);
                                                 <h5 class="modal-title" id="Label_Edit">Cho thành công</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="./view_detailsuccess.php" method="post">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
 
@@ -315,7 +344,7 @@ curl_close($curl);
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" name="successRequest" class="btn btn-danger">Từ chối</button>
+                                                    <button type="submit" name="successGive" class="btn btn-primary">Xác nhận</button>
                                                 </div>
                                             </form>
 
@@ -326,7 +355,7 @@ curl_close($curl);
                                 </div>
                                 <button class=" btn btn-danger" data-bs-toggle="modal" data-bs-target="#chothatbai<?= $data1[$i]['idUserRequest'] ?>">Cho thất bại</button>
 
-                                <div class="modal fade" id="tuchoi<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                <div class="modal fade" id="chothatbai<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                                     <div class="modal-dialog modal-lg ">
                                         <!-- modal-xl -->
                                         <div class="modal-content">
@@ -334,7 +363,7 @@ curl_close($curl);
                                                 <h5 class="modal-title" id="Label_Edit">Cho thất bại</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="./view_detailerror.php" method="post">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
 
@@ -344,7 +373,7 @@ curl_close($curl);
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" name="defeatRequest" class="btn btn-danger">Từ chối</button>
+                                                    <button type="submit" name="errorGive" class="btn btn-danger">Từ chối</button>
                                                 </div>
                                             </form>
 

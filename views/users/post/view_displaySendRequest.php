@@ -57,6 +57,15 @@ curl_close($curl);
         </div>
     <?php
     } ?>
+    <?php if (isset($_SESSION['status_delete_Request'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['status_delete_Request'];
+            unset($_SESSION['status_delete_Request']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
     <div class="page">
 
         <ol class="breadcrumb">
@@ -131,23 +140,26 @@ curl_close($curl);
                                 <p><?php if ($data1[$i]['status'] == 0) {
                                         echo "Đang đợi";
                                     } elseif ($data1[$i]['status'] == 1) {
-                                        echo "Đã duyệt";
+                                        echo "Đã được duyệt";
                                     } elseif ($data1[$i]['status'] == 2) {
-                                        echo "Từ chối";
+                                        echo "Bị Từ chối";
                                     } else if ($data1[$i]['status'] == 3) {
                                         echo "Đã nhận";
+                                    } else if ($data1[$i]['status'] == 4) {
+                                        echo "Từ chối nhận";
                                     }
                                     ?></p>
                             </div>
                         </div>
+
                         <i class="fas fa-ellipsis-v toggle<?= $i ?>" style="cursor:pointer"></i>
                         <div class="menu-child menu<?= $i ?>">
                             <ul class="child">
                                 <li>
 
-                                    <form action="../post/view_deletePost.php" method="post" id="form_delete">
-                                        <a href="#" onclick="document.getElementById('form_delete').submit()">Xoá bài cho</a>
-                                        <input type="hidden" name="deletePost" value="<?= $data1[$i]['idPost'] ?>">
+                                    <form action="../post/view_deleteRequest.php" method="post" id="form_delete<?= $i ?>">
+                                        <a href="#" onclick="document.getElementById('form_delete<?= $i ?>').submit()">Xoá bài cho</a>
+                                        <input type="hidden" name="deleteRequest" value="<?= $data1[$i]['idRequest'] ?>">
                                     </form>
 
                                 </li>
@@ -226,6 +238,42 @@ curl_close($curl);
                                 </div>
 
                             </div>
+                            <?php if ($data1[$i]['status'] == 1 || $data1[$i]['status'] == 3 || $data1[$i]['status'] == 4) : ?>
+                                <div style="cursor:pointer; margin-left: 20px;">
+                                    <div data-bs-toggle="modal" data-bs-target="#response<?php echo $data1[$i]['idPost'] ?>"><img src="../assests/images/icon_response.png"> <small>Yêu cầu được phản hồi </small></div>
+
+                                    <div class=" modal fade" id="response<?php echo $data1[$i]['idPost'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg ">
+                                            <!-- modal-xl -->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="Label_Edit">Yêu cầu phản hồi</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <div class="row mb-3">
+                                                        <label for="message" class="col-md-4 col-lg-3 col-form-label">Tin nhắn phản hồi</label>
+                                                        <div class="col-md-8 col-lg-9">
+                                                            <textarea class="form-control" id="message" name="message" rows="3" disabled><?= $data1[$i]['messageResponse'] ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="dateRequest" class="col-md-4 col-lg-3 col-form-label">Thời gian duyệt yêu cầu</label>
+                                                        <div class="col-md-8 col-lg-9">
+                                                            <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?= $data1[$i]['reviewDay'] ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>

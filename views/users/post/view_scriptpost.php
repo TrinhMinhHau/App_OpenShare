@@ -19,6 +19,7 @@ if (isset($_POST['post'])) {
         }
     }
     $img_noi_encode = json_encode($arr_img);
+    $soluongdocho = $_POST['soluong'];
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idUser' => $id,
@@ -27,6 +28,7 @@ if (isset($_POST['post'])) {
         'address' => $address,
         'photos' => $img_noi_encode,
         'idType' => $idType,
+        'soluongdocho' => $soluongdocho
     );
     // Chuyển dữ liệu sang định dạng JSON
     $json_data = json_encode($data);

@@ -1,19 +1,17 @@
 <?php
 session_start();
 $token = $_SESSION['token'];
-if (isset($_POST['acceptRequest'])) {
+if (isset($_POST['successGive'])) {
     $id = $_POST['idRequest'];
-    $message = $_POST['message'];
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idRequest' => $id,
-        'message' => $message,
     );
     // Chuyển dữ liệu sang định dạng JSON
     $json_data = json_encode($data);
 
     // URL của API
-    $url = 'http://localhost:8000/website_openshare/controllers/users/post/acceptRequest.php';
+    $url = 'http://localhost:8000/website_openshare/controllers/users/post/suscessDetail.php';
 
     // Khởi tạo một session cURL
     $curl = curl_init($url);
@@ -38,16 +36,9 @@ if (isset($_POST['acceptRequest'])) {
         echo 'Có lỗi xảy ra khi gửi yêu cầu PUT đến API';
     } else {
         $response = json_decode($result);
-
-        if ($response[1] === 'accept successfully') {
-            $_SESSION['requestApprove_success'] = 'Duyệt yêu cầu thành công';
-            header('location: ../post/view_displayReceiveRequest.php');
-            exit();
-        } else {
-            $_SESSION['requestApprove_error'] = "Số lượng người cho đã đủ, vui lòng xem lại!!!";
-            header('location: ../post/view_displayReceiveRequest.php');
-            exit();
-        }
+        $_SESSION['give_success'] = 'Cho thành công';
+        header('location: ../post/view_displayReceiveRequest.php');
+        exit();
     }
 
     // Đóng session cURL

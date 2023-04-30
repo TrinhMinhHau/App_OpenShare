@@ -15,23 +15,25 @@ $auth = new AuthUsers($connect, $headers);
 // Validate the token
 $auth_info = $auth->isValid();
 
-// If the token is valid
-//code...
 if ($auth_info['success']) {
-    $itemPost = new Post($connect);
     $data = json_decode(file_get_contents("php://input"));
-    $itemPost->title = $data->title;
-    $itemPost->description = $data->description;
-    $itemPost->address = $data->address;
-    $itemPost->photos = $data->photos;
-    $itemPost->idType = $data->idType;
-    $itemPost->idUser = $data->idUser;
-    $itemPost->soluongdocho = $data->soluongdocho;
+    $Item = new Post($connect);
+    $display = $Item->displayTop10();
+    $num = $display->rowCount();
 
-    if ($itemPost->addItem()) {
-        echo json_encode(array('message', 'ItemType is Inserted'));
-    } else {
-        echo json_encode(array('message', 'ItemType is not Inserted'));
+    if ($num > 0) {
+        $question_array = [];
+        $question_array['data'] = [];
+        while ($row = $display->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $ManagerType_item = array(
+                'name' => $name,
+                'SoluongdochoTC' =>  $SoluongdochoTC,
+                'photoURL' => $photoURL,
+            );
+            array_push($question_array['data'], $ManagerType_item);
+        }
+        echo json_encode($question_array);
     }
 } else {
     // Return error response if the token is invalid

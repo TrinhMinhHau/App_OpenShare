@@ -2,22 +2,22 @@
 session_start();
 $token = $_SESSION['token'];
 
-if (isset($_POST['deletePost'])) {
-    $id = $_POST['deletePost'];
+if (isset($_POST['deleteRequest'])) {
+    $id = $_POST['deleteRequest'];
 } else {
 }
 var_dump($id);
 
 // Dữ liệu của câu hỏi cần cập nhật
 $data = array(
-    'idPost' => $id,
+    'idRequest' => $id,
 );
 
 // Chuyển dữ liệu sang định dạng JSON
 $json_data = json_encode($data);
 
 // URL của API
-$url = 'http://localhost:8000/website_openshare/controllers/users/post/delete.php';
+$url = 'http://localhost:8000/website_openshare/controllers/users/post/deleteRequest.php';
 
 // Khởi tạo một session cURL
 $curl = curl_init($url);
@@ -42,8 +42,8 @@ if ($result === false) {
     $response = json_decode($result, true);
     var_dump($response);
     if ($response[1] === 'ItemType is Inserted') {
-        $_SESSION['status_delete_post'] = "Xóa bài cho thành công";
-        header('location: ../quanlytaikhoan/view_profile.php');
+        $_SESSION['status_delete_Request'] = "Xóa yêu cầu thành công";
+        header('location: ./view_displaySendRequest.php');
         exit();
     } else {
     }

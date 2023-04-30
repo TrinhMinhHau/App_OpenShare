@@ -7,7 +7,7 @@
 <?php
 
 $token = $_SESSION['token'];
-$idUser = $result['user']['idUser'];
+$idUser = $_GET['idUser'];
 $data = array(
     'id_Userget' => $idUser
 );
@@ -48,70 +48,16 @@ curl_close($curl);
 ?>
 <!--Profile Page-->
 <div class="profile-container">
-    <?php if (isset($_SESSION['post_success'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['post_success'];
-            unset($_SESSION['post_success']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php
-    } ?>
-    <?php if (isset($_SESSION['status_delete_post'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['status_delete_post'];
-            unset($_SESSION['status_delete_post']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php
-    } ?>
-    <?php if (isset($_SESSION['status_delete'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['status_delete'];
-            unset($_SESSION['status_delete']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php
-    } ?>
-    <?php if (isset($_SESSION['status_success'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['status_success'];
-            unset($_SESSION['status_success']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php
-    } ?>
-    <?php if (isset($_SESSION['status_error'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['status_error'];
-            unset($_SESSION['status_error']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php
-    } ?>
-    <?php if (isset($_SESSION['capnhat'])) {
-    ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $_SESSION['capnhat'];
-            unset($_SESSION['capnhat']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php
-    } ?>
     <div class="profile-details">
         <div class="pd-left">
             <div class="pd-row">
-                <img src="<?= $result['user']['photoURL'] ?>" alt="" class="pd-image" />
+                <img src="<?= $data1[0]['photoURL'] ?>" alt="" class="pd-image" />
                 <div>
-                    <h3><?= $result['user']['name'] ?></h3>
+                    <h3><?= $data1[0]['name']  ?></h3>
                     <?php
 
                     $token = $_SESSION['token'];
-                    $idUser = $result['user']['idUser'];
+                    $idUser = $_GET['idUser'];
                     $data = array(
                         'idUser' => $idUser
                     );
@@ -163,68 +109,6 @@ curl_close($curl);
             <div class="profile-intro">
                 <div class="update-info">
                     <h3>Thông tin cơ bản</h3>
-                    <a href="#" class="address_user" data-bs-toggle="modal" data-bs-target="#capnhat" role="button">Cập nhật</a>
-
-                    <div class="modal fade" id="capnhat" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                        <div class="modal-dialog modal-lg ">
-                            <!-- modal-xl -->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="Label_Edit">Cập nhật</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form action="./view_editprofile.php" method="post" enctype="multipart/form-data">
-                                    <div class="modal-body">
-
-                                        <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Ảnh đại diện</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <img src="<?= $result['user']['photoURL'] ?>" alt="Profile" id="img" width="100px" height="100px">
-                                                <input type="hidden" value="<?= $result['user']['photoURL'] ?>" name="img" id="img_onchange">
-                                                <div class="mb-3 pt-2">
-                                                    <label for="formFileMultiple" class="form-label"></label>
-                                                    <input class="form-control" type="file" id="fileToUpload" name="fileToUpload">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="id" value="<?= $result['user']['idUser'] ?> " class=" form-control">
-
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="fullName" type="text" class="form-control" id="fullName" value="<?= $result['user']['name'] ?>">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="phone" type="text" class="form-control" id="Phone" value="<?= $result['user']['phoneNumber'] ?>">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control" id="Email" value="<?= $result['user']['email'] ?>">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                        <button type="submit" name="editprofile" class="btn btn-primary">Lưu thay đổi</button>
-
-                                    </div>
-                                </form>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-
-
                 </div>
                 <hr />
                 <ul>
@@ -243,55 +127,6 @@ curl_close($curl);
                     <!-- <button type="button" class="btn btn-primary btn-sm address_user" data-bs-toggle="modal" data-bs-target="#them">
                         Thêm
                     </button> -->
-                    <a href="#" class="address_user" data-bs-toggle="modal" data-bs-target="#them" role="button">Thêm</a>
-
-                    <div class="modal fade" id="them" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                        <div class="modal-dialog modal-lg ">
-                            <!-- modal-xl -->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="Label_Edit">Thêm</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form action="./view_createAddress.php" method="post">
-                                    <div class="modal-body">
-
-                                        <input type="hidden" name="idUser" id="idPost" value="<?php echo ($result['user']['idUser']) ?>">
-                                        <div class="form-group">
-                                            <div class="container">
-
-                                                <div class="row">
-                                                    <div class="col-md-3"><select name="" id="province" class="form-select"></select></div>
-                                                    <div class="col-md-3"> <select name="" id="district" class=" form-select">
-                                                            <option value="">chọn quận</option>
-                                                        </select></div>
-                                                    <div class="col-md-3">
-                                                        <select name="" id="ward" class="form-select">
-                                                            <option value="">chọn phường</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <input type="text" placeholder="Nhập số nhà" class="input-group p-1" id="street" required>
-
-                                                    </div>
-                                                    <input type="hidden" name="result" id="result" value="" />
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                        <button type="submit" name="createAddress" class="btn btn-primary">Thêm</button>
-
-                                    </div>
-                                </form>
-
-
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
                 <hr />
                 <ul>
@@ -349,38 +184,6 @@ curl_close($curl);
                             <li>
                                 <img src="../assests/images/profile-location.png" alt="" /><?= $data2[$i]['address'] ?>
 
-                                <a href="#" class="address_user" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data2[$i]['idAdress']) ?>" role="button">xóa</a>
-
-                                <div class="modal fade" id="ModalDelete<?php echo ($data2[$i]['idAdress']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg ">
-                                        <!-- modal-xl -->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="Label_Edit">Xóa</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form action="./view_deleteAddress.php" method="post">
-                                                <div class="modal-body">
-
-
-                                                    <input type="hidden" name="idAddress" id="idPost" value="<?php echo ($data2[$i]['idAdress']) ?>">
-
-                                                    <div class="form-group">
-                                                        <label>Bạn có chắc chắn xóa địa chỉ <span class="text-danger"><?= $data2[$i]['address'] ?></span> hay không?</label>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" name="deleteAddress" class="btn btn-danger">Xóa</button>
-
-                                                </div>
-                                            </form>
-
-
-                                        </div>
-
-                                    </div>
-                                </div>
                             </li>
                     <?php }
                     } ?>

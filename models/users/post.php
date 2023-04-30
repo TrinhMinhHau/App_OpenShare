@@ -20,24 +20,53 @@ class Post
     public $nameType;
     public $id_Userget;
     public $message;
-
+    public $idRequest;
+    public $soluongdocho;
+    public $reviewDay;
+    public $messageResponse;
+    public $SoluongdochoTC;
     // connect db
     public function __construct($db)
     {
         $this->conn = $db;
     }
 
+    public function numberItemGiveSuccess()
+    {
+        $query = "SELECT count('idPost') as SoluongdochoTC
+        FROM baiviet bv
+        INNER JOIN yeucau yc ON bv.idPost = yc.idPost
+        WHERE bv.idUser =:idUser and yc.status=3";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
 
+    public function displayTop10()
+    {
+        $query = "SELECT bv.idUser, COUNT(bv.idPost) as SoluongdochoTC, u.name,u.photoURL 
+        FROM baiviet bv 
+        INNER JOIN yeucau yc ON bv.idPost = yc.idPost
+        INNER JOIN user u ON bv.idUser = u.idUser
+        WHERE yc.status = 3 
+        GROUP BY bv.idUser
+        LIMIT 10";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
 
     public function displayRequest()
     {
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
-            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay
             FROM yeucau yc 
             JOIN baiviet p ON yc.idPost = p.idPost
             JOIN user u ON u.idUser= p.idUser
             JOIN doanhmuc d ON d.idType = p.idType
-            WHERE yc.idUserRequest =:idUser";
+            WHERE yc.idUserRequest =:idUser
+            ORDER BY yc.idRequest desc ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
         $stmt->execute();
@@ -52,7 +81,8 @@ class Post
         JOIN baiviet p ON yc.idPost = p.idPost
         JOIN user u ON u.idUser= yc.idUserRequest
         JOIN doanhmuc d ON d.idType = p.idType
-        WHERE p.idUser =:idUser";
+        WHERE p.idUser =:idUser
+        ORDER BY yc.idRequest desc";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
         $stmt->execute();
@@ -108,7 +138,7 @@ class Post
     public function displayItem()
     {
 
-        $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and statusPost=0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType order by baiviet.idPost desc";
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and soluongdocho>0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType order by baiviet.idPost desc";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -137,6 +167,20 @@ class Post
         $query_2 = "DELETE FROM baiviet WHERE idPost=:idPost";
         $stmt2 = $this->conn->prepare($query_2);
         $stmt2->bindParam(':idPost', $this->idPost, PDO::PARAM_INT);
+
+        if ($stmt2->execute()) {
+            return true;
+        } else {
+            echo "Xóa thất bại";
+            return false;
+        }
+    }
+
+    public function deleteRequest()
+    {
+        $query_2 = "DELETE FROM yeucau WHERE idRequest=:idRequest";
+        $stmt2 = $this->conn->prepare($query_2);
+        $stmt2->bindParam(':idRequest', $this->idRequest, PDO::PARAM_INT);
 
         if ($stmt2->execute()) {
             return true;

@@ -97,10 +97,10 @@ nav {
   font-size: 15px;
   line-height: 0 !important;
 }
-.online {
+/* .online {
   position: relative;
-}
-.online::after {
+} */
+/* .online::after {
   content: "";
   width: 7px;
   height: 7px;
@@ -110,7 +110,7 @@ nav {
   position: absolute;
   top: 0;
   right: 0;
-}
+} */
 .container1 {
   display: flex;
   justify-content: space-between;
@@ -235,20 +235,26 @@ nav {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 .online-list .online img {
-  width: 40px;
+  width: 50px;
   border-radius: 50%;
 }
 .online-list .online {
-  width: 40px;
-  border-radius: 50%;
-  margin-right: 5px;
+  display: flex;
 }
-.online-list .online::after {
+.online-list .online p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.TopDongGop p {
+  margin-top: 10px;
+}
+/* .online-list .online::after {
   top: unset;
   bottom: 0;
-}
+} */
 .story-gallery {
   display: flex;
   justify-content: center;
