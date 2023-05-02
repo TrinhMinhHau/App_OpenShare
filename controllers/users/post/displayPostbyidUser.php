@@ -42,6 +42,8 @@ if ($auth_info['success']) {
                 'name' => $name,
                 'photoURL' => $photoURL,
                 'nameType' => $nameType,
+                'soluongdocho' => $soluongdocho,
+
             );
             array_push($question_array['data'], $ManagerType_item);
         }

@@ -43,6 +43,8 @@ if ($auth_info['success']) {
         'name' => $name,
         'photoURL' => $photoURL,
         'nameType' => $nameType,
+        'reviewDay' => $reviewDay,
+        'messageResponse' => $messageResponse,
       );
       array_push($question_array['data'], $ManagerType_item);
     }

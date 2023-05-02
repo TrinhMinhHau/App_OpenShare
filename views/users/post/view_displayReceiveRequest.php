@@ -47,12 +47,39 @@ if (curl_error($curl)) {
 curl_close($curl);
 ?>
 <!--Profile Page-->
-<div class="profile-container">
+<div class="profile-container1">
+    <?php if (isset($_SESSION['give_Error'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['give_Error'];
+            unset($_SESSION['give_Error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
+    <?php if (isset($_SESSION['give_success'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['give_success'];
+            unset($_SESSION['give_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
     <?php if (isset($_SESSION['requestApprove_success'])) {
     ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= $_SESSION['requestApprove_success'];
             unset($_SESSION['requestApprove_success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+    } ?>
+    <?php if (isset($_SESSION['requestApprove_error'])) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['requestApprove_error'];
+            unset($_SESSION['requestApprove_error']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php
@@ -81,26 +108,55 @@ curl_close($curl);
                 <img src="<?= $result['user']['photoURL'] ?>" alt="" class="pd-image" />
                 <div>
                     <h3><?= $result['user']['name'] ?></h3>
-                    <p>120 Friends - 20 Mutual</p>
-                    <img src="../assests/images/member-1.png" alt="" />
-                    <img src="../assests/images/member-2.png" alt="" />
-                    <img src="../assests/images/member-3.png" alt="" />
-                    <img src="../assests/images/member-4.png" alt="" />
-                    <img src="../assests/images/member-5.png" alt="" />
-                    <img src="../assests/images/member-6.png" alt="" />
+                    <?php
+
+                    $token = $_SESSION['token'];
+                    $idUser = $result['user']['idUser'];
+                    $data = array(
+                        'idUser' => $idUser
+                    );
+                    $json_data = json_encode($data);
+
+                    $url = 'http://localhost:8000/website_openshare/controllers/users/post/displaynumberItemGiveSuccess.php';
+
+
+                    // Khởi tạo một cURL session
+                    $curl = curl_init();
+
+                    // Thiết lập các tùy chọn cho cURL session
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $url,
+                        CURLOPT_POSTFIELDS => $json_data,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            "Accept: application/json",
+                            "Authorization: Bearer {$token}",
+                        )
+                    ));
+
+                    // Thực hiện yêu cầu cURL và lấy kết quả trả về
+                    $response = curl_exec($curl);
+
+                    // Kiểm tra nếu có lỗi xảy ra
+                    if (curl_error($curl)) {
+                        echo 'Error: ' . curl_error($curl);
+                    } else {
+                        // Xử lý kết quả trả về
+                        $data = json_decode($response, true);
+                        $data5 = $data ? $data['data'] : null;
+                    }
+
+                    // Đóng cURL session
+                    curl_close($curl);
+                    ?>
+                    <p style="margin-left: 5px; font-size:15px;" class="text-bold">Đã Cho <span class="text-success"><?php if ($data5 == null) echo 0;
+                                                                                                                        else echo $data5[0]['SoluongdochoTC'] ?></span></p>
+
                 </div>
             </div>
         </div>
-        <div class="pd-right">
-            <button type="button">
-                <img src="../assests/images/add-friends.png" alt="" /> Friends
-            </button>
-            <button type="button">
-                <img src="../assests/images/message.png" alt="" />Message
-            </button>
-            <br />
-            <a href=""><img src="../assests/images/more.png" alt="" /></a>
-        </div>
+
     </div>
 
 
@@ -172,21 +228,9 @@ curl_close($curl);
                             // var_dump($arr_img);
                             ?>
                         </div>
+                        <hr>
                         <div class="post-row">
-                            <div class="activity-icons">
-                                <div>
-                                    <img src="../assests/images/like-blue.png" alt="" />
-                                    120
-                                </div>
-                                <div>
-                                    <img src="../assests/images/comments.png" alt="" />
-                                    45
-                                </div>
-                                <div>
-                                    <img src="../assests/images/share.png" alt="" />
-                                    20
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>
@@ -219,7 +263,9 @@ curl_close($curl);
                                     } elseif ($data1[$i]['status'] == 2) {
                                         echo "Từ chối";
                                     } else if ($data1[$i]['status'] == 3) {
-                                        echo "Đã nhận";
+                                        echo "Đã cho thành công";
+                                    } else if ($data1[$i]['status'] == 4) {
+                                        echo "Đã cho thất bại";
                                     }
                                     ?></p>
                             </div>
@@ -297,7 +343,7 @@ curl_close($curl);
                             <div>
                                 <button class=" btn btn-primary" data-bs-toggle="modal" data-bs-target="#chothanhcong<?= $data1[$i]['idUserRequest'] ?>">Cho thành công</button>
 
-                                <div class="modal fade" id="tuchoi<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                <div class="modal fade" id="chothanhcong<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                                     <div class="modal-dialog modal-lg ">
                                         <!-- modal-xl -->
                                         <div class="modal-content">
@@ -305,7 +351,7 @@ curl_close($curl);
                                                 <h5 class="modal-title" id="Label_Edit">Cho thành công</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="./view_detailsuccess.php" method="post">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
 
@@ -315,7 +361,7 @@ curl_close($curl);
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" name="successRequest" class="btn btn-danger">Từ chối</button>
+                                                    <button type="submit" name="successGive" class="btn btn-primary">Xác nhận</button>
                                                 </div>
                                             </form>
 
@@ -326,7 +372,7 @@ curl_close($curl);
                                 </div>
                                 <button class=" btn btn-danger" data-bs-toggle="modal" data-bs-target="#chothatbai<?= $data1[$i]['idUserRequest'] ?>">Cho thất bại</button>
 
-                                <div class="modal fade" id="tuchoi<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                                <div class="modal fade" id="chothatbai<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
                                     <div class="modal-dialog modal-lg ">
                                         <!-- modal-xl -->
                                         <div class="modal-content">
@@ -334,7 +380,7 @@ curl_close($curl);
                                                 <h5 class="modal-title" id="Label_Edit">Cho thất bại</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="./view_detailerror.php" method="post">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
 
@@ -344,7 +390,7 @@ curl_close($curl);
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" name="defeatRequest" class="btn btn-danger">Từ chối</button>
+                                                    <button type="submit" name="errorGive" class="btn btn-danger">Từ chối</button>
                                                 </div>
                                             </form>
 

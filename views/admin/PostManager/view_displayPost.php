@@ -84,6 +84,7 @@ curl_close($curl);
                                     <th scope="col">Mã số</th>
                                     <th scope="col">Tên người đăng</th>
                                     <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Tên loại</th>
                                     <th scope="col">Ngày đăng</th>
                                     <th scope="col">Mã NV duyệt</th>
                                     <th colspan=2>Chức năng</th>
@@ -99,6 +100,7 @@ curl_close($curl);
                                             <td><?= ($data1[$i]['idPost']) ?></td>
                                             <td><?= ($data1[$i]['name']) ?></td>
                                             <td><?= ($data1[$i]['title']) ?></td>
+                                            <td><?= ($data1[$i]['nameType']) ?></td>
                                             <td><?= ($data1[$i]['postDate']) ?></td>
                                             <td><?= ($data1[$i]['idStaffApprove']) ?></td>
 
@@ -135,8 +137,8 @@ curl_close($curl);
                                                                                     </div>
                                                                                     </br>
                                                                                     <div class="media-body">
-                                                                                        <h3 class="media-title font-weight-semibold">
-                                                                                            <p class="text-primary">
+                                                                                        <h3 class="media-title ">
+                                                                                            <p class="text-black">
                                                                                                 Địa chỉ: <?= ($data1[$i]['address']) ?>
                                                                                             </p>
                                                                                         </h3>
@@ -172,13 +174,13 @@ curl_close($curl);
 
                                                 <!-- END-DETAIL  -->
 
-                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idPost']) ?>">
+                                                <!-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idPost']) ?>">
                                                     <i class="bi bi-trash-fill"></i> Xóa
                                                 </button>
                                                 <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idPost']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg ">
-                                                        <!-- modal-xl -->
-                                                        <div class="modal-content">
+                                                    <div class="modal-dialog modal-lg "> -->
+                                                <!-- modal-xl -->
+                                                <!-- <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="Label_Edit">Xóa</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -204,7 +206,7 @@ curl_close($curl);
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </div> -->
                     </div>
 
                     </td>

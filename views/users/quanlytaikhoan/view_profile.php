@@ -108,25 +108,53 @@ curl_close($curl);
                 <img src="<?= $result['user']['photoURL'] ?>" alt="" class="pd-image" />
                 <div>
                     <h3><?= $result['user']['name'] ?></h3>
-                    <p>120 Friends - 20 Mutual</p>
-                    <img src="../assests/images/member-1.png" alt="" />
-                    <img src="../assests/images/member-2.png" alt="" />
-                    <img src="../assests/images/member-3.png" alt="" />
-                    <img src="../assests/images/member-4.png" alt="" />
-                    <img src="../assests/images/member-5.png" alt="" />
-                    <img src="../assests/images/member-6.png" alt="" />
+                    <?php
+
+                    $token = $_SESSION['token'];
+                    $idUser = $result['user']['idUser'];
+                    $data = array(
+                        'idUser' => $idUser
+                    );
+                    $json_data = json_encode($data);
+
+                    $url = 'http://localhost:8000/website_openshare/controllers/users/post/displaynumberItemGiveSuccess.php';
+
+
+                    // Khởi tạo một cURL session
+                    $curl = curl_init();
+
+                    // Thiết lập các tùy chọn cho cURL session
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $url,
+                        CURLOPT_POSTFIELDS => $json_data,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            "Accept: application/json",
+                            "Authorization: Bearer {$token}",
+                        )
+                    ));
+
+                    // Thực hiện yêu cầu cURL và lấy kết quả trả về
+                    $response = curl_exec($curl);
+
+                    // Kiểm tra nếu có lỗi xảy ra
+                    if (curl_error($curl)) {
+                        echo 'Error: ' . curl_error($curl);
+                    } else {
+                        // Xử lý kết quả trả về
+                        $data = json_decode($response, true);
+                        $data5 = $data ? $data['data'] : null;
+                    }
+
+                    // Đóng cURL session
+                    curl_close($curl);
+                    ?>
+                    <p style="margin-left: 5px; font-size:15px;" class="text-bold">Đã Cho <span class="text-success"><?php if ($data5 == null) echo 0;
+                                                                                                                        else echo $data5[0]['SoluongdochoTC'] ?></span></p>
+
                 </div>
             </div>
-        </div>
-        <div class="pd-right">
-            <button type="button">
-                <img src="../assests/images/add-friends.png" alt="" /> Friends
-            </button>
-            <button type="button">
-                <img src="../assests/images/message.png" alt="" />Message
-            </button>
-            <br />
-            <a href=""><img src="../assests/images/more.png" alt="" /></a>
         </div>
     </div>
 
@@ -395,37 +423,34 @@ curl_close($curl);
                                 <div class="status_post">
                                     <p><?php if ($data1[$i]['isShow'] == 0) {
                                             echo "Đang đợi duyệt";
-                                        } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 0) {
+                                        } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['soluongdocho'] > 0) {
                                             echo "Đang cho";
-                                        } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['statusPost'] == 1) {
-                                            echo "Duyệt thàng công";
+                                        } elseif ($data1[$i]['isShow'] == 1 && $data1[$i]['soluongdocho'] == 0) {
+                                            echo "Cho thành công";
                                         } else if ($data1[$i]['isShow'] == 2) {
                                             echo "Bị từ chối";
-                                        } else {
-                                            echo "Cho thành công";
                                         }
                                         ?></p>
                                 </div>
                             </div>
-                            <i class="fas fa-ellipsis-v toggle<?= $i ?>" style="cursor:pointer"></i>
-                            <div class="menu-child menu<?= $i ?>">
-                                <ul class="child">
-                                    <li>
-
-                                        <form action="../post/view_deletePost.php" method="post" id="form_delete">
-                                            <a href="#" onclick="document.getElementById('form_delete').submit()">Xoá bài cho</a>
-                                            <input type="hidden" name="deletePost" value="<?= $data1[$i]['idPost'] ?>">
-                                        </form>
-
-                                    </li>
-                                </ul>
-                            </div>
-                            <script>
-                                document.querySelector('.toggle<?= $i ?>').addEventListener('click', function() {
-                                    document.querySelector('.menu<?= $i ?>').classList.toggle('active');
-                                });
-                            </script>
-
+                            <?php if ($data1[$i]['isShow'] == 0) : ?>
+                                <i class="fas fa-ellipsis-v toggle<?= $i ?>" style="cursor:pointer"></i>
+                                <div class="menu-child menu<?= $i ?>">
+                                    <ul class="child">
+                                        <li>
+                                            <form action="../post/view_deletePost.php" method="post" id="form_delete<?= $i ?>">
+                                                <a href="#" onclick="document.getElementById('form_delete<?= $i ?>').submit()">Xoá bài cho</a>
+                                                <input type="hidden" name="deletePost" value="<?= $data1[$i]['idPost'] ?>">
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <script>
+                                    document.querySelector('.toggle<?= $i ?>').addEventListener('click', function() {
+                                        document.querySelector('.menu<?= $i ?>').classList.toggle('active');
+                                    });
+                                </script>
+                            <?php endif; ?>
                         </div>
                         <p class="post-text">
                             <?= $data1[$i]['description'] ?>
@@ -442,24 +467,9 @@ curl_close($curl);
                             // var_dump($arr_img);
                             ?>
                         </div>
+                        <hr>
                         <div class="post-row">
-                            <div class="activity-icons">
-                                <div>
-                                    <img src="../assests/images/like-blue.png" alt="" />
-                                    120
-                                </div>
-                                <div>
-                                    <img src="../assests/images/comments.png" alt="" />
-                                    45
-                                </div>
-                                <div>
-                                    <img src="../assests/images/share.png" alt="" />
-                                    20
-                                </div>
-                            </div>
-                            <div class="post-profile-icon">
-                                <img src="../assests/images/profile-pic.png" alt="" />
-                            </div>
+
                         </div>
                     </div>
                     <script>

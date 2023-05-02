@@ -15,6 +15,7 @@ class PostManager
     public $idUser;
     public $idType;
     public $name;
+    public $nameType;
     // connect db
     public function __construct($db)
     {
@@ -22,14 +23,14 @@ class PostManager
     }
     public function displayunapprovPost()
     {
-        $query = "SELECT *FROM baiviet,user where isShow=0 and baiviet.idUser = user.idUser ORDER BY idPost DESC";
+        $query = "SELECT * FROM baiviet,user,doanhmuc where isShow=0 and baiviet.idUser = user.idUser and baiviet.idType=doanhmuc.idType ORDER BY idPost DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
     public function displayapprovPost()
     {
-        $query = "SELECT *FROM baiviet,user where isShow=1 and baiviet.idUser = user.idUser ORDER BY idPost DESC";
+        $query = "SELECT *FROM baiviet,user,doanhmuc where isShow=1 and baiviet.idUser = user.idUser and baiviet.idType=doanhmuc.idType ORDER BY idPost DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

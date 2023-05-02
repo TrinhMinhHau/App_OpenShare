@@ -75,6 +75,7 @@ curl_close($curl);
                                     <th scope="col">Mã số</th>
                                     <th scope="col">Tên người đăng</th>
                                     <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Tên loại</th>
                                     <th scope="col">Ngày đăng</th>
                                     <th scope="col">Chức năng</th>
 
@@ -91,6 +92,7 @@ curl_close($curl);
                                             <td><?= ($data1[$i]['idPost']) ?></td>
                                             <td><?= ($data1[$i]['name']) ?></td>
                                             <td><?= ($data1[$i]['title']) ?></td>
+                                            <td><?= ($data1[$i]['nameType']) ?></td>
                                             <td><?= ($data1[$i]['postDate']) ?></td>
                                             <td>
                                                 <!-- DETAIL  -->
@@ -125,8 +127,8 @@ curl_close($curl);
                                                                                     </div>
                                                                                     </br>
                                                                                     <div class="media-body">
-                                                                                        <h3 class="media-title font-weight-semibold">
-                                                                                            <p class="text-primary">
+                                                                                        <h3 class="media-title">
+                                                                                            <p class="text-black">
                                                                                                 Địa chỉ: <?= ($data1[$i]['address']) ?>
                                                                                             </p>
                                                                                         </h3>

@@ -58,15 +58,6 @@
                 <li>
                     <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" />
                 </li>
-
-                <li><a href="#"> Thú cưng</a></li>
-                <li><a href="#"> Thú cưng</a></li>
-                <li><a href="#"> Thú cưng</a></li>
-                <li><a href="#"> Thú cưng</a></li>
-
-
-
-
             </ul>
             <!-- settings-notice -->
             <div class="settings-notice">
@@ -118,10 +109,15 @@
             </div>
         </div>
         <div class="nav-right">
-            <div class="search-box">
-                <img src="../assests/images/search.png" alt="" srcset="" />
-                <input type="text" placeholder="Search" />
-            </div>
+            <form action="" method="get">
+                <div class="search-box">
+                    <img src="../assests/images/search.png" alt="" srcset="" />
+                    <input type="text" placeholder="Tìm theo tỉnh, từ khóa trong mô tả" name="keyword" value="<?php if (isset($_GET['keyword'])) echo $_GET['keyword'];
+                                                                                                                else ''  ?>" />
+                    <input type="hidden" name="idType" value="<?php if (isset($_GET['idType'])) echo $_GET['idType'];
+                                                                else ''  ?>">
+                </div>
+            </form>
             <div class="nav-user-icon online" id="userClick">
                 <img src="<?= $result['user']['photoURL'] ?>" alt="" />
             </div>
@@ -136,25 +132,25 @@
                     <img src="<?= $result['user']['photoURL'] ?>" alt="" />
                     <div>
                         <p><?= $result['user']['name'] ?></p>
-                        <a href="../quanlytaikhoan/view_profile.php">See your profile</a>
+                        <a href="../quanlytaikhoan/view_profile.php">Xem trang cá nhân</a>
                     </div>
                 </div>
                 <hr />
                 <div class="user-profile">
                     <img src="../assests/images/feedback.png" alt="" />
                     <div>
-                        <p>Give Feedback</p>
-                        <a href="#">Help us to improve the new design</a>
+                        <p>Gửi phản hồi</p>
+                        <a href="#">Giúp chúng tôi cải thiện Website</a>
                     </div>
                 </div>
                 <hr />
                 <div class="setting-links">
                     <img src="../assests/images/changepassword.png" class="settings-icon" alt="" />
-                    <a href="../quanlytaikhoan/view_changepassword.php">Đổi mật khẩu<img src="../assests/images/arrow.png" width="10px" alt="" /></a>
+                    <a href="../quanlytaikhoan/view_changepassword.php">Đổi mật khẩu</a>
                 </div>
                 <div class="setting-links">
                     <img src="../assests/images/logout.png" class="settings-icon" alt="" />
-                    <a href="../auth/view_logout.php">Logout<img src="../assests/images/arrow.png" width="10px" alt="" /></a>
+                    <a href="../auth/view_logout.php">Đăng Xuất</a>
                 </div>
             </div>
         </div>

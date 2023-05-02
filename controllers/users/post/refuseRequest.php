@@ -38,7 +38,7 @@ if ($auth_info['success']) {
         // $image_mime = "data:image/" . strtolower(pathinfo($image_data, PATHINFO_EXTENSION)) . ";base64," . $image_data;
 
         // update user record in database
-        $update_query = "UPDATE yeucau SET status=2 WHERE idRequest=:idRequest";
+        $update_query = "UPDATE yeucau SET status=2,reviewDay = now()   WHERE idRequest=:idRequest";
         $update_stmt = $conn->prepare($update_query);
 
         // bind parameters to statement

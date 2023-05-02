@@ -35,6 +35,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <label for="soluongdocho" class="col-md-4 col-lg-3 col-form-label">Số lượng</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input class="form-control" type="number" name="soluong" id="soluong" min=1 placeholder="Nhập số lượng đồ cho">
+                                </div>
+                            </div>
                             <input type="hidden" name="id" value="<?= $result['user']['idUser'] ?> " class=" form-control">
 
                             <div class="row mb-3">

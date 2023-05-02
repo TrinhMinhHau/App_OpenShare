@@ -4,21 +4,23 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../../../configs/database.php';
 
-require __DIR__ . '../../../AuthMiddleWare.php';
-include('../../../models/admin/PostManager.php');
+require __DIR__ . '../../../AuthMiddleWareUsers.php';
+include('../../../models/users/post.php');
 
 $db = new db();
 $connect = $db->connect();
 $headers = getallheaders();
-$auth = new Auth($connect, $headers);
+$auth = new AuthUsers($connect, $headers);
 
 // Validate the token
 $auth_info = $auth->isValid();
 
-// If the token is valid
 if ($auth_info['success']) {
-    $Item = new PostManager($connect);
-    $display = $Item->displayapprovPost();
+    $Item = new Post($connect);
+    // $data = json_decode(file_get_contents("php://input"));
+    // $Item->offset = $data->offset;
+    // $Item->limit = $data->limit;
+    $display = $Item->loadMoreApi();
     $num = $display->rowCount();
 
     if ($num > 0) {
@@ -28,7 +30,6 @@ if ($auth_info['success']) {
             extract($row);
             $ManagerType_item = array(
                 'idPost' =>  $idPost,
-                'idUser' =>  $idUser,
                 'title' => $title,
                 'description' => $description,
                 'isShow' => $isShow,
@@ -36,11 +37,12 @@ if ($auth_info['success']) {
                 'address' => $address,
                 'idStaffApprove' => $idStaffApprove,
                 'photos' => $photos,
+                'idUser' => $idUser,
                 'idType' => $idType,
+                'statusPost' => $statusPost,
                 'name' => $name,
+                'photoURL' => $photoURL,
                 'nameType' => $nameType,
-
-
             );
             array_push($question_array['data'], $ManagerType_item);
         }
