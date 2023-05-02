@@ -47,7 +47,7 @@ if (curl_error($curl)) {
 curl_close($curl);
 ?>
 <!--Profile Page-->
-<div class="profile-container">
+<div class="profile-container1">
     <?php if (isset($_SESSION['give_Error'])) {
     ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">

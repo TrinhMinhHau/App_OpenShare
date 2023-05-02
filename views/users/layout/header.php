@@ -58,15 +58,6 @@
                 <li>
                     <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" />
                 </li>
-
-                <li><a href="#"> Thú cưng</a></li>
-                <li><a href="#"> Thú cưng</a></li>
-                <li><a href="#"> Thú cưng</a></li>
-                <li><a href="#"> Thú cưng</a></li>
-
-
-
-
             </ul>
             <!-- settings-notice -->
             <div class="settings-notice">
@@ -118,10 +109,15 @@
             </div>
         </div>
         <div class="nav-right">
-            <div class="search-box">
-                <img src="../assests/images/search.png" alt="" srcset="" />
-                <input type="text" placeholder="Search" />
-            </div>
+            <form action="" method="get">
+                <div class="search-box">
+                    <img src="../assests/images/search.png" alt="" srcset="" />
+                    <input type="text" placeholder="Tìm theo tỉnh, từ khóa trong mô tả" name="keyword" value="<?php if (isset($_GET['keyword'])) echo $_GET['keyword'];
+                                                                                                                else ''  ?>" />
+                    <input type="hidden" name="idType" value="<?php if (isset($_GET['idType'])) echo $_GET['idType'];
+                                                                else ''  ?>">
+                </div>
+            </form>
             <div class="nav-user-icon online" id="userClick">
                 <img src="<?= $result['user']['photoURL'] ?>" alt="" />
             </div>

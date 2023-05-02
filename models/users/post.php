@@ -146,17 +146,79 @@ class Post
             return false;
         }
     }
-
-
-    public function displayItem()
+    public function search()
     {
 
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+        $query = "SELECT * FROM `baiviet`, user, doanhmuc
+        WHERE isShow=1 
+        AND soluongdocho>0 
+        AND user.idUser = baiviet.idUser 
+        AND baiviet.idType=doanhmuc.idType 
+        AND (baiviet.address LIKE :keyword OR doanhmuc.nameType LIKE :keyword OR baiviet.description LIKE :keyword)
+        ORDER BY baiviet.idPost DESC
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':keyword', '%' . $keyword  . '%', PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function search_Type()
+    {
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+        $idType = isset($_GET['idType']) ? $_GET['idType'] : 7;
+        $query = "SELECT * FROM `baiviet`, user, doanhmuc
+        WHERE isShow=1 
+        AND soluongdocho>0 
+        AND user.idUser = baiviet.idUser 
+        AND baiviet.idType=doanhmuc.idType and doanhmuc.idType=:idType 
+        AND (baiviet.address LIKE :keyword OR doanhmuc.nameType LIKE :keyword OR baiviet.description LIKE :keyword)
+        ORDER BY baiviet.idPost DESC
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idType', $idType, PDO::PARAM_INT);
+
+        $stmt->bindValue(':keyword', '%' . $keyword  . '%', PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function search_page()
+    {
+
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+        $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+        $limit = isset($_GET['limit']) ? $_GET['limit'] : 5;
+        $query = "SELECT * FROM `baiviet`, user, doanhmuc
+        WHERE isShow=1 
+        AND soluongdocho>0 
+        AND user.idUser = baiviet.idUser 
+        AND baiviet.idType=doanhmuc.idType 
+        AND (baiviet.address LIKE :keyword OR doanhmuc.nameType LIKE :keyword OR baiviet.description LIKE :keyword)
+        ORDER BY baiviet.idPost DESC LIMIT $limit OFFSET $offset
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':keyword', '%' . $keyword  . '%', PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function displayItem()
+    {
         $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and soluongdocho>0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType order by baiviet.idPost desc";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
-
+    public function displayPostbyType()
+    {
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where  isShow=1 and soluongdocho>0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType and doanhmuc.idType=:idType order by baiviet.idPost desc";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idType', $this->idType, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
     public function displayPostbyidUser()
     {
         $query = "SELECT * FROM `baiviet`,user,doanhmuc where user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType and baiviet.idUser =:id_Userget  order by baiviet.idPost desc";
