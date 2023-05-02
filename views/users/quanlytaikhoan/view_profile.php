@@ -150,8 +150,8 @@ curl_close($curl);
                     // Đóng cURL session
                     curl_close($curl);
                     ?>
-                    <p style="margin-left: 5px; font-size:15px">Đã Cho <span class="text-success"><?php if ($data5 == null) echo 0;
-                                                                                                    else echo $data5[0]['SoluongdochoTC'] ?></span></p>
+                    <p style="margin-left: 5px; font-size:15px;" class="text-bold">Đã Cho <span class="text-success"><?php if ($data5 == null) echo 0;
+                                                                                                                        else echo $data5[0]['SoluongdochoTC'] ?></span></p>
 
                 </div>
             </div>
@@ -467,24 +467,9 @@ curl_close($curl);
                             // var_dump($arr_img);
                             ?>
                         </div>
+                        <hr>
                         <div class="post-row">
-                            <div class="activity-icons">
-                                <div>
-                                    <img src="../assests/images/like-blue.png" alt="" />
-                                    120
-                                </div>
-                                <div>
-                                    <img src="../assests/images/comments.png" alt="" />
-                                    45
-                                </div>
-                                <div>
-                                    <img src="../assests/images/share.png" alt="" />
-                                    20
-                                </div>
-                            </div>
-                            <div class="post-profile-icon">
-                                <img src="../assests/images/profile-pic.png" alt="" />
-                            </div>
+
                         </div>
                     </div>
                     <script>

@@ -25,12 +25,25 @@ class Post
     public $reviewDay;
     public $messageResponse;
     public $SoluongdochoTC;
+    // public $offset;
+    // public $limit;
     // connect db
     public function __construct($db)
     {
         $this->conn = $db;
     }
-
+    public function loadMoreApi()
+    {
+        $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+        $limit = isset($_GET['limit']) ? $_GET['limit'] : 5;
+        // Thiết lập các tham số cho truy vấn
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where isShow=1 and soluongdocho>0 and user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType order by baiviet.idPost desc LIMIT $limit OFFSET $offset";
+        $stmt = $this->conn->prepare($query);
+        // $stmt->bindValue(':limit', $this->limit, PDO::PARAM_INT);
+        // $stmt->bindValue(':offset', $this->offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
     public function numberItemGiveSuccess()
     {
         $query = "SELECT count('idPost') as SoluongdochoTC

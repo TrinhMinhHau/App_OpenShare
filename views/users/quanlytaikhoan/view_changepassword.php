@@ -1,7 +1,7 @@
 <?php include('../layout/header.php'); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <!-- <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css"> -->
-<div class="row col-lg-8 border rounded mx-auto mt-5 p-2 shadow-lg">
+<div class="row col-lg-8 border rounded mx-auto mt-5 p-2 shadow-lg bg-white">
     <?php if (isset($_SESSION['cpw_error'])) {
     ?>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
