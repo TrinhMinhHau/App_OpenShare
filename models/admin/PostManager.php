@@ -16,6 +16,7 @@ class PostManager
     public $idType;
     public $name;
     public $nameType;
+    public $photoURL;
     // connect db
     public function __construct($db)
     {
