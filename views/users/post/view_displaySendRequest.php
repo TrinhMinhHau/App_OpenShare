@@ -149,10 +149,10 @@ curl_close($curl);
                 <div class="post-container">
                     <div class="post-row">
                         <div class="user-profile">
-                            <a href="#"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
+                            <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUser'] ?>"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
                             </a>
                             <div>
-                                <a href="#">
+                                <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUser'] ?>">
                                     <p><?= $data1[$i]['name'] ?></p>
                                 </a>
                                 <span><?= $data1[$i]['postDate'] ?></span>
@@ -161,11 +161,11 @@ curl_close($curl);
                                 <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                             </div>
                             <div class="type">
-                                <a href="#">
+                                <a href="../post/view_displayPostWithType.php?idType=<?= $data1[0]['idType'] ?>">
                                     <p><?= $data1[$i]['nameType'] ?></p>
                                 </a>
                             </div>
-                            <div class="status_post">
+                            <div class=" status_post">
                                 <p><?php if ($data1[$i]['status'] == 0) {
                                         echo "Đang yêu cầu";
                                     } elseif ($data1[$i]['status'] == 1) {

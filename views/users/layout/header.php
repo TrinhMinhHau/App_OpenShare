@@ -60,8 +60,66 @@
                 </li>
             </ul>
             <!-- settings-notice -->
-            <div class="settings-notice">
+            <div class="settings-notice " style="overflow: scroll; ">
                 <div class="settings-notice-inner">
+                    <?php
+                    if (isset($_SESSION['token'])) {
+                        $token = $_SESSION['token'];
+                    } else {
+                        header('location: ../auth/view_login.php');
+                    }
+                    $url = "http://localhost:8000/website_openshare/controllers/users/post/getNoticeFromAdmin.php";
+
+                    $curl = curl_init($url);
+                    curl_setopt($curl, CURLOPT_URL, $url);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+                    $headers = array(
+                        "Accept: application/json",
+                        "Authorization: Bearer {$token}",
+                    );
+                    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+                    //for debug only!
+                    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+                    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+                    $resp = curl_exec($curl);
+                    curl_close($curl);
+                    if ($resp) {
+                        $data = json_decode($resp, true);
+                        $data1 = $data ? $data['data'] : null;
+                        // var_dump($result);
+                    }
+                    ?>
+                    <?php if ($data1 == null) : ?>
+                    <?php else : ?>
+
+                        <?php for ($i = 0; $i < count($data1); $i++) { ?>
+                            <?php if ($data1[$i]['user_id'] === $result['user']['idUser']) : ?>
+                                <?php if ($data1[$i]['isSeen'] == 1) : ?>
+                                    <div class="setting-notice isSeen">
+                                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data1[$i]['post_id'] ?>">
+                                            <h4><?= $data1[$i]['titlePost'] ?></h4>
+                                            <p><?= $data1[$i]['messagefromAdmin'] ?></p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['created_at'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="setting-notice">
+                                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data1[$i]['post_id'] ?>">
+                                            <h4><?= $data1[$i]['titlePost'] ?></h4>
+                                            <p><?= $data1[$i]['messagefromAdmin'] ?></p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['created_at'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+                        <?php } ?>
+                    <?php endif ?>
+
+
                     <div class="setting-notice">
                         <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
                         <a href="#">

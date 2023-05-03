@@ -176,10 +176,10 @@ curl_close($curl);
                     <div class="post-container">
                         <div class="post-row">
                             <div class="user-profile">
-                                <a href="#"> <img src="<?= $result['user']['photoURL'] ?>" alt="" />
+                                <a href="../quanlytaikhoan/view_profile.php"> <img src=" <?= $result['user']['photoURL'] ?>" alt="" />
                                 </a>
                                 <div>
-                                    <a href="#">
+                                    <a href="../quanlytaikhoan/view_profile.php">
                                         <p><?= $result['user']['name'] ?></p>
                                     </a>
                                     <span><?= $data1[$i]['postDate'] ?></span>
@@ -188,7 +188,7 @@ curl_close($curl);
                                     <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                                 </div>
                                 <div class="type">
-                                    <a href="#">
+                                    <a href=" ../post/view_displayPostWithType.php?idType=<?= $data1[$i]['idType'] ?>">
                                         <p><?= $data1[$i]['nameType'] ?></p>
                                     </a>
                                 </div>

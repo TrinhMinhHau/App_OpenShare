@@ -74,6 +74,7 @@ curl_close($curl);
                                     <th scope="col">Tài khoản</th>
                                     <!-- <th scope="col">Email</th> -->
                                     <th scope="col">Ảnh đại diện</th>
+                                    <th scope="col">Số lần cho</th>
                                     <th colspan="2">Chức năng</th>
 
                                     <!-- <th scope="col">Số điện thoại</th>
@@ -83,12 +84,55 @@ curl_close($curl);
                             <tbody>
                                 <?php
                                 for ($i = 0; $i < count($data1); $i++) { ?>
+                                    <?php
+
+                                    $token = $_SESSION['token'];
+                                    $idUser = $data1[$i]['idUser'];
+                                    $data = array(
+                                        'idUser' => $idUser
+                                    );
+                                    $json_data = json_encode($data);
+
+                                    $url = 'http://localhost:8000/website_openshare/controllers/users/post/displaynumberItemGiveSuccess.php';
+
+
+                                    // Khởi tạo một cURL session
+                                    $curl = curl_init();
+
+                                    // Thiết lập các tùy chọn cho cURL session
+                                    curl_setopt_array($curl, array(
+                                        CURLOPT_URL => $url,
+                                        CURLOPT_POSTFIELDS => $json_data,
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_HTTPHEADER => array(
+                                            'Content-Type: application/json',
+                                            "Accept: application/json",
+                                            "Authorization: Bearer {$token}",
+                                        )
+                                    ));
+
+                                    // Thực hiện yêu cầu cURL và lấy kết quả trả về
+                                    $response = curl_exec($curl);
+
+                                    // Kiểm tra nếu có lỗi xảy ra
+                                    if (curl_error($curl)) {
+                                        echo 'Error: ' . curl_error($curl);
+                                    } else {
+                                        // Xử lý kết quả trả về
+                                        $data = json_decode($response, true);
+                                        $data6 = $data ? $data['data'] : null;
+                                    }
+
+                                    // Đóng cURL session
+                                    curl_close($curl);
+                                    ?>
                                     <tr>
                                         <th scope="col"><?= $i + 1 ?></td>
                                         <td><?= ($data1[$i]['idUser']) ?></td>
                                         <td><?= ($data1[$i]['name']) ?></td>
                                         <td><?= ($data1[$i]['userName']) ?></td>
                                         <td><img src="<?= ($data1[$i]['photoURL']) ?>" alt="" srcset="" width="50px" height="20px" style="border-radius:50%"></td>
+                                        <td><?= $data6[0]['SoluongdochoTC'] ?></td>
                                         <td>
                                             <!-- DETAIL  -->
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Modal_Detail<?php echo ($data1[$i]['idUser']) ?>">

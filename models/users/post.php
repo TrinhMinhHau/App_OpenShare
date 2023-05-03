@@ -25,12 +25,24 @@ class Post
     public $reviewDay;
     public $messageResponse;
     public $SoluongdochoTC;
-    // public $offset;
-    // public $limit;
-    // connect db
+    // Khai bao bien phuc vu chuc nang thong bao tu Administration
+    public $user_id;
+    public $post_id;
+    public $messagefromAdmin;
+    public $created_at;
+    public $isSeen;
+    public $titlePost;
+
     public function __construct($db)
     {
         $this->conn = $db;
+    }
+    public function getNoticeFromAdmin()
+    {
+        $query = "SELECT * FROM thongbaoduyetbai  order by id desc";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
     }
     public function loadMoreApi()
     {
@@ -73,7 +85,7 @@ class Post
     public function displayRequest()
     {
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
-            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay,p.idUser
             FROM yeucau yc 
             JOIN baiviet p ON yc.idPost = p.idPost
             JOIN user u ON u.idUser= p.idUser
@@ -210,6 +222,20 @@ class Post
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
+    }
+    public function displayPostbyidPost()
+    {
+        // Delete Baiviet
+        $query_1 = " UPDATE thongbaoduyetbai SET isSeen =1 WHERE post_id = :idPost";
+        $stmt1 = $this->conn->prepare($query_1);
+        $stmt1->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+        //Bind value
+        $query = "SELECT * FROM `baiviet`,user,doanhmuc where  user.idUser = baiviet.idUser and baiviet.idType=doanhmuc.idType and baiviet.idPost=:idPost order by baiviet.idPost desc";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+        if ($stmt->execute() && $stmt1->execute()) {
+            return $stmt;
+        }
     }
     public function displayPostbyType()
     {

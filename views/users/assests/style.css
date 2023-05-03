@@ -580,8 +580,13 @@ nav {
   align-items: center;
   margin: 15px 0;
 }
+.isSeen h4,
+.isSeen p {
+  /* background-color: #ece6e6; */
+  color: #a27878;
+}
 .setting-notice:hover {
-  background-color: #ece6e6;
+  background-color: #cac1c1;
 }
 .setting-notice img {
   width: 38px;

@@ -23,6 +23,8 @@ if ($auth_info['success']) {
     $itemPost->idPost = $data->idPost;
     $itemPost->idStaffApprove = $data->idStaff;
     $itemPost->idUser = $data->idUser;
+    $itemPost->title = $data->title;
+
     if ($itemPost->rejectPost()) {
         echo json_encode(array('message', 'Post is rejected'));
     } else {
