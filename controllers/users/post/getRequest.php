@@ -41,6 +41,7 @@ if ($auth_info['success']) {
         'photos' => $photos,
         'idType' => $idType,
         'name' => $name,
+        'idUser' => $idUser,
         'photoURL' => $photoURL,
         'nameType' => $nameType,
         'reviewDay' => $reviewDay,
