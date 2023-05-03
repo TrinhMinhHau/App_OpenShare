@@ -36,6 +36,7 @@ if ($auth_info['success']) {
                 'address' => $address,
                 'idStaffApprove' => $idStaffApprove,
                 'photos' => $photos,
+                'photoURL' => $photoURL,
                 'idType' => $idType,
                 'name' => $name,
                 'nameType' => $nameType,
