@@ -32,11 +32,14 @@ class Post
     public $created_at;
     public $isSeen;
     public $titlePost;
+    // Khai bao bien phuc vu chuc nang lay so luong yeu cau theo idPost tu bang yeucau
+    public $sodocho;
 
     public function __construct($db)
     {
         $this->conn = $db;
     }
+
     public function getNoticeFromAdmin()
     {
         $query = "SELECT * FROM thongbaoduyetbai  order by id desc";
@@ -53,6 +56,14 @@ class Post
         $stmt = $this->conn->prepare($query);
         // $stmt->bindValue(':limit', $this->limit, PDO::PARAM_INT);
         // $stmt->bindValue(':offset', $this->offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function displayNumberRequestbyidPost()
+    {
+        $query = "SELECT COUNT(idPost) as soyeucau,idPost FROM `yeucau` WHERE idPost = :idPost GROUP BY idPost";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt;
     }

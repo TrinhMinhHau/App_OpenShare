@@ -193,25 +193,6 @@ curl_close($curl);
                                     </a>
                                 </div>
                             </div>
-                            <i class="fas fa-ellipsis-v toggle<?= $i ?>" style="cursor:pointer"></i>
-                            <div class="menu-child menu<?= $i ?>">
-                                <ul class="child">
-                                    <li>
-
-                                        <form action="../post/view_deletePost.php" method="post" id="form_delete">
-                                            <a href="#" onclick="document.getElementById('form_delete').submit()">Xoá bài cho</a>
-                                            <input type="hidden" name="deletePost" value="<?= $data1[$i]['idPost'] ?>">
-                                        </form>
-
-                                    </li>
-                                </ul>
-                            </div>
-                            <script>
-                                document.querySelector('.toggle<?= $i ?>').addEventListener('click', function() {
-                                    document.querySelector('.menu<?= $i ?>').classList.toggle('active');
-                                });
-                            </script>
-
                         </div>
                         <p class="post-text">
                             <?= $data1[$i]['description'] ?>
@@ -236,8 +217,50 @@ curl_close($curl);
                     </div>
                     <?php $currentIdPost = $data1[$i]['idPost']; ?>
                     <p>
+                        <?php
+
+                        $token = $_SESSION['token'];
+                        $idPost = $data1[$i]['idPost'];
+                        $data = array(
+                            'idPost' => $idPost
+                        );
+                        $json_data = json_encode($data);
+
+                        $url = 'http://localhost:8000/website_openshare/controllers/users/post/getNumberRequestByidPost.php';
+
+
+                        // Khởi tạo một cURL session
+                        $curl = curl_init();
+
+                        // Thiết lập các tùy chọn cho cURL session
+                        curl_setopt_array($curl, array(
+                            CURLOPT_URL => $url,
+                            CURLOPT_POSTFIELDS => $json_data,
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_HTTPHEADER => array(
+                                'Content-Type: application/json',
+                                "Accept: application/json",
+                                "Authorization: Bearer {$token}",
+                            )
+                        ));
+
+                        // Thực hiện yêu cầu cURL và lấy kết quả trả về
+                        $response = curl_exec($curl);
+
+                        // Kiểm tra nếu có lỗi xảy ra
+                        if (curl_error($curl)) {
+                            echo 'Error: ' . curl_error($curl);
+                        } else {
+                            // Xử lý kết quả trả về
+                            $data = json_decode($response, true);
+                            $data9 = $data ? $data['data'] : null;
+                        }
+
+                        // Đóng cURL session
+                        curl_close($curl);
+                        ?>
                         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample<?= $data1[$i]['idPost'] ?>" aria-expanded="false" aria-controls="collapseExample">
-                            Xem các yêu cầu
+                            Xem các yêu cầu <span>(<?= $data9[0]['soyeucau'] ?>)</span>
                         </a>
                     </p>
                 <?php endif; ?>
