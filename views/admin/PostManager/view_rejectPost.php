@@ -6,6 +6,7 @@ if (isset($_POST['Tuchoi'])) {
     $idStaff = $_POST['idStaff'];
     $idUser = ($_POST['idUser']);
     $title = ($_POST['title']);
+    $reason = ($_POST['reason']);
 
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
@@ -13,6 +14,7 @@ if (isset($_POST['Tuchoi'])) {
         'idStaff' => $idStaff,
         'idUser' => $idUser,
         'title' => $title,
+        'messagefromAdmin' => $reason
     );
 
     // Chuyển dữ liệu sang định dạng JSON

@@ -17,6 +17,7 @@ class PostManager
     public $name;
     public $nameType;
     public $photoURL;
+    public $messagefromAdmin;
     // connect db
     public function __construct($db)
     {
@@ -66,11 +67,13 @@ class PostManager
 
         // Thong bao cho nguoi dung ve bai da duyet
         $query1 = "INSERT INTO thongbaoduyetbai (user_id, post_id, messagefromAdmin, created_at,titlePost) 
-        VALUES (:user_id,:post_id, 'Cảm ơn bạn đã đóng góp đồ dùng cho cộng đồng, tuy nhiên đồ dùng của bạn không phù hợp với tiêu chuẩn cộng đồng ', NOW(),:titlePost)";
+        VALUES (:user_id,:post_id,:messagefromAdmin, NOW(),:titlePost)";
         $stmt1 = $this->conn->prepare($query1);
         $stmt1->bindValue(':post_id', $this->idPost, PDO::PARAM_INT);
         $stmt1->bindValue(':user_id', $this->idUser, PDO::PARAM_INT);
         $stmt1->bindValue(':titlePost', $this->title, PDO::PARAM_STR);
+        $stmt1->bindValue(':messagefromAdmin', $this->messagefromAdmin, PDO::PARAM_STR);
+
         if ($stmt->execute() && $stmt1->execute()) {
             return true;
         } else {

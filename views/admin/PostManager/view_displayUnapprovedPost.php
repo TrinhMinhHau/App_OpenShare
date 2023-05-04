@@ -142,6 +142,7 @@ curl_close($curl);
 
                                                                                     </div>
                                                                                 </div>
+
                                                                             </div>
 
                                                                         </div>
@@ -151,26 +152,46 @@ curl_close($curl);
 
 
                                                                     </div>
+
+                                                                </div>
+
+
+                                                                <div id="reason-form<?php echo $data1[$i]['idPost'] ?>" style="display: none;">
+                                                                    <form action="./view_rejectPost.php" method="post">
+                                                                        <label for="reason" class="col-md-4 col-lg-3 col-form-label">Lý do từ chối</label>
+                                                                        <div class=" media-body col-md-12 col-lg-12 mb-1">
+                                                                            <textarea class="form-control" id="reason" name="reason" placeholder="Nhập lý do từ chối ..." rows="3" required></textarea>
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-danger" name="Tuchoi">Từ chối</button>
+                                                                        <button type="button" class="btn btn-secondary" onclick="hideReasonForm(<?php echo ($data1[$i]['idPost']) ?>)">Hủy</button>
+                                                                        <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
+                                                                        <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
+                                                                        <input type="hidden" name="idUser" id="idUser" value="<?php echo ($data1[$i]['idUser']) ?>">
+                                                                        <input type="hidden" name="title" id="title" value="<?php echo ($data1[$i]['title']) ?>">
+                                                                    </form>
                                                                 </div>
 
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <form action="./view_approvPost.php" method="post">
-                                                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="Duyet">Duyệt</button>
+                                                                    <button type="submit" id="duyet<?php echo $data1[$i]['idPost'] ?>" class="btn btn-primary" data-bs-dismiss="modal" name="Duyet">Duyệt</button>
                                                                     <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
                                                                     <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
                                                                     <input type="hidden" name="idUser" id="idUser" value="<?php echo ($data1[$i]['idUser']) ?>">
                                                                     <input type="hidden" name="title" id="title" value="<?php echo ($data1[$i]['title']) ?>">
                                                                 </form>
-                                                                <form action="./view_rejectPost.php" method="post">
+                                                                <!-- <form action="./view_rejectPost.php" method="post">
                                                                     <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="Tuchoi">Từ chối</button>
                                                                     <input type="hidden" name="idPost" id="idPost" value="<?php echo ($data1[$i]['idPost']) ?>">
                                                                     <input type="hidden" name="idStaff" id="idStaff" value="<?php echo ($result['user']['idStaff']) ?>">
                                                                     <input type="hidden" name="idUser" id="idUser" value="<?php echo ($data1[$i]['idUser']) ?>">
                                                                     <input type="hidden" name="title" id="title" value="<?php echo ($data1[$i]['title']) ?>">
 
-                                                                </form>
+                                                                </form> -->
+                                                                <button type="submit" class="btn btn-danger" id="tuchoi<?php echo ($data1[$i]['idPost']) ?>" onclick="showReasonForm(<?php echo ($data1[$i]['idPost']) ?>)">Từ Chối </button>
+
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -192,6 +213,8 @@ curl_close($curl);
         <!-- END-DELETE  -->
 
         </tr>
+
+
 <?php }
                                 } ?>
 
@@ -213,3 +236,16 @@ curl_close($curl);
         color: #fff;
     }
 </style>
+<script>
+    function showReasonForm(idPost) {
+        document.getElementById("reason-form" + idPost).style.display = "block";
+        document.getElementById("duyet" + idPost).style.display = "none";
+        document.getElementById("tuchoi" + idPost).style.display = "none";
+    }
+
+    function hideReasonForm(idPost) {
+        document.getElementById("reason-form" + idPost).style.display = "none";
+        document.getElementById("duyet" + idPost).style.display = "inline-block";
+        document.getElementById("tuchoi" + idPost).style.display = "inline-block";
+    }
+</script>
