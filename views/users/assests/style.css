@@ -28,6 +28,14 @@ nav {
   top: 0;
   z-index: 100;
 }
+
+.nav-left .badge-number {
+  position: absolute;
+  inset: 12px 959px auto auto;
+  font-weight: normal;
+  font-size: 5px;
+  padding: 1px 3px;
+}
 .logo {
   width: 160px;
   margin-right: 45px;

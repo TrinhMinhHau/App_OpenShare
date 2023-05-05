@@ -34,6 +34,16 @@ class Post
     public $titlePost;
     // Khai bao bien phuc vu chuc nang lay so luong yeu cau theo idPost tu bang yeucau
     public $sodocho;
+    // Khai bao bien phuc vu chuc nang thong bao qua trinh cho nhan
+    public $idUserRequest_N;
+    public $idPostRequest_N;
+    public $createAt_N;
+    public $status_accept_reject;
+    public $message_N;
+    public $idNotice;
+    public $issen_N;
+
+
 
     public function __construct($db)
     {
@@ -43,6 +53,15 @@ class Post
     public function getNoticeFromAdmin()
     {
         $query = "SELECT * FROM thongbaoduyetbai  order by id desc";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function getNoticeGiveandReceive()
+    {
+        $query = "SELECT tb.idNotice,tb.idPostRequest_N,tb.idUserRequest_N,bv.idUser,u.name,bv.title,tb.createAt_N,tb.issen_N,u.photoURL,tb.status_accept_reject,tb.message_N FROM thongbaochonhan tb 
+        JOIN baiviet bv ON tb.idPostRequest_N = bv.idPost 
+        JOIN user u ON u.idUser = tb.idUserRequest_N order by idNotice desc";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -87,6 +106,7 @@ class Post
         INNER JOIN user u ON bv.idUser = u.idUser
         WHERE yc.status = 3 
         GROUP BY bv.idUser
+        ORDER BY COUNT(bv.idPost) desc
         LIMIT 10";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -108,6 +128,27 @@ class Post
         $stmt->execute();
         return $stmt;
     }
+    public function displayRequestbyidPost()
+    {
+        $query_1 = " UPDATE thongbaochonhan SET issen_N =1 WHERE idNotice = :idNotice";
+        $stmt1 = $this->conn->prepare($query_1);
+        $stmt1->bindValue(':idNotice', $this->idNotice, PDO::PARAM_INT);
+        $stmt1->execute();
+        $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay,p.idUser
+            FROM yeucau yc 
+            JOIN baiviet p ON yc.idPost = p.idPost
+            JOIN user u ON u.idUser= p.idUser
+            JOIN doanhmuc d ON d.idType = p.idType
+            WHERE yc.idUserRequest =:idUser and yc.idPost =:idPost
+            ORDER BY yc.idRequest desc ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+    }
 
     public function displayManegerRequest()
     {
@@ -118,13 +159,34 @@ class Post
         JOIN user u ON u.idUser= yc.idUserRequest
         JOIN doanhmuc d ON d.idType = p.idType
         WHERE p.idUser =:idUser
-        ORDER BY yc.idRequest desc";
+        ORDER BY yc.idPost desc";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt;
     }
 
+    public function displayManegerRequestbyidPost()
+    {
+        $query_1 = " UPDATE thongbaochonhan SET issen_N =1 WHERE idNotice = :idNotice";
+        $stmt1 = $this->conn->prepare($query_1);
+        $stmt1->bindValue(':idNotice', $this->idNotice, PDO::PARAM_INT);
+        $stmt1->execute();
+        $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest, yc.requestDate, yc.status,
+        p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL
+        FROM yeucau yc
+        JOIN baiviet p ON yc.idPost = p.idPost
+        JOIN user u ON u.idUser= yc.idUserRequest
+        JOIN doanhmuc d ON d.idType = p.idType
+        WHERE p.idUser =:idUser and yc.idPost =:idPost
+        ORDER BY yc.idPost desc";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+    }
     public function addItem()
     {
         $query = "INSERT INTO `baiviet` SET title=:title,description=:description,address=:address,photos=:photos,idType=:idType,idUser=:idUser";
@@ -155,13 +217,19 @@ class Post
         if ($check_requestPost_stmt->rowCount()) :
             echo "Người dùng này đã yêu cầu";
         else :
+            // Chen vao bang yeu cau
             $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost,message=:message";
             $stmt = $this->conn->prepare($query);
             $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
             $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
             $stmt->bindValue(':message', $this->message, PDO::PARAM_STR);
+            // Chen vao bang thong bao cho nhan
+            $query1 = "INSERT INTO `thongbaochonhan` SET idPostRequest_N=:idPost,idUserRequest_N=:idUserRequest";
+            $stmt1 = $this->conn->prepare($query1);
+            $stmt1->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+            $stmt1->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
         endif;
-        if ($stmt->execute()) {
+        if ($stmt->execute() && $stmt1->execute()) {
             return true;
         } else {
             echo "Error", $stmt->error;

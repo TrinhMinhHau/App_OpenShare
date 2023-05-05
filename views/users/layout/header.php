@@ -8,6 +8,7 @@
     <title>OpenShare</title>
 
     <link href="../../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <script src="../../../assets/vendor/bootstrap/js/bootstrap.min.js" rel="stylesheet"></script>
     <link rel="stylesheet" href="../assests/style.css" />
     <script src="https://kit.fontawesome.com/ed71b1744c.js" crossorigin="anonymous"></script>
@@ -53,44 +54,95 @@
                 <img src="../assests/images/openshare_logo.png" alt="" height="41px" class="logo" /></a>
             <ul>
                 <li>
-                    <a href="../TrangChu/index.php" class="active1"><img src="../assests/images/house-icon-black-and-white-home-vector-24922033-removebg-preview.png" alt="" srcset="" /></a>
+                    <a href="../TrangChu/index.php"><i class="bi bi-house-door-fill" style="cursor: pointer; font-size:30px; color:#012970"></i></a>
                 </li>
+                <?php
+                if (isset($_SESSION['token'])) {
+                    $token = $_SESSION['token'];
+                } else {
+                    header('location: ../auth/view_login.php');
+                }
+                $url = "http://localhost:8000/website_openshare/controllers/users/post/getNoticeFromAdmin.php";
+
+                $curl = curl_init($url);
+                curl_setopt($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+                $headers = array(
+                    "Accept: application/json",
+                    "Authorization: Bearer {$token}",
+                );
+                curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+                //for debug only!
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+                $resp = curl_exec($curl);
+                curl_close($curl);
+                if ($resp) {
+                    $data = json_decode($resp, true);
+                    $data1 = $data ? $data['data'] : null;
+                    // var_dump($result);
+                }
+                ?>
+                <?php
+                if (isset($_SESSION['token'])) {
+                    $token = $_SESSION['token'];
+                } else {
+                    header('location: ../auth/view_login.php');
+                }
+                $url = "http://localhost:8000/website_openshare/controllers/users/post/getNoticeGiveandReceive.php";
+
+                $curl = curl_init($url);
+                curl_setopt($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+                $headers = array(
+                    "Accept: application/json",
+                    "Authorization: Bearer {$token}",
+                );
+                curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+                //for debug only!
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+                $resp = curl_exec($curl);
+                curl_close($curl);
+                if ($resp) {
+                    $data = json_decode($resp, true);
+                    $datagiari = $data ? $data['data'] : null;
+                    // var_dump($result);
+                }
+                ?>
+                <?php
+                $demtb1 = 0;
+                $demtb2 = 0;
+                for ($i = 0; $i < count($data1); $i++) {
+                    if ($data1[$i]['isSeen'] == 0 && ($data1[$i]['user_id'] == $result['user']['idUser'])) {
+                        $demtb1++;
+                    }
+                }
+                for ($i = 0; $i < count($datagiari); $i++) {
+                    if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUserRequest_N'] == $result['user']['idUser'])) {
+                        $demtb2++;
+                    }
+                }
+
+                ?>
                 <li>
-                    <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" />
+                    <i class="bi bi-bell notice-click" style="cursor: pointer; font-size:22px;color:#012970"></i>
+                    <?php if ($demtb1 > 0 || $demtb2 > 0) : ?>
+                        <span class="badge bg-primary badge-number">*</span>
+                    <?php else : ?>
+                        <span class="badge bg-primary badge-number"></span>
+                    <?php endif; ?>
+                    <!-- <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" /> -->
                 </li>
             </ul>
             <!-- settings-notice -->
-            <div class="settings-notice " style="overflow: scroll; ">
+            <div class="settings-notice" style="overflow: scroll; ">
                 <div class="settings-notice-inner">
-                    <?php
-                    if (isset($_SESSION['token'])) {
-                        $token = $_SESSION['token'];
-                    } else {
-                        header('location: ../auth/view_login.php');
-                    }
-                    $url = "http://localhost:8000/website_openshare/controllers/users/post/getNoticeFromAdmin.php";
 
-                    $curl = curl_init($url);
-                    curl_setopt($curl, CURLOPT_URL, $url);
-                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-                    $headers = array(
-                        "Accept: application/json",
-                        "Authorization: Bearer {$token}",
-                    );
-                    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-                    //for debug only!
-                    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-                    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-                    $resp = curl_exec($curl);
-                    curl_close($curl);
-                    if ($resp) {
-                        $data = json_decode($resp, true);
-                        $data1 = $data ? $data['data'] : null;
-                        // var_dump($result);
-                    }
-                    ?>
                     <?php if ($data1 == null) : ?>
                     <?php else : ?>
 
@@ -120,49 +172,69 @@
                     <?php endif ?>
 
 
-                    <div class="setting-notice">
-                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                        <a href="#">
-                            <h4>TrinhMinhHau</h4>
-                            <p>Bài đăng đã được duyệt</p>
-                            <p>Cách đây 5p</p>
-                        </a>
-                    </div>
-                    <div class="setting-notice">
-                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                        <a href="#">
-                            <h4>TrinhMinhHau</h4>
-                            <p>Bài đăng đã được duyệt</p>
-                            <p>Cách đây 5p</p>
-                        </a>
-                    </div>
-                    <div class="setting-notice">
-                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                        <a href="#">
-                            <h4>TrinhMinhHau</h4>
-                            <p>Bài đăng đã được duyệt</p>
-                            <p>Cách đây 5p</p>
-                        </a>
-                    </div>
-                    <div class="setting-notice">
-                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                        <a href="#">
-                            <h4>TrinhMinhHau</h4>
-                            <p>Bài đăng đã được duyệt</p>
-                            <p>Cách đây 5p</p>
-                        </a>
-                    </div>
-                    <div class="setting-notice">
-                        <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                        <a href="#">
-                            <h4>TrinhMinhHau</h4>
-                            <p>
-                                Bài đăng đã được duyệt Bài đăng đã được duyệt Bài đăng đã được
-                                duyệt
-                            </p>
-                            <p>Cách đây 5p</p>
-                        </a>
-                    </div>
+                    <?php if ($datagiari == null) : ?>
+                    <?php else : ?>
+                        <?php for ($i = 0; $i < count($datagiari); $i++) { ?>
+                            <?php if ($datagiari[$i]['idUser'] === $result['user']['idUser'] && $datagiari[$i]['status_accept_reject'] === null) : ?>
+                                <?php if ($datagiari[$i]['issen_N'] == 1) : ?>
+                                    <div class="setting-notice isSeen">
+                                        <img src="<?= $datagiari[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $datagiari[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $datagiari[$i]['title'] ?></span></p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="setting-notice">
+                                        <img src="<?= $datagiari[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $datagiari[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $datagiari[$i]['title'] ?></span></p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+                            <?php if ($datagiari[$i]['idUserRequest_N'] === $result['user']['idUser'] && $datagiari[$i]['status_accept_reject'] === 1) : ?>
+                                <?php if ($datagiari[$i]['issen_N'] == 1) : ?>
+                                    <div class=" setting-notice isSeen">
+                                        <img src="../assests/images/icon-thanh-cong.png" class="settings-icon" alt="" />
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> được chấp nhận</p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <div class=" setting-notice ">
+                                        <img src="../assests/images/icon-thanh-cong.png" class="settings-icon" alt="" />
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> được chấp nhận</p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+                            <?php if ($datagiari[$i]['idUserRequest_N'] === $result['user']['idUser'] && $datagiari[$i]['status_accept_reject'] === 0) : ?>
+                                <?php if ($datagiari[$i]['issen_N'] == 1) : ?>
+                                    <div class="setting-notice isSeen">
+                                        <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> bị từ chối</p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="setting-notice">
+                                        <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> bị từ chối</p>
+                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+                        <?php } ?>
+                    <?php endif; ?>
+
                 </div>
             </div>
         </div>
@@ -214,7 +286,7 @@
         </div>
     </nav>
     <script>
-        const lis = document.querySelectorAll('.nav-left ul li a');
+        const lis = document.querySelectorAll('.nav-left ul li a i');
         for (let i = 0; i < lis.length; i++) {
             lis[i].addEventListener('click', function() {
                 // Xóa lớp active1 từ tất cả các phần tử li
