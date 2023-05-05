@@ -32,6 +32,8 @@ try {
             // extract request parameters
             $idRequest = $request_body['idRequest'];
             $message = $request_body['message'];
+            $idUserRequest = $request_body['idUserRequest'];
+            $idPost = $request_body['idPost'];
 
 
 
@@ -83,9 +85,15 @@ try {
                 // $query4_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
                 $update_stmt->bindValue(':message', $message, PDO::PARAM_STR);
 
+                // chèn vào bảng thông báo.
+                $query1 = "INSERT INTO `thongbaochonhan` SET idPostRequest_N=:idPost,idUserRequest_N=:idUserRequest, message_N='đã được chấp nhận',status_accept_reject = 1";
+                $stmt1 = $conn->prepare($query1);
+                $stmt1->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+                $stmt1->bindValue(':idUserRequest', $idUserRequest, PDO::PARAM_INT);
+
 
                 // execute statement
-                if ($update_stmt->execute() && $query3_stmt->execute()) {
+                if ($update_stmt->execute() && $query3_stmt->execute() & $stmt1->execute()) {
                     echo json_encode(array('message', $success_message));
                 } else {
                     echo json_encode(array('message', $error_message));

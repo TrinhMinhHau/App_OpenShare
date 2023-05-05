@@ -312,6 +312,8 @@ curl_close($curl);
                                             <form action="../post/view_acceptRequest.php" method="post">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
+                                                    <input type="hidden" name="idPost" value="<?= $data1[$i]['idPost'] ?>">
+                                                    <input type="hidden" name="idUserRequest" value="<?= $data1[$i]['idUserRequest']  ?>">
                                                     <div class="row mb-3">
                                                         <label for="message" class="col-md-4 col-lg-3 col-form-label">Tin nhắn</label>
                                                         <div class="col-md-8 col-lg-9">
@@ -344,7 +346,8 @@ curl_close($curl);
                                             <form action="../post/view_refuseRequest.php" method="post">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
-
+                                                    <input type="hidden" name="idPost" value="<?= $data1[$i]['idPost'] ?>">
+                                                    <input type="hidden" name="idUserRequest" value="<?= $data1[$i]['idUserRequest']  ?>">
                                                     <div class="form-group">
                                                         <label>Bạn có chắc chắn từ chối yêu cầu này hay không?</label>
                                                     </div>

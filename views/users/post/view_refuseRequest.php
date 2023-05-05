@@ -3,9 +3,13 @@ session_start();
 $token = $_SESSION['token'];
 if (isset($_POST['refuseRequest'])) {
     $id = $_POST['idRequest'];
+    $idUserRequest = $_POST['idUserRequest'];
+    $idPost = $_POST['idPost'];
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idRequest' => $id,
+        'idUserRequest' => $idUserRequest,
+        'idPost' => $idPost
     );
     // Chuyển dữ liệu sang định dạng JSON
     $json_data = json_encode($data);
