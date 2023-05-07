@@ -27,6 +27,7 @@ if ($auth_info['success']) {
         while ($row = $display->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
             $ManagerType_item = array(
+                'idUser' => $idUser,
                 'name' => $name,
                 'SoluongdochoTC' =>  $SoluongdochoTC,
                 'photoURL' => $photoURL,

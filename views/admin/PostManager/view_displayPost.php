@@ -174,13 +174,13 @@ curl_close($curl);
 
                                                 <!-- END-DETAIL  -->
 
-                                                <!-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idPost']) ?>">
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idPost']) ?>">
                                                     <i class="bi bi-trash-fill"></i> Xóa
                                                 </button>
                                                 <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idPost']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg "> -->
-                                                <!-- modal-xl -->
-                                                <!-- <div class="modal-content">
+                                                    <div class="modal-dialog modal-lg ">
+                                                        <!-- modal-xl -->
+                                                        <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="Label_Edit">Xóa</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -206,7 +206,7 @@ curl_close($curl);
                                                         </div>
 
                                                     </div>
-                                                </div> -->
+                                                </div>
                     </div>
 
                     </td>

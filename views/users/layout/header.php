@@ -117,25 +117,27 @@
                 <?php
                 $demtb1 = 0;
                 $demtb2 = 0;
+                $demtb3 = 0;
                 for ($i = 0; $i < count($data1); $i++) {
                     if ($data1[$i]['isSeen'] == 0 && ($data1[$i]['user_id'] == $result['user']['idUser'])) {
                         $demtb1++;
                     }
                 }
                 for ($i = 0; $i < count($datagiari); $i++) {
-                    if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUserRequest_N'] == $result['user']['idUser'])) {
+                    if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUserRequest_N'] == $result['user']['idUser']) && ($datagiari[$i]['status_accept_reject'] !== null)) {
                         $demtb2++;
                     }
                 }
-
+                for ($i = 0; $i < count($datagiari); $i++) {
+                    if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUser'] == $result['user']['idUser']) && ($datagiari[$i]['status_accept_reject'] === null)) {
+                        $demtb3++;
+                    }
+                }
                 ?>
                 <li>
                     <i class="bi bi-bell notice-click" style="cursor: pointer; font-size:22px;color:#012970"></i>
-                    <?php if ($demtb1 > 0 || $demtb2 > 0) : ?>
-                        <span class="badge bg-primary badge-number">*</span>
-                    <?php else : ?>
-                        <span class="badge bg-primary badge-number"></span>
-                    <?php endif; ?>
+                    <span class="badge bg-primary badge-number"><?php echo $demtb1 + $demtb2 + $demtb3  ?></span>
+
                     <!-- <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" /> -->
                 </li>
             </ul>
@@ -285,16 +287,3 @@
             </div>
         </div>
     </nav>
-    <script>
-        const lis = document.querySelectorAll('.nav-left ul li a i');
-        for (let i = 0; i < lis.length; i++) {
-            lis[i].addEventListener('click', function() {
-                // Xóa lớp active1 từ tất cả các phần tử li
-                for (let j = 0; j < lis.length; j++) {
-                    lis[j].classList.remove('active1');
-                }
-                // Thêm lớp active1 vào phần tử li được click
-                this.classList.add('active1');
-            });
-        }
-    </script>

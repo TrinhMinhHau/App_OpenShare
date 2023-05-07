@@ -90,8 +90,24 @@ class PostManager
         //Bind value
         $stmt1->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
 
-        // Delete Loaibaiviet
+        $query_2 = "DELETE FROM thongbaochonhan WHERE idPostRequest_N=:idPost";
+        $stmt2 = $this->conn->prepare($query_2);
+        //Bind value
+        $stmt2->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+        $stmt2->execute();
 
+        // Delete Loaibaiviet
+        $query_3 = "DELETE FROM thongbaoduyetbai WHERE post_id=:idPost";
+        $stmt3 = $this->conn->prepare($query_3);
+        //Bind value
+        $stmt3->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+        $stmt3->execute();
+
+        $query_4 = "DELETE FROM yeucau WHERE idPost=:idPost";
+        $stmt4 = $this->conn->prepare($query_4);
+        //Bind value
+        $stmt4->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+        $stmt4->execute();
 
         if ($stmt1->execute()) {
             return true;

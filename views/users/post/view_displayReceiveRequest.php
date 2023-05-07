@@ -272,7 +272,7 @@ curl_close($curl);
                                 <a href="#"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
                                 </a>
                                 <div>
-                                    <a href="#">
+                                    <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUserRequest'] ?>">
                                         <p><?= $data1[$i]['name'] ?></p>
                                     </a>
                                     <span><?= $data1[$i]['requestDate'] ?></span>

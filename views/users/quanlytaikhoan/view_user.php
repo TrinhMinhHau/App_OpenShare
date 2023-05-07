@@ -46,14 +46,64 @@ if (curl_error($curl)) {
 // Đóng cURL session
 curl_close($curl);
 ?>
+<?php
+
+$token = $_SESSION['token'];
+$idUser = $_GET['idUser'];
+$data = array(
+    'idUser' => $idUser
+);
+$json_data = json_encode($data);
+
+$url = 'http://localhost:8000/website_openshare/controllers/users/profile/getInforUserByID.php';
+
+
+// Khởi tạo một cURL session
+$curl = curl_init();
+
+// Thiết lập các tùy chọn cho cURL session
+curl_setopt_array($curl, array(
+    CURLOPT_URL => $url,
+    CURLOPT_POSTFIELDS => $json_data,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        "Accept: application/json",
+        "Authorization: Bearer {$token}",
+    )
+));
+
+// Thực hiện yêu cầu cURL và lấy kết quả trả về
+$response = curl_exec($curl);
+
+// Kiểm tra nếu có lỗi xảy ra
+if (curl_error($curl)) {
+    echo 'Error: ' . curl_error($curl);
+} else {
+    // Xử lý kết quả trả về
+    $data = json_decode($response, true);
+    $data6 = $data ? $data['data'] : null;
+}
+
+// Đóng cURL session
+curl_close($curl);
+?>
 <!--Profile Page-->
+<div class="page" style="margin-top: 30px;">
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../TrangChu/index.php">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Xem thông tin người cho</li>
+    </ol>
+
+</div>
 <div class="profile-container">
     <div class="profile-details">
         <div class="pd-left">
             <div class="pd-row">
-                <img src="<?= $data1[0]['photoURL'] ?>" alt="" class="pd-image" />
+                <img src="<?= $data6[0]['photoURL'] ?>" alt="" class="pd-image" />
                 <div>
-                    <h3><?= $data1[0]['name']  ?></h3>
+                    <h3><?= $data6[0]['name']  ?></h3>
                     <?php
 
                     $token = $_SESSION['token'];
@@ -110,48 +160,6 @@ curl_close($curl);
                 <div class="update-info">
                     <h3>Thông tin cơ bản</h3>
                 </div>
-                <?php
-
-                $token = $_SESSION['token'];
-                $idUser = $_GET['idUser'];
-                $data = array(
-                    'idUser' => $idUser
-                );
-                $json_data = json_encode($data);
-
-                $url = 'http://localhost:8000/website_openshare/controllers/users/profile/getInforUserByID.php';
-
-
-                // Khởi tạo một cURL session
-                $curl = curl_init();
-
-                // Thiết lập các tùy chọn cho cURL session
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => $url,
-                    CURLOPT_POSTFIELDS => $json_data,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_HTTPHEADER => array(
-                        'Content-Type: application/json',
-                        "Accept: application/json",
-                        "Authorization: Bearer {$token}",
-                    )
-                ));
-
-                // Thực hiện yêu cầu cURL và lấy kết quả trả về
-                $response = curl_exec($curl);
-
-                // Kiểm tra nếu có lỗi xảy ra
-                if (curl_error($curl)) {
-                    echo 'Error: ' . curl_error($curl);
-                } else {
-                    // Xử lý kết quả trả về
-                    $data = json_decode($response, true);
-                    $data6 = $data ? $data['data'] : null;
-                }
-
-                // Đóng cURL session
-                curl_close($curl);
-                ?>
                 <hr />
                 <ul>
                     <li>
@@ -262,7 +270,7 @@ curl_close($curl);
                                         <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                                     </div>
                                     <div class="type">
-                                        <a href="#">
+                                        <a href="../post/view_displayPostWithType.php?idType=<?= $data1[$i]['idType'] ?>">
                                             <p><?= $data1[$i]['nameType'] ?></p>
                                         </a>
                                     </div>
