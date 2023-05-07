@@ -47,6 +47,14 @@ if (curl_error($curl)) {
 curl_close($curl);
 ?>
 <!--Profile Page-->
+<div class="page" style="margin-top: 30px;">
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../TrangChu/index.php">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Trang cá nhân</li>
+    </ol>
+
+</div>
 <div class="profile-container">
     <?php if (isset($_SESSION['post_success'])) {
     ?>
@@ -102,6 +110,7 @@ curl_close($curl);
         </div>
     <?php
     } ?>
+
     <div class="profile-details">
         <div class="pd-left">
             <div class="pd-row">
@@ -416,7 +425,7 @@ curl_close($curl);
                                     <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                                 </div>
                                 <div class="type">
-                                    <a href="#">
+                                    <a href="../post/view_displayPostWithType.php?idType=<?= $data1[$i]['idType'] ?>">
                                         <p><?= $data1[$i]['nameType'] ?></p>
                                     </a>
                                 </div>

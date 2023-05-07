@@ -95,6 +95,7 @@
             <a href="../quanlytaikhoan/view_profile.php"><img src="<?= $result['user']['photoURL'] ?>" alt="" style="border-radius: 50%" /><?= $result['user']['name'] ?></a>
             <a href="../post/view_displaySendRequest.php"><img src="../assests/images/hand3-removebg-preview.png" alt="" />Yêu cầu đã gửi</a>
             <a href="../post/view_displayReceiveRequest.php"><img src="../assests/images/Acceptrequest_icon.png" alt="" />Yêu cầu đã nhận</a>
+            <a href="../post/view_historyGiveandReceive.php"><img src="../assests/images/history-removebg-preview.png" alt="" />Lịch sử cho và nhận</a>
 
         </div>
         <div class="shortcut-links">
@@ -447,11 +448,28 @@
         // Đóng cURL session
         curl_close($curl);
         ?>
-        <?php for ($i = 0; $i < count($data2); $i++) { ?>
+        <?php for ($i = 0; $i < count($data2); $i++) {
+        ?>
             <div class="online-list">
                 <div class="online">
-                    <img src="<?= $data2[$i]['photoURL'] ?>" alt="" srcset="" />
-                    <p><?= $data2[$i]['name'] ?></p>
+                    <?php if ($data2[$i]['idUser'] !== $result['user']['idUser']) :  ?>
+
+                        <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data2[$i]['idUser'] ?>">
+                            <img src="<?= $data2[$i]['photoURL'] ?>" alt="" srcset="" />
+                        </a>
+                        <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data2[$i]['idUser'] ?>" style="text-decoration: none; color:#333">
+                            <p><?= $data2[$i]['name'] ?></p>
+                        </a>
+                    <?php else : ?>
+                        <a href="../quanlytaikhoan/view_profile.php">
+                            <img src="<?= $data2[$i]['photoURL'] ?>" alt="" srcset="" />
+                        </a>
+                        <a href="../quanlytaikhoan/view_profile.php" style="text-decoration: none; color:#333">
+                            <p><?= $data2[$i]['name'] ?></p>
+                        </a>
+
+                    <?php endif; ?>
+
                 </div>
 
                 <div class="TopDongGop">
@@ -466,6 +484,34 @@
 </div>
 <?php include('../layout/footer.php'); ?>
 <?php include('../post/view_post.php') ?>
+<script>
+    // Lấy URL hiện tại của trang
+    var currentUrl = window.location.href;
+
+    // Lặp lại các phần tử <a> trong menu
+    const lis = document.querySelectorAll('.nav-left ul li a ');
+    for (let i = 0; i < lis.length; i++) {
+        const link = lis[i];
+
+        // Nếu href của phần tử <a> khớp với URL hiện tại
+        if (link.href === currentUrl) {
+            // Thêm lớp active vào thẻ <a>
+            link.classList.add('active1');
+        }
+
+        // Thêm sự kiện click cho phần tử <a>
+        link.addEventListener('click', function() {
+            // Xóa lớp active từ tất cả các phần tử <a>
+            for (let j = 0; j < lis.length; j++) {
+                lis[j].classList.remove('active1');
+            }
+
+            // Thêm lớp active vào phần tử <a> được click
+            this.classList.add('active1');
+        });
+    }
+    console.log(123);
+</script>
 <style>
     .pagination {
         display: flex;

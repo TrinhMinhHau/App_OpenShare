@@ -9,7 +9,7 @@
                         <h5 class="modal-title" id="Label_Edit">Đăng bài cho</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="../post/view_scriptpost.php" method="post" enctype="multipart/form-data">
+                    <form action="../post/view_scriptpost.php" method="post" id="form_post" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="row mb-3">
                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tiêu đề</label>
@@ -178,7 +178,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="submit" name="post" class="btn btn-primary">Lưu thay đổi</button>
+                                <button type="submit" name="post" id="post_sub" class="btn btn-primary">Lưu thay đổi</button>
 
                             </div>
                     </form>
@@ -209,3 +209,18 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../assests/handle_address_post.js"></script>
+    <script>
+        document.querySelector('#form_post #post_sub').addEventListener('click', function() {
+            // Lấy giá trị của trường "select"
+            var selectValue = document.querySelector('#form_post select[name="address"]').value;
+            var addressAdd = document.getElementById('result_post').value;
+            // Kiểm tra nếu giá trị bằng chuỗi rỗng
+            if (selectValue === '' && addressAdd === '') {
+                // Hiển thị trường nhập địa chỉ thêm
+                document.querySelector('#form_post #collapseExample').classList.add('show');
+
+                // Ngăn không cho form được gửi
+                event.preventDefault();
+            }
+        });
+    </script>

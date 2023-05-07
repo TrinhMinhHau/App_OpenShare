@@ -9,8 +9,7 @@
 $token = $_SESSION['token'];
 $idUser = $result['user']['idUser'];
 $idPost = $_GET['idPost'];
-$idNotice = $_GET['idNotice'];;
-
+$idNotice = $_GET['idNotice'];
 $data = array(
     'idUser' => $idUser,
     'idPost' => $idPost,
