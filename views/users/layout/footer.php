@@ -1,5 +1,5 @@
 <div class="footer">
-    <p>Copyright 2023 - OpenShare Group</p>
+    <p>Bản quyền thuộc về nhóm OpenShare</p>
 </div>
 </body>
 

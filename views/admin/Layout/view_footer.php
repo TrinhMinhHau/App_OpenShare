@@ -1,7 +1,9 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
       <div class="copyright">
-          &copy; Copyright <strong><span>By Nhom OpenShare</span></strong>. All Rights Reserved
+          &copy; Bản quyền thuộc về nhóm <strong><span>
+                  OpenShare</p>
+              </span></strong>.
       </div>
 
   </footer><!-- End Footer -->

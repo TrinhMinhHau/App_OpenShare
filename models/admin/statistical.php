@@ -34,4 +34,27 @@ class statistical
         $stmt->execute();
         return $stmt;
     }
+    public function sumofUser()
+    {
+        $query = "SELECT 
+        count(idUser) as countUser
+        FROM user";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function sumofPost()
+    {
+        $query = "SELECT COUNT(idPost) as TongSoluongbaicho FROM `baiviet` WHERE isShow=1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function sumofItemSuccess()
+    {
+        $query = "SELECT COUNT(idRequest) as Soluongdochothanhcong FROM `yeucau` WHERE status=3";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
 }
