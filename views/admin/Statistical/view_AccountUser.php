@@ -31,7 +31,6 @@ if (curl_error($curl)) {
     // Xử lý kết quả trả về
     $data = json_decode($response, true);
     $data1 = (isset($data['data'])) ? $data['data'] : null;
-    var_dump($data1);
 }
 // var_dump($data1);
 
