@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+    <title>website_openshare</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <?php include('../../../file.php'); ?>
@@ -70,8 +69,8 @@
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                    <img src="../../../assets/img/logo.png" alt="">
-                                    <span class="d-none d-lg-block">OPENSHARE</span>
+                                    <img src="../../users/assests/images/openshare_logo.png" alt="" width="200px" max-height="65px">
+                                    <!-- <span class="d-none d-lg-block">OPENSHARE</span> -->
                                 </a>
                             </div><!-- End Logo -->
 

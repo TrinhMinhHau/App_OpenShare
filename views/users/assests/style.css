@@ -28,10 +28,22 @@ nav {
   top: 0;
   z-index: 100;
 }
-
+.nav-icon {
+  font-size: 22px;
+  color: #012970;
+  margin-right: 25px;
+  position: relative;
+}
 .nav-left .badge-number {
-  position: absolute;
+  /* position: absolute;
   inset: 5px 953px auto auto;
+  font-weight: normal;
+  font-size: 10px;
+  padding: 5px 5px; */
+  position: absolute;
+  top: 5px;
+  left: 380px;
+  margin-right: 10px;
   font-weight: normal;
   font-size: 10px;
   padding: 5px 5px;
@@ -989,7 +1001,7 @@ a.active1 i {
 }
 
 .loginBtn {
-  background-color: #1877f2;
+  background-color: var(--nav-color);
   padding: 15px;
   text-align: center;
   text-decoration: none;
@@ -1009,7 +1021,6 @@ a.active1 i {
 
 .sign-up {
   padding-top: 20px;
-  border-top: 1px solid #999;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -1030,7 +1041,7 @@ a.active1 i {
 }
 
 .signupBtn:hover {
-  background-color: green;
+  background-color: var(--nav-color);
 }
 
 .right p {
