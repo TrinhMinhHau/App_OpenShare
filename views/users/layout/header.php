@@ -135,9 +135,8 @@
                 }
                 ?>
                 <li>
-                    <i class="bi bi-bell notice-click" style="cursor: pointer; font-size:22px;color:#012970"></i>
-                    <span class="badge bg-primary badge-number"><?php echo $demtb1 + $demtb2 + $demtb3  ?></span>
-
+                    <i class="bi bi-bell notice-click nav-icon " style="cursor: pointer"></i>
+                    <span class=" badge bg-primary badge-number"><?php echo $demtb1 + $demtb2 + $demtb3  ?></span>
                     <!-- <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" /> -->
                 </li>
             </ul>
@@ -272,7 +271,7 @@
                     <img src="../assests/images/feedback.png" alt="" />
                     <div>
                         <p>Gửi phản hồi</p>
-                        <a href="#">Giúp chúng tôi cải thiện Website</a>
+                        <a href="../contact/contact.php">Giúp chúng tôi cải thiện Website</a>
                     </div>
                 </div>
                 <hr />

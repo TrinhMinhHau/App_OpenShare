@@ -76,7 +76,8 @@
                 ?>
                 <form action="" class="form-login" method="get">
                     <input type="text" placeholder="Tên đăng nhập" name="userName" required />
-                    <input type="password" placeholder="Mật khẩu" name="password" required />
+                    <input type="password" placeholder="Mật khẩu" name="password" id="password" required />
+                    <i class="bi bi-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
                     <div id="err_dl" style="margin-bottom: 5px;"></div>
                     <button class="loginBtn" type="submit" name="login">Login</button>
                     <div class="sign-up">
@@ -89,7 +90,7 @@
 </body>
 
 </html>
-
+<script src="../assests/togglePassword.js"></script>
 <script>
     document.getElementById('err_dl').innerHTML = document.getElementById('err_ms').value;
 </script>
@@ -98,5 +99,16 @@
         color: red;
         font-size: 0.875rem;
 
+    }
+
+    #password {
+        position: relative;
+    }
+
+    #togglePassword {
+        position: absolute;
+        top: 260px;
+        right: 150px;
+        display: none;
     }
 </style>

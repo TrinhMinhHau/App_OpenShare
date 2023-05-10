@@ -390,13 +390,16 @@
             $next_page = ($page < $total_pages) ? $page + 1 : $total_pages; // Trang kế tiếp
 
             echo '<div class="pagination">';
-            echo '<a href="?page=' . $prev_page . '">Trang trước</a>';
-
+            if ($page > 1) {
+                echo '<a href="?page=' . $prev_page . '">Trang trước</a>';
+            }
             for ($i = 1; $i <= $total_pages; $i++) {
                 $active = ($i == $page) ? 'active' : '';
                 echo '<a href="?page=' . $i . '" class="' . $active . '">' . $i . '</a>';
             }
-            echo '<a href="?page=' . $next_page . '">Trang kế tiếp</a>';
+            if ($page < $total_pages) {
+                echo '<a href="?page=' . $next_page . '">Trang kế tiếp</a>';
+            }
             echo '</div>';
             ?>
         <?php endif; ?>

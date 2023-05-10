@@ -21,6 +21,8 @@
                                 <label for="description" class="col-md-4 col-lg-3 col-form-label">Mô tả</label>
                                 <div class="col-md-8 col-lg-9">
                                     <textarea class="form-control" id="description" name="description" placeholder="Mô tả ..." rows="3"></textarea>
+                                    <i class="bi bi-mic-fill mic" id="click_to_record"></i>
+                                    <div id="listening_indicator"></div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -223,4 +225,52 @@
                 event.preventDefault();
             }
         });
+
+        document.getElementById("click_to_record").addEventListener("click", function() {
+            var old_text = document.getElementById("description").value;
+            var speech = true;
+            window.SpeechRecognition = window.webkitSpeechRecognition;
+            var listeningIndicator = document.getElementById("listening_indicator");
+
+            const recognition = new SpeechRecognition();
+            recognition.interimResults = true;
+            recognition.lang = "vi-VN";
+            recognition.addEventListener("start", () => {
+                listeningIndicator.style.backgroundColor = "green";
+                listeningIndicator.textContent = "Đang lắng nghe...";
+            });
+
+            recognition.addEventListener("end", () => {
+                listeningIndicator.style.backgroundColor = "red";
+                listeningIndicator.textContent = "";
+            });
+            recognition.addEventListener("result", (e) => {
+                const transcript = Array.from(e.results)
+                    .map((result) => result[0])
+                    .map((result) => result.transcript)
+                    .join("");
+
+                document.getElementById("description").value = old_text + ' ' + transcript;
+                console.log(transcript);
+            });
+
+            if (speech == true) {
+                recognition.start();
+            }
+        });
     </script>
+    <style>
+        #description {
+            position: relative;
+        }
+
+        .mic {
+            position: absolute !important;
+            top: 120px;
+            right: 30px !important;
+        }
+
+        #listening_indicator {
+            width: 150px;
+        }
+    </style>
