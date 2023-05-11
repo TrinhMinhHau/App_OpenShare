@@ -143,7 +143,26 @@
             <!-- settings-notice -->
             <div class="settings-notice" style="overflow: scroll; ">
                 <div class="settings-notice-inner">
+                    <?php
+                    function convert_time($datecreate)
+                    {
 
+                        $thoigianhienthi = 0;
+                        $thoigian = round((strtotime(date('Y-m-d H:i:s')) - strtotime($datecreate)) / 3600, 0) + 5;
+                        if ($thoigian <= 24) {
+                            $thoigianhienthi = $thoigian;
+                        } else {
+                            $thoigianhienthi = round($thoigian / 24);
+                        }
+                        $text = '';
+                        if ($thoigian <= 24) {
+                            $text = ' giờ trước';
+                        } else {
+                            $text = ' ngày trước';
+                        }
+                        echo 'Cách đây ' . $thoigianhienthi . $text;
+                    }
+                    ?>
                     <?php if ($data1 == null) : ?>
                     <?php else : ?>
 
@@ -155,7 +174,7 @@
                                         <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data1[$i]['post_id'] ?>">
                                             <h4><?= $data1[$i]['titlePost'] ?></h4>
                                             <p><?= $data1[$i]['messagefromAdmin'] ?></p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['created_at'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($data1[$i]['created_at']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
@@ -164,7 +183,7 @@
                                         <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data1[$i]['post_id'] ?>">
                                             <h4><?= $data1[$i]['titlePost'] ?></h4>
                                             <p><?= $data1[$i]['messagefromAdmin'] ?></p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['created_at'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($data1[$i]['created_at']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>
@@ -182,7 +201,7 @@
                                         <img src="<?= $datagiari[$i]['photoURL'] ?>" class="settings-icon" alt="" />
                                         <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
                                             <p>Bạn <span class="text-primary"><?= $datagiari[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $datagiari[$i]['title'] ?></span></p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
@@ -190,7 +209,7 @@
                                         <img src="<?= $datagiari[$i]['photoURL'] ?>" class="settings-icon" alt="" />
                                         <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
                                             <p>Bạn <span class="text-primary"><?= $datagiari[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $datagiari[$i]['title'] ?></span></p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>
@@ -201,7 +220,7 @@
                                         <img src="../assests/images/icon-thanh-cong.png" class="settings-icon" alt="" />
                                         <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
                                             <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> được chấp nhận</p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
@@ -209,7 +228,7 @@
                                         <img src="../assests/images/icon-thanh-cong.png" class="settings-icon" alt="" />
                                         <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
                                             <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> được chấp nhận</p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>
@@ -220,7 +239,7 @@
                                         <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
                                         <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
                                             <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> bị từ chối</p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
@@ -228,7 +247,7 @@
                                         <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
                                         <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
                                             <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> bị từ chối</p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($datagiari[$i]['createAt_N'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>

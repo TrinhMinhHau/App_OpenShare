@@ -98,6 +98,26 @@
                 // Đóng cURL session
                 curl_close($curl);
                 ?>
+                <?php
+                function convert_time($datecreate)
+                {
+
+                    $thoigianhienthi = 0;
+                    $thoigian = round((strtotime(date('Y-m-d H:i:s')) - strtotime($datecreate)) / 3600, 0) + 5;
+                    if ($thoigian <= 24) {
+                        $thoigianhienthi = $thoigian;
+                    } else {
+                        $thoigianhienthi = round($thoigian / 24);
+                    }
+                    $text = '';
+                    if ($thoigian <= 24) {
+                        $text = ' giờ trước';
+                    } else {
+                        $text = ' ngày trước';
+                    }
+                    echo 'Cách đây ' . $thoigianhienthi . $text;
+                }
+                ?>
                 <!-- end -->
 
                 <li class="nav-item dropdown">
@@ -131,7 +151,7 @@
                                         <div>
                                             <h4><?= $data1[$i]['name'] ?></h4>
                                             <p><?= $data1[$i]['title'] ?></p>
-                                            <p>Cách đây <?= round((strtotime(date('Y-m-d H:i:s')) - strtotime($data1[$i]['postDate'])) / 3600, 0) + 5 ?> giờ trước </p>
+                                            <p><?php convert_time($data1[$i]['postDate']) ?></p>
                                         </div>
                                     </a>
                                 </li> <?php }

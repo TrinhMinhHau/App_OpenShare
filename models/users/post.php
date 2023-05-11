@@ -14,7 +14,6 @@ class Post
     public $idUserRequest;
     public $postDate;
     public $requestDate;
-    public $statusPost;
     public $name;
     public $photoURL;
     public $nameType;
@@ -208,33 +207,51 @@ class Post
 
     public function requestPost()
     {
-        $check_requestPost = "SELECT idUserRequest,idPost FROM `yeucau` WHERE  `idUserRequest`=:idUserRequest and `idPost`=:idPost";
-        $check_requestPost_stmt = $this->conn->prepare($check_requestPost);
-        $check_requestPost_stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
-        $check_requestPost_stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
-        $check_requestPost_stmt->execute();
+        // Lấy ngày hiện tại
+        $currentDate = date("Y-m-d");
 
-        if ($check_requestPost_stmt->rowCount()) :
-            echo "Người dùng này đã yêu cầu";
-        else :
-            // Chen vao bang yeu cau
-            $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost,message=:message";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
-            $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
-            $stmt->bindValue(':message', $this->message, PDO::PARAM_STR);
-            // Chen vao bang thong bao cho nhan
-            $query1 = "INSERT INTO `thongbaochonhan` SET idPostRequest_N=:idPost,idUserRequest_N=:idUserRequest";
-            $stmt1 = $this->conn->prepare($query1);
-            $stmt1->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
-            $stmt1->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
-        endif;
-        if ($stmt->execute() && $stmt1->execute()) {
-            return true;
+        // Kiểm tra số lần yêu cầu của người dùng trong ngày
+        $check_requestPostCount = "SELECT COUNT(*) as requestCount FROM `yeucau` WHERE `idUserRequest` = :idUserRequest AND DATE(requestDate) = :currentDate";
+        $check_requestPostCount_stmt = $this->conn->prepare($check_requestPostCount);
+        $check_requestPostCount_stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+        $check_requestPostCount_stmt->bindValue(':currentDate', $currentDate, PDO::PARAM_STR);
+        $check_requestPostCount_stmt->execute();
+
+        // Lấy số lần yêu cầu trong ngày
+        $requestCount = $check_requestPostCount_stmt->fetch(PDO::FETCH_ASSOC)['requestCount'];
+
+        // Kiểm tra số lần yêu cầu đã đạt giới hạn
+        if ($requestCount >= 3) {
+            echo "Bạn đã đạt đến giới hạn yêu cầu trong ngày.";
         } else {
-            echo "Error", $stmt->error;
-            echo $stmt->error;
-            return false;
+            $check_requestPost = "SELECT idUserRequest,idPost FROM `yeucau` WHERE  `idUserRequest`=:idUserRequest and `idPost`=:idPost";
+            $check_requestPost_stmt = $this->conn->prepare($check_requestPost);
+            $check_requestPost_stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+            $check_requestPost_stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+            $check_requestPost_stmt->execute();
+
+            if ($check_requestPost_stmt->rowCount()) :
+                echo "Người dùng này đã yêu cầu";
+            else :
+                // Chen vao bang yeu cau
+                $query = "INSERT INTO `yeucau` SET idUserRequest=:idUserRequest,idPost=:idPost,message=:message";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+                $stmt->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+                $stmt->bindValue(':message', $this->message, PDO::PARAM_STR);
+                // Chen vao bang thong bao cho nhan
+                $query1 = "INSERT INTO `thongbaochonhan` SET idPostRequest_N=:idPost,idUserRequest_N=:idUserRequest";
+                $stmt1 = $this->conn->prepare($query1);
+                $stmt1->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
+                $stmt1->bindValue(':idUserRequest', $this->idUserRequest, PDO::PARAM_INT);
+            endif;
+            if ($stmt->execute() && $stmt1->execute()) {
+                return true;
+            } else {
+                echo "Error", $stmt->error;
+                echo $stmt->error;
+                return false;
+            }
         }
     }
     public function search()
