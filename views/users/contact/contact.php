@@ -45,7 +45,9 @@
 
             //Content
             $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = $_POST['subject'];
+            $subject = $_POST['subject'];
+            $encodedSubject = mb_encode_mimeheader($subject, 'UTF-8');
+            $mail->Subject = $encodedSubject;
             $mail->Body    = $_POST['message'];
             // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
@@ -346,4 +348,31 @@
     }
 
     /* Style for contact section */
+    @media (max-width: 900px) {
+        .wrap {
+            width: 70%;
+        }
+
+        .contact-to input[type="text"]:nth-child(2),
+        .contact-to input[type="text"]:nth-child(3),
+        .contact-to input[type="password"] {
+            margin-left: 0px !important;
+        }
+
+        .contact-to input[type="text"],
+        .contact-to input[type="password"] {
+            width: 96%;
+        }
+
+        .text2 input[type="text"],
+        .text2 textarea {
+            width: 96.2%;
+            resize: none;
+        }
+
+        .col_1_of_bottom {
+            width: 50%;
+        }
+
+    }
 </style>

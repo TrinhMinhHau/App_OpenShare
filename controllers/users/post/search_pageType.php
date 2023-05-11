@@ -37,7 +37,6 @@ if ($auth_info['success']) {
                 'photos' => $photos,
                 'idUser' => $idUser,
                 'idType' => $idType,
-                'statusPost' => $statusPost,
                 'name' => $name,
                 'photoURL' => $photoURL,
                 'nameType' => $nameType,

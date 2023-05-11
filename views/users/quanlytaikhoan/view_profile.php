@@ -270,12 +270,12 @@ curl_close($curl);
                                             <div class="container">
 
                                                 <div class="row">
-                                                    <div class="col-md-3"><select name="" id="province" class="form-select"></select></div>
-                                                    <div class="col-md-3"> <select name="" id="district" class=" form-select">
+                                                    <div class="col-md-3"><select name="" id="province" class="form-select" required></select></div>
+                                                    <div class="col-md-3"> <select name="" id="district" class=" form-select" required>
                                                             <option value="">chọn quận</option>
                                                         </select></div>
                                                     <div class="col-md-3">
-                                                        <select name="" id="ward" class="form-select">
+                                                        <select name="" id="ward" class="form-select" required>
                                                             <option value="">chọn phường</option>
                                                         </select>
                                                     </div>

@@ -62,9 +62,12 @@
             </div>
             <div class="right">
                 <form action="" class="form-login" method="get">
-                    <input type="text" placeholder="Tên đăng nhập" name="userName" required />
-                    <input type="text" placeholder="Họ và tên" name="name" required />
-                    <input type="password" placeholder="Mật khẩu" name="password" id="password" required />
+                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_GET['userName'])) echo $_GET['userName'];
+                                                                                            else '';  ?>" required />
+                    <input type="text" placeholder="Họ và tên" name="name" value="<?php if (isset($_GET['name'])) echo $_GET['name'];
+                                                                                    else '';  ?>" required />
+                    <input type="password" placeholder="Mật khẩu" name="password" id="password" value="<?php if (isset($_GET['password'])) echo $_GET['password'];
+                                                                                                        else '';  ?>" required />
                     <i class="bi bi-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
                     <div id="err_dl" style="margin-bottom: 5px;"></div>
 
@@ -91,7 +94,7 @@
 
     }
 
-    #password {
+    /* #password {
         position: relative;
     }
 
@@ -99,6 +102,14 @@
         position: absolute;
         top: 310px;
         right: 150px;
+        display: none;
+    } */
+
+    #togglePassword {
+        position: relative;
+        display: block;
+        top: -49px;
+        right: -150px;
         display: none;
     }
 </style>

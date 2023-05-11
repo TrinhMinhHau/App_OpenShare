@@ -51,7 +51,7 @@ if ($result === false) {
         header('location: ./view_displaySendRequest.php');
         exit();
     } else {
-        $_SESSION['send_request_error'] = "Gửi yêu cầu thất bại, bạn đã gửi yêu cầu cho bài cho này rồi !!!";
+        $_SESSION['send_request_error'] = "Gửi yêu cầu thất bại (có thể bạn đã gửi yêu cầu đến bài cho này rồi hoặc đã đạt giới hạn yêu cầu 3 lần/ngày)!!!";
         header('location: ../TrangChu/index.php');
         exit();
     }
