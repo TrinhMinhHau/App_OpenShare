@@ -119,13 +119,15 @@ curl_close($curl);
     if ($data1 == null) {
     ?>
         <div class="post-container">
-            <p class="datanull">Không yêu cầu nào được nhận </p>
+            <p class="datanull">Chưa có yêu cầu nào được gửi đến bạn !!! </p>
         </div>
         <?php
     } else {
         $currentIdPost = null;
+        $dem = 0;
         for ($i = 0; $i < count($data1); $i++) { ?>
             <?php if ($data1[$i]['status'] === 3) : ?>
+                $dem++;
                 <?php if ($data1[$i]['idPost'] !== $currentIdPost) : ?>
                     <div class="post-container">
                         <div class="post-row">
@@ -236,6 +238,11 @@ curl_close($curl);
                 </script>
             <?php endif; ?>
         <?php } ?>
+        <?php if ($dem == 0) : ?>
+            <div class="post-container">
+                <p class="datanull">Chưa có yêu cầu nào được gửi đến bạn !!! </p>
+            </div>
+        <?php endif ?>
     <?php } ?>
 </div>
 <?php include('../post/view_post.php') ?>

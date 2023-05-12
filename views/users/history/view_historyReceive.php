@@ -117,16 +117,15 @@ curl_close($curl);
     if ($data1 == null) {
     ?>
         <div class="post-container">
-            <p class="datanull">Không yêu cầu nào được gửi </p>
+            <p class="datanull">Bạn chưa được nhận đồ dùng nào !!!</p>
         </div>
         <?php
     } else {
+        $dem = 0;
         for ($i = 0; $i < count($data1); $i++) {
-
-
         ?>
             <?php if ($data1[$i]['status'] === 3) : ?>
-
+                $dem++;
                 <div class="post-container">
                     <div class="post-row">
                         <div class="user-profile">
@@ -297,6 +296,11 @@ curl_close($curl);
                 </script>
             <?php endif; ?>
         <?php } ?>
+        <?php if ($dem == 0) : ?>
+            <div class="post-container">
+                <p class="datanull">Bạn chưa được nhận đồ dùng nào !!! </p>
+            </div>
+        <?php endif ?>
 
     <?php } ?>
 </div>
