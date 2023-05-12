@@ -117,9 +117,16 @@
                             <a href="#"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
                             </a>
                             <div>
-                                <a href="#">
-                                    <p><?= $data1[$i]['name'] ?></p>
-                                </a>
+                                <?php if ($data1[$i]['idUser'] !== $result['user']['idUser']) :  ?>
+
+                                    <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUser'] ?>">
+                                        <p><?= $data1[$i]['name'] ?></p>
+                                    </a>
+                                <?php else : ?>
+                                    <a href="../quanlytaikhoan/view_profile.php">
+                                        <p><?= $data1[$i]['name'] ?></p>
+                                    </a>
+                                <?php endif; ?>
                                 <span><?= $data1[$i]['postDate'] ?></span>
                             </div>
                             <div class="address">
