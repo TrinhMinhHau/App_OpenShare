@@ -243,8 +243,12 @@ curl_close($curl);
                         </div>
                     </div>
 
-                    <div style="margin-bottom: 5px;">
-                        <span><?= $data1[$i]['message'] ?></span>
+                    <div style="margin: 10px 0;">
+                        <span>Yêu cầu được gửi đến:</span><span class="text-primary"> <?= $data1[$i]['message'] ?></span> <br />
+                        <?php if ($data1[$i]['messageResponse']) : ?> <span>Phản hồi của bạn: </span><span class="text-primary"><?= $data1[$i]['messageResponse'] ?></span>
+                        <?php endif; ?><br />
+                        <?php if ($data1[$i]['messageAfterReceiveGood']) : ?> <span>Phản hồi từ người xin: </span><span class="text-primary"><?= $data1[$i]['messageAfterReceiveGood'] ?></span>
+                        <?php endif; ?>
                     </div>
                     <?php if ($data1[$i]['status'] == 0) : ?>
                         <div>
@@ -314,68 +318,7 @@ curl_close($curl);
                             </div>
                         </div>
                     <?php endif; ?>
-                    <?php if ($data1[$i]['status'] == 1) : ?>
-                        <div>
-                            <button class=" btn btn-primary" data-bs-toggle="modal" data-bs-target="#chothanhcong<?= $data1[$i]['idUserRequest'] ?>">Cho thành công</button>
 
-                            <div class="modal fade" id="chothanhcong<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                                <div class="modal-dialog modal-lg ">
-                                    <!-- modal-xl -->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="Label_Edit">Cho thành công</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="./view_detailsuccess.php" method="post">
-                                            <div class="modal-body">
-                                                <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
-
-                                                <div class="form-group">
-                                                    <label>Bạn có chắc chắn hoàn thành yêu cầu này hay không?</label>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                <button type="submit" name="successGive" class="btn btn-primary">Xác nhận</button>
-                                            </div>
-                                        </form>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <button class=" btn btn-danger" data-bs-toggle="modal" data-bs-target="#chothatbai<?= $data1[$i]['idUserRequest'] ?>">Cho thất bại</button>
-
-                            <div class="modal fade" id="chothatbai<?= $data1[$i]['idUserRequest'] ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                                <div class="modal-dialog modal-lg ">
-                                    <!-- modal-xl -->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="Label_Edit">Cho thất bại</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="./view_detailerror.php" method="post">
-                                            <div class="modal-body">
-                                                <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
-
-                                                <div class="form-group">
-                                                    <label>Bạn có chắc chắn không cho yêu cầu này hay không?</label>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                <button type="submit" name="errorGive" class="btn btn-danger">Từ chối</button>
-                                            </div>
-                                        </form>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
 

@@ -125,7 +125,7 @@ curl_close($curl);
         for ($i = 0; $i < count($data1); $i++) {
         ?>
             <?php if ($data1[$i]['status'] === 3) : ?>
-                $dem++;
+                <?php $dem++; ?>
                 <div class="post-container">
                     <div class="post-row">
                         <div class="user-profile">

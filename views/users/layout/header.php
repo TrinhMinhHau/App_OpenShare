@@ -118,31 +118,19 @@
                 $demtb1 = 0;
                 $demtb2 = 0;
                 $demtb3 = 0;
-                $userExists = false;
-                $userExists1 = false;
+
                 for ($i = 0; $i < count($data1); $i++) {
                     if ($data1[$i]['isSeen'] == 0 && ($data1[$i]['user_id'] == $result['user']['idUser'])) {
                         $demtb1++;
                     }
                 }
-                for ($i = 0; $i < count($data1); $i++) {
 
-                    if (($data1[$i]['user_id'] == $result['user']['idUser'])) {
-                        $userExists = true;
-                        break;
-                    }
-                }
                 for ($i = 0; $i < count($datagiari); $i++) {
                     if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUserRequest_N'] == $result['user']['idUser']) && ($datagiari[$i]['status_accept_reject'] !== null)) {
                         $demtb2++;
                     }
                 }
-                for ($i = 0; $i < count($datagiari); $i++) {
-                    if (($datagiari[$i]['idUserRequest_N'] == $result['user']['idUser'])) {
-                        $userExists1 = true;
-                        break;
-                    }
-                }
+
                 for ($i = 0; $i < count($datagiari); $i++) {
                     if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUser'] == $result['user']['idUser']) && ($datagiari[$i]['status_accept_reject'] === null)) {
                         $demtb3++;
@@ -158,15 +146,6 @@
             <!-- settings-notice -->
             <div class="settings-notice" style="overflow: scroll; ">
                 <div class="settings-notice-inner">
-                    <?php if ($userExists === false && $userExists1 === false) : ?>
-                        <div class="setting-notice">
-                            <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                            <a href="#">
-                                <p>Không có thông báo nào</p>
-
-                            </a>
-                        </div>
-                    <?php endif ?>
                     <?php
                     function convert_time($datecreate)
                     {
