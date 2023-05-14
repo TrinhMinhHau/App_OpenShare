@@ -82,7 +82,7 @@
                 if ($resp) {
                     $data = json_decode($resp, true);
                     $data1 = $data ? $data['data'] : null;
-                    // var_dump($result);
+                    // var_dump($data1);
                 }
                 ?>
                 <?php
@@ -110,37 +110,37 @@
                 curl_close($curl);
                 if ($resp) {
                     $data = json_decode($resp, true);
-                    $datagiari = $data ? $data['data'] : null;
-                    // var_dump($result);
+                    $data_gar = $data ? $data['data'] : null;
+                    // var_dump($data_merge);
                 }
                 ?>
                 <?php
-                $demtb1 = 0;
-                $demtb2 = 0;
-                $demtb3 = 0;
-
-                for ($i = 0; $i < count($data1); $i++) {
-                    if ($data1[$i]['isSeen'] == 0 && ($data1[$i]['user_id'] == $result['user']['idUser'])) {
-                        $demtb1++;
+                $data_merge = array_merge($data1, $data_gar);
+                usort($data_merge, function ($a, $b) {
+                    $timeA = isset($a['created_at']) ? $a['created_at'] : $a['createAt_N'];
+                    $timeB = isset($b['created_at']) ? $b['created_at'] : $b['createAt_N'];
+                    return strtotime($timeB) - strtotime($timeA);
+                });
+                // var_dump($data_merge);
+                ?>
+                <?php
+                $dem = 0;
+                for ($i = 0; $i < count($data_merge); $i++) {
+                    if (isset($data_merge[$i]['isSeen']) && $data_merge[$i]['isSeen'] == 0 && ($data_merge[$i]['user_id'] == $result['user']['idUser'])) {
+                        $dem++;
+                    }
+                    if (isset($data_merge[$i]['issen_N']) && $data_merge[$i]['issen_N'] == 0  && ($data_merge[$i]['idUserRequest_N'] == $result['user']['idUser']) && ($data_merge[$i]['status_accept_reject'] !== null)) {
+                        $dem++;
+                    }
+                    if (isset($data_merge[$i]['issen_N']) && $data_merge[$i]['issen_N'] == 0  && ($data_merge[$i]['idUser'] == $result['user']['idUser']) && ($data_merge[$i]['status_accept_reject'] === null)) {
+                        $dem++;
                     }
                 }
 
-                for ($i = 0; $i < count($datagiari); $i++) {
-                    if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUserRequest_N'] == $result['user']['idUser']) && ($datagiari[$i]['status_accept_reject'] !== null)) {
-                        $demtb2++;
-                    }
-                }
-
-                for ($i = 0; $i < count($datagiari); $i++) {
-                    if ($datagiari[$i]['issen_N'] == 0  && ($datagiari[$i]['idUser'] == $result['user']['idUser']) && ($datagiari[$i]['status_accept_reject'] === null)) {
-                        $demtb3++;
-                    }
-                }
                 ?>
                 <li>
                     <i class="bi bi-bell notice-click nav-icon " style="cursor: pointer"></i>
-                    <span class=" badge bg-primary badge-number"><?php echo $demtb1 + $demtb2 + $demtb3  ?></span>
-                    <!-- <img src="../assests/images/notification.png" alt="" srcset="" class="notice-click" style="cursor: pointer" /> -->
+                    <span class=" badge bg-primary badge-number"><?php echo $dem ?></span>
                 </li>
             </ul>
             <!-- settings-notice -->
@@ -166,98 +166,93 @@
                         echo 'Cách đây ' . $thoigianhienthi . $text;
                     }
                     ?>
-                    <?php if ($data1 == null) : ?>
+                    <?php if ($data_merge == null) : ?>
                     <?php else : ?>
-
-                        <?php for ($i = 0; $i < count($data1); $i++) { ?>
-                            <?php if ($data1[$i]['user_id'] === $result['user']['idUser']) : ?>
-                                <?php if ($data1[$i]['isSeen'] == 1) : ?>
+                        <?php for ($i = 0; $i < count($data_merge); $i++) { ?>
+                            <?php if (isset($data_merge[$i]['user_id']) && $data_merge[$i]['user_id'] !== 'Undefined' && $data_merge[$i]['user_id'] === $result['user']['idUser']) : ?>
+                                <?php if ($data_merge[$i]['isSeen'] == 1) : ?>
                                     <div class="setting-notice isSeen">
                                         <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                                        <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data1[$i]['post_id'] ?>">
-                                            <h4><?= $data1[$i]['titlePost'] ?></h4>
-                                            <p><?= $data1[$i]['messagefromAdmin'] ?></p>
-                                            <p><?php convert_time($data1[$i]['created_at']) ?></p>
+                                        <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data_merge[$i]['post_id'] ?>">
+                                            <h4><?= $data_merge[$i]['titlePost'] ?></h4>
+                                            <p><?= $data_merge[$i]['messagefromAdmin'] ?></p>
+                                            <p><?php convert_time($data_merge[$i]['created_at']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
                                     <div class="setting-notice">
                                         <img src="../assests/images/notice-icon-b.png" class="settings-icon" alt="" />
-                                        <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data1[$i]['post_id'] ?>">
-                                            <h4><?= $data1[$i]['titlePost'] ?></h4>
-                                            <p><?= $data1[$i]['messagefromAdmin'] ?></p>
-                                            <p><?php convert_time($data1[$i]['created_at']) ?></p>
+                                        <a href="../post/view_displayPostWithidPost.php?idPost=<?= $data_merge[$i]['post_id'] ?>">
+                                            <h4><?= $data_merge[$i]['titlePost'] ?></h4>
+                                            <p><?= $data_merge[$i]['messagefromAdmin'] ?></p>
+                                            <p><?php convert_time($data_merge[$i]['created_at']) ?></p>
                                         </a>
                                     </div>
-                                <?php endif ?>
-                            <?php endif ?>
-                        <?php } ?>
-                    <?php endif ?>
-
-
-                    <?php if ($datagiari == null) : ?>
-                    <?php else : ?>
-                        <?php for ($i = 0; $i < count($datagiari); $i++) { ?>
-                            <?php if ($datagiari[$i]['idUser'] === $result['user']['idUser'] && $datagiari[$i]['status_accept_reject'] === null) : ?>
-                                <?php if ($datagiari[$i]['issen_N'] == 1) : ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <!-- receive  -->
+                            <?php if (isset($data_merge[$i]['idUser']) && $data_merge[$i]['idUser'] === $result['user']['idUser'] && $data_merge[$i]['status_accept_reject'] === null) : ?>
+                                <?php if ($data_merge[$i]['issen_N'] == 1) : ?>
                                     <div class="setting-notice isSeen">
-                                        <img src="<?= $datagiari[$i]['photoURL'] ?>" class="settings-icon" alt="" />
-                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
-                                            <p>Bạn <span class="text-primary"><?= $datagiari[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $datagiari[$i]['title'] ?></span></p>
-                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
+                                        <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span></p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
                                     <div class="setting-notice">
-                                        <img src="<?= $datagiari[$i]['photoURL'] ?>" class="settings-icon" alt="" />
-                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
-                                            <p>Bạn <span class="text-primary"><?= $datagiari[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $datagiari[$i]['title'] ?></span></p>
-                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
+                                        <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã gửi yêu cầu đến bài viết <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span></p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>
                             <?php endif ?>
-                            <?php if ($datagiari[$i]['idUserRequest_N'] === $result['user']['idUser'] && $datagiari[$i]['status_accept_reject'] === 1) : ?>
-                                <?php if ($datagiari[$i]['issen_N'] == 1) : ?>
+                            <?php if (isset($data_merge[$i]['idUserRequest_N']) && $data_merge[$i]['idUserRequest_N'] === $result['user']['idUser'] && $data_merge[$i]['status_accept_reject'] === 1) : ?>
+                                <?php if ($data_merge[$i]['issen_N'] == 1) : ?>
                                     <div class=" setting-notice isSeen">
                                         <img src="../assests/images/icon-thanh-cong.png" class="settings-icon" alt="" />
-                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
-                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> được chấp nhận</p>
-                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $data_merge[$i]['title'] ?></span> được chấp nhận</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
                                     <div class=" setting-notice ">
                                         <img src="../assests/images/icon-thanh-cong.png" class="settings-icon" alt="" />
-                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
-                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> được chấp nhận</p>
-                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $data_merge[$i]['title'] ?></span> được chấp nhận</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>
                             <?php endif ?>
-                            <?php if ($datagiari[$i]['idUserRequest_N'] === $result['user']['idUser'] && $datagiari[$i]['status_accept_reject'] === 0) : ?>
-                                <?php if ($datagiari[$i]['issen_N'] == 1) : ?>
+                            <?php if (isset($data_merge[$i]['idUserRequest_N']) && $data_merge[$i]['idUserRequest_N'] === $result['user']['idUser'] && $data_merge[$i]['status_accept_reject'] === 0) : ?>
+                                <?php if ($data_merge[$i]['issen_N'] == 1) : ?>
                                     <div class="setting-notice isSeen">
                                         <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
-                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
-                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> bị từ chối</p>
-                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $data_merge[$i]['title'] ?></span> bị từ chối</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php else : ?>
                                     <div class="setting-notice">
                                         <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
-                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $datagiari[$i]['idPost'] ?>&idNotice=<?= $datagiari[$i]['idNotice'] ?>">
-                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $datagiari[$i]['title'] ?></span> bị từ chối</p>
-                                            <p><?php convert_time($datagiari[$i]['createAt_N']) ?></p>
+                                        <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $data_merge[$i]['title'] ?></span> bị từ chối</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
                                 <?php endif ?>
                             <?php endif ?>
-                        <?php } ?>
-                    <?php endif; ?>
 
+                        <?php } ?>
+
+
+                    <?php endif ?>
                 </div>
             </div>
         </div>

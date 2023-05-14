@@ -218,10 +218,10 @@ curl_close($curl);
                 <div class="card card-body">
                     <div class=" profile-request">
                         <div class="user-profile">
-                            <a href="#"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
+                            <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUserRequest'] ?>"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
                             </a>
                             <div>
-                                <a href="#">
+                                <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUserRequest'] ?>">
                                     <p><?= $data1[$i]['name'] ?></p>
                                 </a>
                                 <span><?= $data1[$i]['requestDate'] ?></span>
