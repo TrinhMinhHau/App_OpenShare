@@ -119,7 +119,9 @@
                                             </div> -->
                                             <div class="mb-3 pt-2">
                                                 <label for="formFileMultiple" class="form-label"></label>
-                                                <input class="form-control" type="file" id="fileToUpload" name="fileToUpload">
+                                                <input class="form-control" type="file" hidden id="fileToUploadmul" name="fileToUpload">
+                                                <input type="button" onClick="getFile.simulate()" value="Chọn tệp ảnh" id="getFile1" />
+                                                <label id="selected">Không tệp nào được chọn</label>
                                             </div>
                                         </div>
                                     </div>
@@ -241,7 +243,7 @@
 
         });
     });
-    imgInpEl = document.getElementById('fileToUpload');
+    imgInpEl = document.getElementById('fileToUploadmul');
     imgEL = document.getElementById('img');
 
     imgInpEl.onchange = evt => {
@@ -251,3 +253,31 @@
         }
     }
 </script>
+<script src="../../users/assests/handle_choosefile.js"></script>
+<style>
+    #selected {
+        border-radius: 10px;
+        text-transform: uppercase;
+        color: teal;
+        padding: 0 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: grey;
+        font-size: 13px !important;
+    }
+
+    #getFile1 {
+        border-radius: 10px;
+        background: teal;
+        cursor: pointer;
+        color: white;
+        padding: 0 5px;
+        font-family: Trebuchet MS;
+        border: 0;
+
+    }
+
+    #getFile1:hover {
+        background: #0aa;
+    }
+</style>

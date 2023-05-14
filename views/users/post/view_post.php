@@ -32,15 +32,17 @@
                                     </div>
                                     <div class="mb-3 pt-2">
                                         <label for="formFileMultiple" class="form-label"></label>
-                                        <input class="form-control" type="file" id="fileToUploadmul" required name="fileToUpload[]" onchange="
+                                        <input class="form-control" type="file" hidden id="fileToUploadmul" required name="fileToUpload[]" onchange="
                                         previewMultiple(event)" multiple>
+                                        <input type="button" onClick="getFile.simulate()" value="Chọn tệp ảnh" id="getFile1" />
+                                        <label id="selected">Không tệp nào được chọn</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="soluongdocho" class="col-md-4 col-lg-3 col-form-label">Số lượng</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input class="form-control" type="number" name="soluong" id="soluong" min=1 placeholder="Nhập số lượng đồ cho">
+                                    <input class="form-control" type="number" name="soluong" id="soluong" min=1 required placeholder="Nhập số lượng đồ cho">
                                 </div>
                             </div>
                             <input type="hidden" name="id" value="<?= $result['user']['idUser'] ?> " class=" form-control">
@@ -91,7 +93,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                <label for="Address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
                                 <div class="col-md-8 col-lg-9">
                                     <select class="form-select" name="address">
                                         <option value="" selected>Chọn địa chỉ</option>
@@ -151,12 +153,13 @@
                                         <button class="btn btn-primary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                             Thêm địa chỉ
                                         </button>
+                                        <span class="text-warning">(*Thêm địa chỉ khác, ngoài địa chỉ của bạn)</span>
                                     </p>
                                 </div>
 
                                 <div class="collapse" id="collapseExample">
 
-                                    <div class="container">
+                                    <div class="container" style="margin-bottom: 20px;">
 
                                         <div class="row">
                                             <div class="col-md-3"><select name="" id="province_post" class="form-select"></select></div>
@@ -176,6 +179,20 @@
                                         </div>
 
                                     </div>
+
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="capcha" class="col-md-4 col-lg-3 col-form-label">Capcha</label>
+                                    <div class="col-md-8 col-lg-9 input_field captch_box">
+                                        <input type="text" value="" disabled />
+                                        <button class="refresh_button">
+                                            <i class="bi bi-arrow-repeat repeat"></i>
+                                        </button>
+                                    </div>
+                                    <div class="input_field captch_input">
+                                        <input type="text" placeholder="Enter captcha" required />
+                                    </div>
+                                    <div class="message"></div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -211,6 +228,9 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../assests/handle_address_post.js"></script>
+    <script src="../assests/handle_choosefile.js"></script>
+    <script src="../assests/handle_capcha.js"></script>
+
     <script>
         document.querySelector('#form_post #post_sub').addEventListener('click', function() {
             // Lấy giá trị của trường "select"
@@ -272,5 +292,84 @@
 
         #listening_indicator {
             width: 150px;
+        }
+    </style>
+    <style>
+        #selected {
+            border-radius: 10px;
+            text-transform: uppercase;
+            color: teal;
+            padding: 0 5px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: grey;
+            font-size: 13px !important;
+        }
+
+        #getFile1 {
+            border-radius: 10px;
+            background: teal;
+            cursor: pointer;
+            color: white;
+            padding: 0 5px;
+            font-family: Trebuchet MS;
+            border: 0;
+        }
+
+        #getFile1:hover {
+            background: #0aa;
+        }
+    </style>
+    <style>
+        .input_field {
+            position: relative;
+            width: 30%;
+        }
+
+        .refresh_button {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: #826afb;
+            height: 30px;
+            width: 30px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .repeat {
+            position: static !important;
+        }
+
+        .refresh_button:active {
+            transform: translateY(-50%) scale(0.98);
+        }
+
+        .input_field input,
+        .button button {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .input_field input {
+            padding: 0 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .captch_box input {
+            color: #6b6b6b;
+            font-size: 22px;
+            pointer-events: none;
+        }
+
+        .captch_input input:focus {
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
         }
     </style>
