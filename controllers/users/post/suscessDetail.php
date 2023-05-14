@@ -29,6 +29,7 @@ if ($auth_info['success']) {
 
         // extract request parameters
         $idRequest = $request_body['idRequest'];
+        $messageAfterReceiveGood = $request_body['messageAfterReceiveGood'];
         var_dump($request_body);
         // decode image data from base64
         // $image = base64_decode($image_data);
@@ -43,9 +44,10 @@ if ($auth_info['success']) {
         // bind parameters to statement
         // $update_stmt->bindValue(':idChiTietYC', $idChiTietYC, PDO::PARAM_INT);
 
-        $update_query = "UPDATE yeucau SET status=3,successDay=now() WHERE idRequest=:idRequest ";
+        $update_query = "UPDATE yeucau SET status=3,messageAfterReceiveGood=:messageAfterReceiveGood,successDay=now() WHERE idRequest=:idRequest ";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
+        $update_stmt->bindValue(':messageAfterReceiveGood', $messageAfterReceiveGood, PDO::PARAM_STR);
         // execute statement
         if ($update_stmt->execute()) {
             http_response_code(200);

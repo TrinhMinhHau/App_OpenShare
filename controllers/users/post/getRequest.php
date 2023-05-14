@@ -46,6 +46,7 @@ if ($auth_info['success']) {
         'nameType' => $nameType,
         'reviewDay' => $reviewDay,
         'messageResponse' => $messageResponse,
+        'messageAfterReceiveGood' => $messageAfterReceiveGood,
       );
       array_push($question_array['data'], $ManagerType_item);
     }

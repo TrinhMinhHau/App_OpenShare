@@ -206,6 +206,7 @@ curl_close($curl);
                                                     <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?= $data1[$i]['requestDate'] ?></textarea>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>
@@ -241,6 +242,41 @@ curl_close($curl);
                                                         <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?= $data1[$i]['reviewDay'] ?></textarea>
                                                     </div>
                                                 </div>
+                                                <?php if ($data1[$i]['status'] === 1) : ?>
+                                                    <div>
+                                                        <label for="dateRequest" class="col-md-4 col-lg-3 col-form-label">Xác nhận hoàn tất</label>
+                                                        <div id="reason-form_tc<?php echo $data1[$i]['idPost'] ?>" style="display: none;">
+                                                            <form action="./view_detailsuccess.php" method="post">
+                                                                <div class=" media-body col-md-12 col-lg-12 mb-1">
+                                                                    <textarea class="form-control" id="reason" name="reason" placeholder="Nhập phản hồi với người cho" rows="3" required></textarea>
+                                                                </div>
+                                                                <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
+                                                                <button type="submit" class="btn btn-success" name="Thanhcong">Thành công</button>
+                                                                <button type="button" class="btn btn-secondary" onclick="hideReasonForm_tc(<?php echo ($data1[$i]['idPost']) ?>)">Hủy</button>
+                                                            </form>
+                                                        </div>
+                                                        <div id="reason-form_tb<?php echo $data1[$i]['idPost'] ?>" style="display: none;">
+                                                            <form action="./view_detailerror.php" method="post">
+                                                                <div class=" media-body col-md-12 col-lg-12 mb-1">
+                                                                    <textarea class="form-control" id="reason" name="reason" placeholder="Nhập phản hồi với người cho" rows="3" required></textarea>
+                                                                </div>
+                                                                <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
+                                                                <button type="submit" class="btn btn-danger" name="Tuchoi">Từ chối</button>
+                                                                <button type="button" class="btn btn-secondary" onclick="hideReasonForm_tb(<?php echo ($data1[$i]['idPost']) ?>)">Hủy</button>
+                                                            </form>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-success" id="thanhcong<?php echo ($data1[$i]['idPost']) ?>" onclick="showReasonForm_tc(<?php echo ($data1[$i]['idPost']) ?>)">Nhận đồ thành công</button>
+                                                        <button type="submit" class="btn btn-danger" id="tuchoi<?php echo ($data1[$i]['idPost']) ?>" onclick="showReasonForm_tb(<?php echo ($data1[$i]['idPost']) ?>)">Nhận đồ thất bại </button>
+                                                    </div>
+                                                <?php else : ?>
+                                                    <div class="row mb-3">
+
+                                                        <label for="message" class="col-md-4 col-lg-3 col-form-label">Tin nhắn xác nhận</label>
+                                                        <div class="col-md-8 col-lg-9">
+                                                            <textarea class="form-control" id="message" name="message" rows="3" disabled><?= $data1[$i]['messageAfterReceiveGood'] ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                <?php endif ?>
                                             </div>
 
                                         </div>
@@ -288,6 +324,32 @@ curl_close($curl);
         if (file) {
             imgEL.src = URL.createObjectURL(file)
         }
+    }
+</script>
+<script>
+    function showReasonForm_tb(idPost) {
+        document.getElementById("reason-form_tb" + idPost).style.display = "block";
+        document.getElementById("thanhcong" + idPost).style.display = "none";
+        document.getElementById("tuchoi" + idPost).style.display = "none";
+    }
+
+    function hideReasonForm_tb(idPost) {
+        document.getElementById("reason-form_tb" + idPost).style.display = "none";
+        document.getElementById("thanhcong" + idPost).style.display = "inline-block";
+        document.getElementById("tuchoi" + idPost).style.display = "inline-block";
+    }
+</script>
+<script>
+    function showReasonForm_tc(idPost) {
+        document.getElementById("reason-form_tc" + idPost).style.display = "block";
+        document.getElementById("thanhcong" + idPost).style.display = "none";
+        document.getElementById("tuchoi" + idPost).style.display = "none";
+    }
+
+    function hideReasonForm_tc(idPost) {
+        document.getElementById("reason-form_tc" + idPost).style.display = "none";
+        document.getElementById("thanhcong" + idPost).style.display = "inline-block";
+        document.getElementById("tuchoi" + idPost).style.display = "inline-block";
     }
 </script>
 <?php include('../layout/footer.php'); ?>

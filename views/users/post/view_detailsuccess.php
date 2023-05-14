@@ -1,11 +1,13 @@
 <?php
 session_start();
 $token = $_SESSION['token'];
-if (isset($_POST['successGive'])) {
+if (isset($_POST['Thanhcong'])) {
     $id = $_POST['idRequest'];
+    $message = $_POST['reason'];
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idRequest' => $id,
+        'messageAfterReceiveGood' => $message,
     );
     // Chuyển dữ liệu sang định dạng JSON
     $json_data = json_encode($data);
@@ -36,8 +38,8 @@ if (isset($_POST['successGive'])) {
         echo 'Có lỗi xảy ra khi gửi yêu cầu PUT đến API';
     } else {
         $response = json_decode($result);
-        $_SESSION['give_success'] = 'Cho thành công';
-        header('location: ../post/view_displayReceiveRequest.php');
+        $_SESSION['give_success'] = 'Xác nhận thành công';
+        header('location: ../post/view_displaySendRequest.php');
         exit();
     }
 
