@@ -12,6 +12,8 @@ class AuthUsers extends JwtHandler
         $this->headers = $headers;
     }
 
+    // new stash test
+
     public function isValid()
     {
 
