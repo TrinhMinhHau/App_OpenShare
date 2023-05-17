@@ -188,7 +188,7 @@ class Post
     }
     public function addItem()
     {
-        $query = "INSERT INTO `baiviet` SET title=:title,description=:description,address=:address,photos=:photos,idType=:idType,idUser=:idUser";
+        $query = "INSERT INTO `baiviet` SET title=:title,description=:description,address=:address,photos=:photos,idType=:idType,idUser=:idUser,soluongdocho=:soluongdocho";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
         $stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
@@ -196,6 +196,7 @@ class Post
         $stmt->bindValue(':photos', $this->photos, PDO::PARAM_STR);
         $stmt->bindValue(':idType', $this->idType, PDO::PARAM_INT);
         $stmt->bindValue(':idUser', $this->idUser, PDO::PARAM_INT);
+        $stmt->bindValue(':soluongdocho', $this->soluongdocho, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             return true;

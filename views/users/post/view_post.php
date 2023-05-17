@@ -153,7 +153,13 @@
                                         <button class="btn btn-primary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                             Thêm địa chỉ
                                         </button>
-                                        <span class="text-warning">(*Thêm địa chỉ khác, ngoài địa chỉ của bạn)</span>
+                                        <!-- <span class="text-warning">(*Thêm địa chỉ khác, ngoài địa chỉ của bạn)</span> -->
+                                        <i class="bi bi-info-circle note text-warning" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1"></i>
+                                    <div class="collapse" id="collapseExample1">
+                                        <div class="card card-body">
+                                            Lựa chọn này nhằm mục đích để người cho chưa cập nhật địa chỉ có thể cho đồ hoặc có thể cho giúp người khác cho đồ khi họ không sử dụng App.
+                                        </div>
+                                    </div>
                                     </p>
                                 </div>
 
@@ -189,8 +195,12 @@
                                             <i class="bi bi-arrow-repeat repeat"></i>
                                         </button>
                                     </div>
-                                    <div class="input_field captch_input">
-                                        <input type="text" placeholder="Enter captcha" required />
+
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="" class="col-md-4 col-lg-3"></label>
+                                    <div class="col-md-8 col-lg-9 input_field captch_input">
+                                        <input type="text" placeholder="Nhập capcha" required />
                                     </div>
                                     <div class="message"></div>
                                 </div>
@@ -290,6 +300,12 @@
             right: 30px !important;
         }
 
+        .note {
+            position: relative !important;
+            top: 5px;
+            left: 10px !important;
+        }
+
         #listening_indicator {
             width: 150px;
         }
@@ -323,7 +339,7 @@
     <style>
         .input_field {
             position: relative;
-            width: 30%;
+            width: 50%;
         }
 
         .refresh_button {
@@ -367,6 +383,10 @@
             color: #6b6b6b;
             font-size: 22px;
             pointer-events: none;
+        }
+
+        .captch_input input {
+            padding: 10px 15px;
         }
 
         .captch_input input:focus {

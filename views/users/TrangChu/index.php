@@ -146,6 +146,22 @@
     </div>
     <!-- main-content -->
     <div class="main-content">
+        <div class="write-post-container" style="display: flex; justify-content: center; align-items: center;">
+
+            <div class="post-row">
+                <form action="" method="get">
+                    <div class="search-box">
+                        <img src="../assests/images/search.png" alt="" srcset="" />
+                        <input type="text" placeholder="Bạn cần tìm gì ?" name="keyword" id="keyword" value="<?php if (isset($_GET['keyword'])) echo $_GET['keyword'];
+                                                                                                                else ''  ?>" />
+                        <i class="bi bi-mic-fill" id="search_microphone" style="cursor:pointer"></i>
+                    </div>
+                    <div id="listening_indicator1"></div>
+                </form>
+
+            </div>
+
+        </div>
         <?php if (isset($_SESSION['cpw_suc'])) {
         ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -537,4 +553,46 @@
         background-color: #333;
         color: #fff;
     }
+
+    #listening_indicator1 {
+        margin-top: 5px;
+        width: 150px;
+        float: right;
+        border-radius: 5px;
+    }
 </style>
+<script>
+    document.getElementById("search_microphone").addEventListener("click", function() {
+        var old_text = document.getElementById("keyword").value;
+        var speech = true;
+        window.SpeechRecognition = window.webkitSpeechRecognition;
+        var listeningIndicator = document.getElementById("listening_indicator1");
+
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        recognition.lang = "vi-VN";
+        recognition.addEventListener("start", () => {
+            listeningIndicator.style.backgroundColor = "green";
+            listeningIndicator.style.color = "white";
+            listeningIndicator.textContent = "Đang lắng nghe...";
+        });
+
+        recognition.addEventListener("end", () => {
+            listeningIndicator.style.backgroundColor = "red";
+            listeningIndicator.textContent = "";
+        });
+        recognition.addEventListener("result", (e) => {
+            const transcript = Array.from(e.results)
+                .map((result) => result[0])
+                .map((result) => result.transcript)
+                .join("");
+
+            document.getElementById("keyword").value = old_text + ' ' + transcript;
+            console.log(transcript);
+        });
+
+        if (speech == true) {
+            recognition.start();
+        }
+    });
+</script>

@@ -42,7 +42,7 @@ const submitBtnClick = () => {
   message.classList.add("active");
   // Check if the entered captcha text is correct or not
   if (captchaInputBox.value !== captchaText && captchaInputBox.value !== "") {
-    message.innerText = "Entered captcha is not correct";
+    message.innerText = "Capcha không chính xác";
     message.style.color = "#FF2525";
     event.preventDefault();
   }
