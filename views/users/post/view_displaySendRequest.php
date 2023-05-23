@@ -305,10 +305,24 @@ curl_close($curl);
                                                             <label for="dateRequest" class="col-md-4 col-lg-3 col-form-label">Xác nhận hoàn tất</label>
                                                             <div id="reason-form_tc<?php echo $data1[$i]['idPost'] ?>" style="display: none;">
                                                                 <form action="./view_detailsuccess.php" method="post">
+                                                                    <div id="rating">
+                                                                        <input type="radio" id="star5" name="rating" value="5" required />
+                                                                        <label class="full" for="star5" title="Tuyệt vời - 5 sao"></label>
+                                                                        <input type="radio" id="star4" name="rating" value="4" required />
+                                                                        <label class="full" for="star4" title="tốt - 4 sao"></label>
+                                                                        <input type="radio" id="star3" name="rating" value="3" required />
+                                                                        <label class="full" for="star3" title="Sài được - 3 sao"></label>
+                                                                        <input type="radio" id="star2" name="rating" value="2" required />
+                                                                        <label class="full" for="star2" title="không tốt - 2 sao"></label>
+                                                                        <input type="radio" id="star1" name="rating" value="1" required />
+                                                                        <label class="full" for="star1" title="tệ - 1 sao"></label>
+                                                                    </div>
                                                                     <div class=" media-body col-md-12 col-lg-12 mb-1">
                                                                         <textarea class="form-control" id="reason" name="reason" placeholder="Nhập phản hồi với người cho" rows="3" required></textarea>
                                                                     </div>
                                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
+                                                                    <input type="hidden" name="idPost" value="<?= $data1[$i]['idPost'] ?>">
+                                                                    <input type="hidden" name="idUserRequest" value="<?= $data1[$i]['idUserRequest']  ?>">
                                                                     <button type="submit" class="btn btn-success" name="Thanhcong">Thành công</button>
                                                                     <button type="button" class="btn btn-secondary" onclick="hideReasonForm_tc(<?php echo ($data1[$i]['idPost']) ?>)">Hủy</button>
                                                                 </form>
@@ -319,6 +333,8 @@ curl_close($curl);
                                                                         <textarea class="form-control" id="reason" name="reason" placeholder="Nhập phản hồi với người cho" rows="3" required></textarea>
                                                                     </div>
                                                                     <input type="hidden" name="idRequest" value="<?= $data1[$i]['idRequest'] ?>">
+                                                                    <input type="hidden" name="idPost" value="<?= $data1[$i]['idPost'] ?>">
+                                                                    <input type="hidden" name="idUserRequest" value="<?= $data1[$i]['idUserRequest']  ?>">
                                                                     <button type="submit" class="btn btn-danger" name="Tuchoi">Từ chối</button>
                                                                     <button type="button" class="btn btn-secondary" onclick="hideReasonForm_tb(<?php echo ($data1[$i]['idPost']) ?>)">Hủy</button>
                                                                 </form>
@@ -333,6 +349,36 @@ curl_close($curl);
                                                                 <textarea class="form-control" id="message" name="message" rows="3" disabled><?= $data1[$i]['messageAfterReceiveGood'] ?></textarea>
                                                             </div>
                                                         </div>
+                                                        <?php if ($data1[$i]['status'] == 3) : ?>
+
+                                                            <div class="row mb-3">
+                                                                <label for="star" class="col-md-4 col-lg-3 col-form-label">Đánh giá của bạn:</label>
+                                                                <div class="col-md-8 col-lg-9 mt-2">
+                                                                    <?php if ($data1[$i]['ratingStar'] == 1) : ?>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                    <?php elseif ($data1[$i]['ratingStar'] == 2) : ?>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                    <?php elseif ($data1[$i]['ratingStar'] == 3) : ?>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                    <?php elseif ($data1[$i]['ratingStar'] == 4) : ?>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                    <?php elseif ($data1[$i]['ratingStar'] == 5) : ?>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+
                                                     <?php endif ?>
                                                 </div>
 

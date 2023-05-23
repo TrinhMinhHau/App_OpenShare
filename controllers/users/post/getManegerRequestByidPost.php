@@ -46,7 +46,9 @@ if ($auth_info['success']) {
                 'nameType' => $nameType,
                 'photoURL' => $photoURL,
                 'messageResponse' => $messageResponse,
-                'messageAfterReceiveGood' => $messageAfterReceiveGood
+                'messageAfterReceiveGood' => $messageAfterReceiveGood,
+                'ratingStar' => $ratingStar
+
             );
             array_push($question_array['data'], $ManagerType_item);
         }

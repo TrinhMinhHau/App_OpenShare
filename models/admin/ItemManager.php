@@ -14,7 +14,7 @@ class ItemManager
     }
     public function displayItem()
     {
-        $query = "SELECT * FROM doanhmuc ORDER BY idType DESC";
+        $query = "SELECT * FROM doanhmuc";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
