@@ -234,12 +234,33 @@ curl_close($curl);
                                     echo "Đã duyệt";
                                 } elseif ($data1[$i]['status'] == 2) {
                                     echo "Từ chối";
-                                } else if ($data1[$i]['status'] == 3) {
-                                    echo "Đã cho thành công";
-                                } else if ($data1[$i]['status'] == 4) {
+                                } else if ($data1[$i]['status'] == 3) { ?>
+                                    <?php if ($data1[$i]['ratingStar'] == 1) : ?>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    <?php elseif ($data1[$i]['ratingStar'] == 2) : ?>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    <?php elseif ($data1[$i]['ratingStar'] == 3) : ?>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    <?php elseif ($data1[$i]['ratingStar'] == 4) : ?>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    <?php elseif ($data1[$i]['ratingStar'] == 5) : ?>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    <?php endif; ?>
+                                <?php      } else if ($data1[$i]['status'] == 4) {
                                     echo "Đã cho thất bại";
                                 }
-                                ?></p>
+                                ?>
+                            </p>
                         </div>
                     </div>
 

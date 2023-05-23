@@ -135,6 +135,12 @@
                     if (isset($data_merge[$i]['issen_N']) && $data_merge[$i]['issen_N'] == 0  && ($data_merge[$i]['idUser'] == $result['user']['idUser']) && ($data_merge[$i]['status_accept_reject'] === null)) {
                         $dem++;
                     }
+                    if (isset($data_merge[$i]['issen_N']) && $data_merge[$i]['issen_N'] == 0  && ($data_merge[$i]['idUser'] == $result['user']['idUser']) && ($data_merge[$i]['status_accept_reject'] == 2)) {
+                        $dem++;
+                    }
+                    if (isset($data_merge[$i]['issen_N']) && $data_merge[$i]['issen_N'] == 0  && ($data_merge[$i]['idUser'] == $result['user']['idUser']) && ($data_merge[$i]['status_accept_reject'] == 3)) {
+                        $dem++;
+                    }
                 }
 
                 ?>
@@ -243,6 +249,46 @@
                                         <img src="../assests/images/icon_refuse.png" class="settings-icon" alt="" />
                                         <a href="../post/view_displaySendRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
                                             <p>Yêu cầu của bạn đến bài cho <span class="text-primary"><?= $data_merge[$i]['title'] ?></span> bị từ chối</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+                            <!-- Thông báo sau khi giao hàng thành công -->
+                            <?php if (isset($data_merge[$i]['idUser']) && $data_merge[$i]['idUser'] === $result['user']['idUser'] && $data_merge[$i]['status_accept_reject'] === 2) : ?>
+                                <?php if ($data_merge[$i]['issen_N'] == 1) : ?>
+                                    <div class="setting-notice isSeen">
+                                        <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã xác nhận nhận đồ <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span> thành công</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="setting-notice">
+                                        <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã xác nhận, nhận đồ <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span> thành công</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+
+                            <?php if (isset($data_merge[$i]['idUser']) && $data_merge[$i]['idUser'] === $result['user']['idUser'] && $data_merge[$i]['status_accept_reject'] === 3) : ?>
+                                <?php if ($data_merge[$i]['issen_N'] == 1) : ?>
+                                    <div class="setting-notice isSeen">
+                                        <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã xác nhận, nhận đồ <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span> thất bại</p>
+                                            <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="setting-notice">
+                                        <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
+                                        <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã xác nhận, nhận đồ <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span> thất bại</p>
                                             <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>

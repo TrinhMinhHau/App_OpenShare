@@ -4,10 +4,16 @@ $token = $_SESSION['token'];
 if (isset($_POST['Thanhcong'])) {
     $id = $_POST['idRequest'];
     $message = $_POST['reason'];
+    $rating = $_POST['rating'];
+    $idUserRequest = $_POST['idUserRequest'];
+    $idPost = $_POST['idPost'];
     // Dữ liệu của câu hỏi cần cập nhật
     $data = array(
         'idRequest' => $id,
         'messageAfterReceiveGood' => $message,
+        'ratingStar' => $rating,
+        'idUserRequest' => $idUserRequest,
+        'idPost' => $idPost
     );
     // Chuyển dữ liệu sang định dạng JSON
     $json_data = json_encode($data);

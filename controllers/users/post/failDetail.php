@@ -31,6 +31,8 @@ if ($auth_info['success']) {
         // $idChiTietYC = $request_body['idChiTietYC'];
         $idRequest = $request_body['idRequest'];
         $messageAfterReceiveGood = $request_body['messageAfterReceiveGood'];
+        $idUserRequest = $request_body['idUserRequest'];
+        $idPost = $request_body['idPost'];
         var_dump($request_body);
         // decode image data from base64
         // $image = base64_decode($image_data);
@@ -60,8 +62,14 @@ if ($auth_info['success']) {
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
         $update_stmt->bindValue(':messageAfterReceiveGood', $messageAfterReceiveGood, PDO::PARAM_STR);
+
+        // chèn vào bảng thông báo.
+        $query1 = "INSERT INTO `thongbaochonhan` SET idPostRequest_N=:idPost,idUserRequest_N=:idUserRequest,status_accept_reject = 3";
+        $stmt1 = $conn->prepare($query1);
+        $stmt1->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+        $stmt1->bindValue(':idUserRequest', $idUserRequest, PDO::PARAM_INT);
         // execute statement
-        if ($update_stmt->execute() && $query3_stmt->execute()) {
+        if ($update_stmt->execute() && $query3_stmt->execute() && $stmt1->execute()) {
             http_response_code(200);
             echo json_encode(['message' => $success_message]);
         } else {

@@ -115,7 +115,7 @@ class Post
     public function displayRequest()
     {
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
-            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay,p.idUser,yc.messageAfterReceiveGood	
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay,p.idUser,yc.messageAfterReceiveGood,yc.ratingStar
             FROM yeucau yc 
             JOIN baiviet p ON yc.idPost = p.idPost
             JOIN user u ON u.idUser= p.idUser
@@ -134,7 +134,7 @@ class Post
         $stmt1->bindValue(':idNotice', $this->idNotice, PDO::PARAM_INT);
         $stmt1->execute();
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.requestDate,yc.status,
-            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay,p.idUser,yc.messageAfterReceiveGood
+            p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.reviewDay,p.idUser,yc.messageAfterReceiveGood,yc.ratingStar
             FROM yeucau yc 
             JOIN baiviet p ON yc.idPost = p.idPost
             JOIN user u ON u.idUser= p.idUser
@@ -152,7 +152,7 @@ class Post
     public function displayManegerRequest()
     {
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest, yc.requestDate, yc.status,
-        p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.messageAfterReceiveGood
+        p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.messageAfterReceiveGood,yc.ratingStar
         FROM yeucau yc
         JOIN baiviet p ON yc.idPost = p.idPost
         JOIN user u ON u.idUser= yc.idUserRequest
@@ -172,7 +172,7 @@ class Post
         $stmt1->bindValue(':idNotice', $this->idNotice, PDO::PARAM_INT);
         $stmt1->execute();
         $query = "SELECT yc.idRequest, yc.idPost, yc.idUserRequest, yc.message, yc.idUserRequest, yc.requestDate, yc.status,
-        p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.messageAfterReceiveGood
+        p.title, p.description, p.postDate, p.address, p.photos, p.idType,u.name,d.nameType,u.photoURL,yc.messageResponse,yc.messageAfterReceiveGood,yc.ratingStar
         FROM yeucau yc
         JOIN baiviet p ON yc.idPost = p.idPost
         JOIN user u ON u.idUser= yc.idUserRequest

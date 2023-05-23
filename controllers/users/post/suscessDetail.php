@@ -30,6 +30,9 @@ if ($auth_info['success']) {
         // extract request parameters
         $idRequest = $request_body['idRequest'];
         $messageAfterReceiveGood = $request_body['messageAfterReceiveGood'];
+        $rating = $request_body['ratingStar'];
+        $idUserRequest = $request_body['idUserRequest'];
+        $idPost = $request_body['idPost'];
         var_dump($request_body);
         // decode image data from base64
         // $image = base64_decode($image_data);
@@ -44,12 +47,21 @@ if ($auth_info['success']) {
         // bind parameters to statement
         // $update_stmt->bindValue(':idChiTietYC', $idChiTietYC, PDO::PARAM_INT);
 
-        $update_query = "UPDATE yeucau SET status=3,messageAfterReceiveGood=:messageAfterReceiveGood,successDay=now() WHERE idRequest=:idRequest ";
+        $update_query = "UPDATE yeucau SET status=3,messageAfterReceiveGood=:messageAfterReceiveGood,successDay=now(),ratingStar=:ratingStar WHERE idRequest=:idRequest ";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bindValue(':idRequest', $idRequest, PDO::PARAM_INT);
         $update_stmt->bindValue(':messageAfterReceiveGood', $messageAfterReceiveGood, PDO::PARAM_STR);
+        $update_stmt->bindValue(':ratingStar', $rating, PDO::PARAM_INT);
+
+        // chèn vào bảng thông báo.
+        $query1 = "INSERT INTO `thongbaochonhan` SET idPostRequest_N=:idPost,idUserRequest_N=:idUserRequest,status_accept_reject = 2";
+        $stmt1 = $conn->prepare($query1);
+        $stmt1->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+        $stmt1->bindValue(':idUserRequest', $idUserRequest, PDO::PARAM_INT);
+
+
         // execute statement
-        if ($update_stmt->execute()) {
+        if ($update_stmt->execute() && $stmt1->execute()) {
             http_response_code(200);
             echo json_encode(['message' => $success_message]);
         } else {

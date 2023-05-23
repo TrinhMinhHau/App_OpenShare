@@ -197,41 +197,43 @@ curl_close($curl);
 
             <!-- ENDUPDATE -->
             <!-- DELETE  -->
+            <?php if ($data1[$i]['idType'] === 8) : ?>
+            <?php else : ?>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idType']) ?>">
+                    <i class="bi bi-trash-fill"></i> Xóa
+                </button>
+                <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idType']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
+                    <div class="modal-dialog modal-lg ">
+                        <!-- modal-xl -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="Label_Edit">Xóa</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="./view_deleteItem.php" method="post">
+                                <div class="modal-body">
 
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo ($data1[$i]['idType']) ?>">
-                <i class="bi bi-trash-fill"></i> Xóa
-            </button>
-            <div class="modal fade" id="ModalDelete<?php echo ($data1[$i]['idType']) ?>" tabindex="-1" aria-labelledby="Label_Edit" aria-hidden="true">
-                <div class="modal-dialog modal-lg ">
-                    <!-- modal-xl -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="Label_Edit">Xóa</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="./view_deleteItem.php" method="post">
-                            <div class="modal-body">
 
+                                    <input type="hidden" name="idType" id="idType" value="<?php echo ($data1[$i]['idType']) ?>">
 
-                                <input type="hidden" name="idType" id="idType" value="<?php echo ($data1[$i]['idType']) ?>">
-
-                                <div class="form-group">
-                                    <label>Bạn có chắc chắn xóa <span class="text-danger font-weight-bold"> <?php echo ($data1[$i]['nameType']) ?></span> hay không?</label>
+                                    <div class="form-group">
+                                        <label>Bạn có chắc chắn xóa <span class="text-danger font-weight-bold"> <?php echo ($data1[$i]['nameType']) ?></span> hay không?</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="submit" name="deleteItem" class="btn btn-danger">Xóa</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" name="deleteItem" class="btn btn-danger">Xóa</button>
 
-                            </div>
-                        </form>
+                                </div>
+                            </form>
 
+
+                        </div>
 
                     </div>
-
                 </div>
-            </div>
-            </div>
+                </div>
+            <?php endif ?>
         </td>
         <!-- END-DELETE  -->
 
