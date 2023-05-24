@@ -31,6 +31,7 @@ if ($num > 0) {
       'description' => $description,
       'isShow' => $isShow,
       'postDate' => $postDate,
+      'approvDate' => $approvDate,
       'address' => $address,
       'idStaffApprove' => $idStaffApprove,
       'photos' => $photos,

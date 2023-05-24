@@ -131,7 +131,7 @@ curl_close($curl);
                                 <a href="../quanlytaikhoan/view_profile.php">
                                     <p><?= $result['user']['name'] ?></p>
                                 </a>
-                                <span><?= $data1[$i]['postDate'] ?></span>
+                                <span><?php convert_time($data1[$i]['approvDate']) ?></span>
                             </div>
                             <div class="address">
                                 <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
@@ -224,7 +224,7 @@ curl_close($curl);
                                 <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUserRequest'] ?>">
                                     <p><?= $data1[$i]['name'] ?></p>
                                 </a>
-                                <span><?= $data1[$i]['requestDate'] ?></span>
+                                <span><?php convert_time($data1[$i]['requestDate']) ?></span>
                             </div>
                         </div>
                         <div class="status_post">

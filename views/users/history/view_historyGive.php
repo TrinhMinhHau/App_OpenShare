@@ -138,7 +138,7 @@ curl_close($curl);
                                     <a href="../quanlytaikhoan/view_profile.php">
                                         <p><?= $result['user']['name'] ?></p>
                                     </a>
-                                    <span><?= $data1[$i]['postDate'] ?></span>
+                                    <span><?php convert_time($data1[$i]['approvDate']) ?></span>
                                 </div>
                                 <div class="address">
                                     <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
@@ -200,17 +200,43 @@ curl_close($curl);
                                         echo "Đã duyệt";
                                     } elseif ($data1[$i]['status'] == 2) {
                                         echo "Từ chối";
-                                    } else if ($data1[$i]['status'] == 3) {
-                                        echo "Đã cho thành công";
-                                    } else if ($data1[$i]['status'] == 4) {
+                                    } else if ($data1[$i]['status'] == 3) { ?>
+                                        <?php if ($data1[$i]['ratingStar'] == 1) : ?>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        <?php elseif ($data1[$i]['ratingStar'] == 2) : ?>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        <?php elseif ($data1[$i]['ratingStar'] == 3) : ?>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        <?php elseif ($data1[$i]['ratingStar'] == 4) : ?>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        <?php elseif ($data1[$i]['ratingStar'] == 5) : ?>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        <?php endif; ?>
+                                    <?php    } else if ($data1[$i]['status'] == 4) {
                                         echo "Đã cho thất bại";
                                     }
-                                    ?></p>
+                                    ?>
+                                </p>
                             </div>
                         </div>
 
-                        <div style="margin-bottom: 5px;">
-                            <span><?= $data1[$i]['message'] ?></span>
+                        <div style="margin: 10px 0;">
+                            <span>Yêu cầu được gửi đến:</span><span class="text-primary"> <?= $data1[$i]['message'] ?></span> <br />
+                            <?php if ($data1[$i]['messageResponse']) : ?> <span>Phản hồi của bạn: </span><span class="text-primary"><?= $data1[$i]['messageResponse'] ?></span>
+                            <?php endif; ?><br />
+                            <?php if ($data1[$i]['messageAfterReceiveGood']) : ?> <span>Phản hồi từ người xin: </span><span class="text-primary"><?= $data1[$i]['messageAfterReceiveGood'] ?></span>
+                            <?php endif; ?>
+
                         </div>
                     </div>
                 </div>

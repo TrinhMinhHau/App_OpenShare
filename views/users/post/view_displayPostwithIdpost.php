@@ -65,7 +65,7 @@
                             <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[0]['idUser'] ?>">
                                 <p><?= $data1[0]['name'] ?></p>
                             </a>
-                            <span><?= $data1[0]['postDate'] ?></span>
+                            <span><?php convert_time($data1[0]['approvDate']) ?></span>
                         </div>
                         <div class="address">
                             <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[0]['address'])[0] ?></p>
