@@ -135,7 +135,7 @@ curl_close($curl);
                                 <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUser'] ?>">
                                     <p><?= $data1[$i]['name'] ?></p>
                                 </a>
-                                <span><?= $data1[$i]['postDate'] ?></span>
+                                <span><?php convert_time($data1[$i]['approvDate']) ?></span>
                             </div>
                             <div class="address">
                                 <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
@@ -235,7 +235,7 @@ curl_close($curl);
                                 </div>
 
                             </div>
-                            <?php if ($data1[$i]['status'] == 1 || $data1[$i]['status'] == 3 || $data1[$i]['status'] == 4) : ?>
+                            <?php if ($data1[$i]['status'] == 3) : ?>
                                 <div style="cursor:pointer; margin-left: 20px;">
                                     <div data-bs-toggle="modal" data-bs-target="#response<?php echo $data1[$i]['idPost'] ?>"><img src="../assests/images/icon_response.png"> <small>Yêu cầu được phản hồi </small></div>
 
@@ -262,6 +262,39 @@ curl_close($curl);
                                                             <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?= $data1[$i]['reviewDay'] ?></textarea>
                                                         </div>
                                                     </div>
+                                                    <div class="row mb-3">
+                                                        <label for="message" class="col-md-4 col-lg-3 col-form-label">Tin nhắn xác nhận</label>
+                                                        <div class="col-md-8 col-lg-9">
+                                                            <textarea class="form-control" id="message" name="message" rows="3" disabled><?= $data1[$i]['messageAfterReceiveGood'] ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="star" class="col-md-4 col-lg-3 col-form-label">Đánh giá của bạn:</label>
+                                                        <div class="col-md-8 col-lg-9 mt-2">
+                                                            <?php if ($data1[$i]['ratingStar'] == 1) : ?>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                            <?php elseif ($data1[$i]['ratingStar'] == 2) : ?>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                            <?php elseif ($data1[$i]['ratingStar'] == 3) : ?>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                            <?php elseif ($data1[$i]['ratingStar'] == 4) : ?>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                            <?php elseif ($data1[$i]['ratingStar'] == 5) : ?>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                                <i class="bi bi-star-fill text-warning"></i>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
 
                                             </div>

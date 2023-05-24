@@ -39,6 +39,7 @@ if ($auth_info['success']) {
                 'title' => $title,
                 'description' => $description,
                 'postDate' => $postDate,
+                'approvDate' => $approvDate,
                 'address' => $address,
                 'photos' => $photos,
                 'idType' => $idType,

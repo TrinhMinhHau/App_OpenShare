@@ -173,7 +173,7 @@ curl_close($curl);
                                 <a href="../quanlytaikhoan/view_user.php?idUser=<?= $data1[$i]['idUser'] ?>">
                                     <p><?= $data1[$i]['name'] ?></p>
                                 </a>
-                                <span><?= $data1[$i]['postDate'] ?></span>
+                                <span><?php convert_time($data1[$i]['approvDate']) ?></span>
                             </div>
                             <div class="address">
                                 <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
@@ -262,7 +262,7 @@ curl_close($curl);
                                                 <div class="row mb-3">
                                                     <label for="dateRequest" class="col-md-4 col-lg-3 col-form-label">Thời gian yêu cầu</label>
                                                     <div class="col-md-8 col-lg-9">
-                                                        <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?= $data1[$i]['requestDate'] ?></textarea>
+                                                        <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?php convert_time($data1[$i]['requestDate']) ?></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -297,7 +297,7 @@ curl_close($curl);
                                                     <div class="row mb-3">
                                                         <label for="dateRequest" class="col-md-4 col-lg-3 col-form-label">Thời gian duyệt yêu cầu</label>
                                                         <div class="col-md-8 col-lg-9">
-                                                            <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?= $data1[$i]['reviewDay'] ?></textarea>
+                                                            <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?php convert_time($data1[$i]['reviewDate']) ?></textarea>
                                                         </div>
                                                     </div>
                                                     <?php if ($data1[$i]['status'] === 1) : ?>

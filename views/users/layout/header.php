@@ -160,16 +160,20 @@
                         $thoigian = round((strtotime(date('Y-m-d H:i:s')) - strtotime($datecreate)) / 3600, 0) + 5;
                         if ($thoigian <= 24) {
                             $thoigianhienthi = $thoigian;
-                        } else {
+                        } else if ($thoigian > 24 && $thoigian <= 168) {
                             $thoigianhienthi = round($thoigian / 24);
+                        } else {
+                            $thoigianhienthi = $datecreate;
                         }
                         $text = '';
                         if ($thoigian <= 24) {
                             $text = ' giờ trước';
-                        } else {
+                        } else if ($thoigian > 24 && $thoigian <= 168) {
                             $text = ' ngày trước';
+                        } else {
+                            $text = '';
                         }
-                        echo 'Cách đây ' . $thoigianhienthi . $text;
+                        echo $thoigianhienthi . $text;
                     }
                     ?>
                     <?php if ($data_merge == null) : ?>

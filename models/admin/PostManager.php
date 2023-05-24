@@ -39,7 +39,7 @@ class PostManager
     }
     public function approvPost()
     {
-        $query = "UPDATE baiviet SET isShow=1,idStaffApprove=:idStaffApprove where idPost =:idPost";
+        $query = "UPDATE baiviet SET isShow=1,idStaffApprove=:idStaffApprove, approvDate=NOW() where idPost =:idPost";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->bindValue(':idStaffApprove', $this->idStaffApprove, PDO::PARAM_INT);
@@ -59,7 +59,7 @@ class PostManager
     }
     public function rejectPost()
     {
-        $query = "UPDATE baiviet SET isShow=2,idStaffApprove=:idStaffApprove where idPost =:idPost";
+        $query = "UPDATE baiviet SET isShow=2,idStaffApprove=:idStaffApprove, approvDate=NOW() where idPost =:idPost";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':idPost', $this->idPost, PDO::PARAM_INT);
         $stmt->bindValue(':idStaffApprove', $this->idStaffApprove, PDO::PARAM_INT);

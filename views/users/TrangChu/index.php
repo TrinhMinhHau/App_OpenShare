@@ -181,6 +181,7 @@
         <?php
         } ?>
         <?php
+
         if ($data1 == null) {
         } else {
             for ($i = 0; $i < count($data1); $i++) {
@@ -202,7 +203,7 @@
                                             <p><?= $data1[$i]['name'] ?></p>
                                         </a>
                                     <?php endif; ?>
-                                    <span><?= $data1[$i]['postDate'] ?></span>
+                                    <span><?php convert_time($data1[$i]['approvDate']) ?></span>
                                 </div>
                                 <div class="address">
                                     <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
