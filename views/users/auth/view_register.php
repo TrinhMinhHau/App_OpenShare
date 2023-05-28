@@ -12,11 +12,11 @@
 <body>
     <?php
     session_start();
-    if (isset($_GET['register'])) {
+    if (isset($_POST['register'])) {
 
-        $name = $_GET['name'];
-        $password = $_GET['password'];
-        $userName = $_GET['userName'];
+        $name = $_POST['name'];
+        $password = $_POST['password'];
+        $userName = $_POST['userName'];
         $url = 'http://localhost:8000/website_openshare/controllers/users/auth/register.php';
         $data = array(
             'name' => $name,
@@ -61,12 +61,12 @@
                 <p>OPENSHARE CHO ĐI LÀ CÒN MÃI</p>
             </div>
             <div class="right">
-                <form action="" class="form-login" method="get">
-                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_GET['userName'])) echo $_GET['userName'];
+                <form action="" class="form-login" method="post">
+                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_POST['userName'])) echo $_POST['userName'];
                                                                                             else '';  ?>" required />
-                    <input type="text" placeholder="Họ và tên" name="name" value="<?php if (isset($_GET['name'])) echo $_GET['name'];
+                    <input type="text" placeholder="Họ và tên" name="name" value="<?php if (isset($_POST['name'])) echo $_POST['name'];
                                                                                     else '';  ?>" required />
-                    <input type="password" placeholder="Mật khẩu" name="password" id="password" value="<?php if (isset($_GET['password'])) echo $_GET['password'];
+                    <input type="password" placeholder="Mật khẩu" name="password" id="password" value="<?php if (isset($_POST['password'])) echo $_POST['password'];
                                                                                                         else '';  ?>" required />
                     <i class="bi bi-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
                     <div id="err_dl" style="margin-bottom: 5px;"></div>

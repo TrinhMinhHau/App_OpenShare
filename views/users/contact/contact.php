@@ -1,69 +1,6 @@
 <?php include('../layout/header.php'); ?>
 
 <body>
-    <?php
-
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-
-    // include "PHPMailer/src/PHPMailer.php";
-    // include "PHPMailer/src/Exception.php";
-    // include "PHPMailer/src/OAuth.php";
-    // include "PHPMailer/src/POP3.php";
-    // include "PHPMailer/src/SMTP.php";
-
-
-    require './PHPMailer/src/Exception.php';
-    require './PHPMailer/src/PHPMailer.php';
-    require './PHPMailer/src/SMTP.php';
-    $mail = new PHPMailer(true);
-    try {
-        //Server settings
-        $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-
-        $mail->SMTPAuth = true;
-        if (isset($_POST['submit'])) {                             // Enable SMTP authentication
-            $mail->Username = $_POST['email'];                 // SMTP username
-            $mail->Password = $_POST['password'];                           // SMTP password
-            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
-
-            //Recipients
-            $mail->setFrom($_POST['email'], $_POST['name']);
-            $mail->addAddress('hau.tm.61cntt@ntu.edu.vn', 'TrinhMinhHau');     // Add a recipient              // Name is optional
-            //$mail->addReplyTo('info@example.com', 'Information');
-
-            // $mail->addCC('cc@example.com');
-            // $mail->addBCC('bcc@example.com');
-
-            //Attachments
-            // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
-            //Content
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $subject = $_POST['subject'];
-            $encodedSubject = mb_encode_mimeheader($subject, 'UTF-8');
-            $mail->Subject = $encodedSubject;
-            $mail->Body    = $_POST['message'];
-            // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-            $mail->send();
-            // echo "<h2 style='text-align:center;color:red;'>" . 'Gửi phản hồi thành công, chúng tôi sẽ phản hồi bạn sớm nhất!!!' . "</h2>";
-            echo "<script>
-			alert('Gửi phản hồi thành công, chúng tôi sẽ phản hồi bạn sớm nhất!!!');
-			</script>";
-        }
-    } catch (Exception $e) {
-        echo "<script>
-        alert('Gửi thất bại: $mail->ErrorInfo');
-        </script>";
-    }
-
-    ?>
     <div class="content contact-main">
         <!----start-contact---->
         <div class="contact-info">
@@ -113,21 +50,6 @@
                     </div>
                     <div class="clear"></div>
                 </div>
-                <form method="post" action="">
-                    <div class="contact-form">
-                        <div class="contact-to">
-                            <input type="text" class="text" name="name" value="Tên..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Tên...';}" required>
-                            <input type="text" class="text" name="email" value="Email..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email...';}" required>
-                            <input type="text" class="text" name="subject" value="Tiêu đề..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Chủ đề...';}" required>
-                            <input type="password" class="text" name="password" placeholder="Mật khẩu App..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Mật khẩu...';} " style="margin-left: 10px;" required>
-                        </div>
-                        <div class="text2">
-                            <textarea value="Nội dung..." name="message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nội dung...';}">Nội dung...</textarea>
-                        </div>
-                        <span><input type="submit" class="" value="Gửi" name="submit"></span>
-                        <div class="clear"></div>
-                    </div>
-                </form>
             </div>
         </div>
         <!----//End-contact---->
@@ -187,107 +109,10 @@
         color: #626262;
     }
 
-    .contact-to input[type="text"] {
-        padding: 12px 10px;
-        width: 20%;
-        font-family: "Open Sans", sans-serif;
-        margin: 12px 0;
-        border: 1px solid rgba(192, 192, 192, 0.61);
-        color: #626262;
-        background: #fff;
-        float: left;
-        outline: none;
-        font-size: 0.85em;
-        transition: border-color 0.3s;
-        -o-transition: border-color 0.3s;
-        -ms-transition: border-color 0.3s;
-        -moz-transition: border-color 0.3s;
-        -webkit-transition: border-color 0.3s;
-        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -moz-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -o-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        -o-border-radius: 4px;
-    }
-
-    .contact-to input[type="text"]:nth-child(2),
-    .contact-to input[type="text"]:nth-child(3) {
-        margin-left: 10px;
-    }
-
     ul {
         list-style: none;
         margin: 0px;
         /* padding: 0px; */
-    }
-
-    .text2 input[type="text"],
-    .text2 textarea {
-        width: 82%;
-        margin: 12px 0;
-        border: 1px solid rgba(192, 192, 192, 0.61);
-        color: #626262;
-        font-family: "Open Sans", sans-serif;
-        outline: none;
-        margin-bottom: 25px;
-        height: 100px;
-        padding: 12px 10px;
-        font-size: 0.85em;
-        transition: border-color 0.3s;
-        -o-transition: border-color 0.3s;
-        -ms-transition: border-color 0.3s;
-        -moz-transition: border-color 0.3s;
-        -webkit-transition: border-color 0.3s;
-        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -moz-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -o-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        -o-border-radius: 4px;
-    }
-
-    .text2 textarea {
-        height: 180px;
-    }
-
-    .text2 input[type="text"]:hover,
-    .text2 textarea:hover,
-    .contact-to input[type="text"]:hover {
-        border: 1px solid rgba(228, 93, 93, 0.33);
-    }
-
-    .contact-form input[type="submit"] {
-        background: #e45d5d;
-        color: #fff;
-        padding: 0.9em 3em;
-        display: inline-block;
-        text-transform: uppercase;
-        transition: 0.5s all;
-        -webkit-transition: 0.5s all;
-        -moz-transition: 0.5s all;
-        -o-transition: 0.5s all;
-        border-radius: 0.3em;
-        -webkit-border-radius: 0.3em;
-        -moz-border-radius: 0.3em;
-        -o-border-radius: 0.3em;
-        font-size: 0.875em;
-        border-top: none;
-        border-right: none;
-        border-left: none;
-        border-bottom: 4px solid #b93838;
-        outline: none;
-        cursor: pointer;
-        font-family: "Open Sans", sans-serif;
-    }
-
-    .contact-form input[type="submit"]:hover {
-        background: #1c1c20;
-        border-bottom: 4px solid #333;
     }
 
     .span_1_of_first1 h5 {
@@ -316,33 +141,6 @@
         margin-bottom: 1em;
     }
 
-    input[type='password'] {
-        margin-left: 50px;
-        padding: 12px 10px;
-        width: 20%;
-        font-family: "Open Sans", sans-serif;
-        margin: 12px 0;
-        border: 1px solid rgba(192, 192, 192, 0.61);
-        color: #626262;
-        background: #fff;
-        float: left;
-        outline: none;
-        font-size: 0.85em;
-        transition: border-color 0.3s;
-        -o-transition: border-color 0.3s;
-        -ms-transition: border-color 0.3s;
-        -moz-transition: border-color 0.3s;
-        -webkit-transition: border-color 0.3s;
-        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -moz-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        -o-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        -o-border-radius: 4px;
-    }
-
     .clear {
         clear: both;
     }
@@ -351,17 +149,6 @@
     @media (max-width: 900px) {
         .wrap {
             width: 70%;
-        }
-
-        .contact-to input[type="text"]:nth-child(2),
-        .contact-to input[type="text"]:nth-child(3),
-        .contact-to input[type="password"] {
-            margin-left: 0px !important;
-        }
-
-        .contact-to input[type="text"],
-        .contact-to input[type="password"] {
-            width: 96%;
         }
 
         .text2 input[type="text"],

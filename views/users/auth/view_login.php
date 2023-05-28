@@ -14,9 +14,9 @@
     session_start();
     $userName = '';
     $password = '';
-    if (isset($_GET['login'])) {
-        $userName = $_GET['userName'];
-        $password = $_GET['password'];
+    if (isset($_POST['login'])) {
+        $userName = $_POST['userName'];
+        $password = $_POST['password'];
 
         $url = 'http://localhost:8000/website_openshare/controllers/users/auth/login.php';
         $data = array(
@@ -74,14 +74,14 @@
                     unset($_SESSION['res_suc']);
                 }
                 ?>
-                <form action="" class="form-login" method="get">
-                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_GET['userName'])) echo $_GET['userName'];
+                <form action="" class="form-login" method="post">
+                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_POST['userName'])) echo $_POST['userName'];
                                                                                             else '';  ?>" required />
-                    <input type="password" placeholder="Mật khẩu" name="password" value="<?php if (isset($_GET['password'])) echo $_GET['password'];
+                    <input type="password" placeholder="Mật khẩu" name="password" value="<?php if (isset($_POST['password'])) echo $_POST['password'];
                                                                                             else '';  ?>" id="password" required />
                     <i class="bi bi-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
                     <div id="err_dl" style="margin-bottom: 5px;"></div>
-                    <button class="loginBtn" type="submit" name="login">Login</button>
+                    <button class="loginBtn" type="submit" name="login">Đăng nhập</button>
                     <div class="sign-up">
                         <a href="./view_register.php" class="signupBtn">Tạo tài khoản mới</a>
                     </div>

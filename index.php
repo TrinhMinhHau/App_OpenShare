@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php $base_url = "http://localhost:8000/website_openshare/views/users"; ?>
-<?php $base_url_file = "http://localhost:8000/website_openshare/"; ?>
+
 
 <head>
     <meta charset="UTF-8" />
@@ -9,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OpenShare</title>
 
-    <link href="<?= $base_url_file ?>assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= $base_url_file ?>assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <script src="<?= $base_url_file ?>assets/vendor/bootstrap/js/bootstrap.min.js" rel="stylesheet"></script>
-    <link rel="stylesheet" href="<?= $base_url ?>/assests/style.css" />
+    <link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <script src="./assets/vendor/bootstrap/js/bootstrap.min.js" rel="stylesheet"></script>
+    <link rel="stylesheet" href="./views/users/assests/style.css" />
     <script src="https://kit.fontawesome.com/ed71b1744c.js" crossorigin="anonymous"></script>
-    <script defer src="<?= $base_url ?>/assests/script.js"></script>
+    <script defer src="./views/users/assests/script.js"></script>
     <!-- Thư viện jQuery -->
     <script src="//code.jquery.com/jquery.min.js"></script>
     <!-- CSS của Images Grid -->
@@ -26,8 +25,8 @@
 <body>
     <nav>
         <div class="nav-left">
-            <a href="<?= $base_url ?>/TrangChu/index_khach.php">
-                <img src="<?= $base_url ?>/assests/images/openshare_logo.png" alt="" height="41px" class="logo" /></a>
+            <a href="./index.php">
+                <img src="./views/users/assests/images/openshare_logo.png" alt="" height="41px" class="logo" /></a>
             <ul>
                 <li>
                     <a href="./index.php"><i class="bi bi-house-door-fill" style="cursor: pointer; font-size:30px; color:#012970"></i></a>
@@ -35,8 +34,8 @@
             </ul>
         </div>
         <div class="nav-right">
-            <li><a href="<?= $base_url ?>/auth/view_login.php">Đăng nhập</a></li>
-            <li><a href="<?= $base_url ?>/auth/view_register.php">Đăng ký</a></li>
+            <li><a href="./views/users/auth/view_login.php">Đăng nhập</a></li>
+            <li><a href="./views/users/auth/view_register.php">Đăng ký</a></li>
         </div>
     </nav>
     <?php if (isset($_GET['keyword'])) : ?>
@@ -156,7 +155,7 @@
                     curl_close($curl);
                     ?>
                     <?php for ($i = 0; $i < count($data3); $i++) { ?>
-                        <li><a href="<?= $base_url ?>/post/view_displayPostWithType.php?idType=<?= $data3[$i]['idType'] ?>"><i class="fa-regular fa-circle"></i> <?= $data3[$i]['nameType'] ?></a></li>
+                        <li><a href="./views/users/post/view_displayPostWithType.php?idType=<?= $data3[$i]['idType'] ?>"><i class="fa-regular fa-circle"></i> <?= $data3[$i]['nameType'] ?></a></li>
                     <?php } ?>
                 </ul>
 
@@ -171,7 +170,7 @@
                 <div class="post-row">
                     <form action="" method="get">
                         <div class="search-box">
-                            <img src="<?= $base_url ?>/assests/images/search.png" alt="" srcset="" />
+                            <img src="./views/users/assests/images/search.png" alt="" srcset="" />
                             <input type="text" placeholder="Bạn cần tìm gì ?" name="keyword" id="keyword" value="<?php if (isset($_GET['keyword'])) echo $_GET['keyword'];
                                                                                                                     else ''  ?>" />
                             <i class="bi bi-mic-fill" id="search_microphone" style="cursor:pointer"></i>
@@ -237,7 +236,7 @@
                                 <a href="#"> <img src="<?= $data1[$i]['photoURL'] ?>" alt="" />
                                     <div>
 
-                                        <a href="<?= $base_url ?>/quanlytaikhoan/view_profile.php">
+                                        <a href="./views/users/quanlytaikhoan/view_profile.php">
                                             <p><?= $data1[$i]['name'] ?></p>
                                         </a>
 
@@ -247,7 +246,7 @@
                                         <p><i class="fa-solid fa-location-dot"></i> <?= explode(",",  $data1[$i]['address'])[0] ?></p>
                                     </div>
                                     <div class="type">
-                                        <a href="<?= $base_url ?>/post/view_displayPostWithType.php?idType=<?= $data1[$i]['idType'] ?>">
+                                        <a href="./views/users/post/view_displayPostWithType.php?idType=<?= $data1[$i]['idType'] ?>">
                                             <p><?= $data1[$i]['nameType'] ?></p>
                                         </a>
                                     </div>
@@ -419,7 +418,7 @@
             <div class="sidebar-title">
                 <h4 class="text-warning">Quảng cáo</h4>
             </div>
-            <img src="<?= $base_url ?>/assests/images/advertisement.png" alt="" srcset="" class="sidebar-ads" />
+            <img src="./views/users/assests/images/advertisement.png" alt="" srcset="" class="sidebar-ads" />
             <div class="sidebar-title">
                 <h4 class="text-success">Top nhà hảo tâm</h4>
             </div>
@@ -460,10 +459,10 @@
                 <div class="online-list">
                     <div class="online">
 
-                        <a href="<?= $base_url ?>/quanlytaikhoan/view_profile.php">
+                        <a href="./views/users/quanlytaikhoan/view_profile.php">
                             <img src="<?= $data2[$i]['photoURL'] ?>" alt="" srcset="" />
                         </a>
-                        <a href="<?= $base_url ?>/quanlytaikhoan/view_profile.php" style="text-decoration: none; color:#333">
+                        <a href="./views/users/quanlytaikhoan/view_profile.php" style="text-decoration: none; color:#333">
                             <p><?= $data2[$i]['name'] ?></p>
                         </a>
                     </div>
