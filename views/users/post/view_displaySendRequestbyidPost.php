@@ -239,7 +239,7 @@ curl_close($curl);
                                                 <div class="row mb-3">
                                                     <label for="dateRequest" class="col-md-4 col-lg-3 col-form-label">Thời gian duyệt yêu cầu</label>
                                                     <div class="col-md-8 col-lg-9">
-                                                        <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?php convert_time($data1[$i]['reviewDate']) ?></textarea>
+                                                        <textarea class="form-control" id="dateRequest" name="dateRequest" placeholder="Mô tả ..." rows="1" disabled><?php convert_time($data1[$i]['reviewDay']) ?></textarea>
                                                     </div>
                                                 </div>
                                                 <?php if ($data1[$i]['status'] === 1) : ?>
