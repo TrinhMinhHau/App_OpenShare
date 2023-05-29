@@ -31,13 +31,13 @@
                     <th> Mật khẩu cũ</th>
                     <td>
                         <input type="hidden" name="idUser" value="<?= $result['user']['idUser'] ?>">
-                        <input type="password" name="password" class="form-control" pattern=".{6,}" required>
+                        <input type="password" name="password" class="form-control" required oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu cũ!!')" oninput="setCustomValidity('')">
                     </td>
                 </tr>
                 <tr>
                     <th> Mật khẩu mới</th>
                     <td>
-                        <input type="password" name="newpassword" id="newPassword" class="form-control" pattern=".{6,}" required>
+                        <input type="password" name="newpassword" id="newPassword" class="form-control" required oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu mới!!!')" oninput="setCustomValidity('')">
                     </td>
                     <td>
                         <span id="err_ms1" class="err"></span>
@@ -48,7 +48,7 @@
                 <tr>
                     <th> Nhập lại mật khẩu mới</th>
                     <td>
-                        <input type="password" id="renewPassword" class="form-control" pattern=".{6,}" required>
+                        <input type="password" id="renewPassword" class="form-control" required oninvalid="this.setCustomValidity('Vui lòng nhập lại mật khẩu mới!!!')" oninput="setCustomValidity('')">
                     </td>
                 </tr>
                 <tr>

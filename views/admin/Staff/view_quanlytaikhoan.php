@@ -178,7 +178,7 @@
                                 <div class="row mb-3">
                                     <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="password" type="password" class="form-control" id="currentPassword" required>
+                                        <input name="password" type="password" class="form-control" id="currentPassword">
                                     </div>
                                     <span id="err_ms" class="err">
                                     </span>
@@ -187,7 +187,7 @@
                                 <div class="row mb-3">
                                     <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="newpassword" type="password" class="form-control" id="newPassword" required>
+                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
                                     </div>
                                     <span id="err_ms1" class="err"></span>
                                 </div>
@@ -195,7 +195,7 @@
                                 <div class="row mb-3">
                                     <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu mới</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword" required>
+                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
                                     </div>
                                     <span id="err_ms2" class="err"></span>
 
@@ -225,21 +225,34 @@
         $("#changepassword").click(function() {
             const newPassword = $('#newPassword').val();
             const confirmPassword = $('#renewPassword').val();
-            if (newPassword.length < 8) {
-                $('#err_ms1').html('Mật khẩu phải lớn hơn 7 ký tự');
-            } else if (newPassword !== confirmPassword) {
+            const currentPassword = $('#currentPassword').val();
+            if (currentPassword === '') {
+                $('#err_ms').html('Vui lòng nhập mật khẩu hiện tại !!!');
+            } else if (newPassword === '') {
+                $('#err_ms').html('');
+                $('#err_ms1').html('Vui lòng nhập mật khẩu mới !!!');
+            } else if (confirmPassword === '') {
                 $('#err_ms1').html('');
-                $('#err_ms2').html('Mật khẩu không khớp');
+                $('#err_ms2').html('Vui lòng xác nhận mật khẩu mới !!!');
             } else {
-                $('#err_ms2').html('');
-                $.post("./view_changpassword.php", {
-                    id: $("#id").val(),
-                    password: $("#currentPassword").val(),
-                    newpassword: $("#newPassword").val()
-                }, function(data) {
-                    $("#dl_rs").html(data);
-                })
+                if (newPassword.length < 8) {
+                    $('#err_ms2').html('');
+                    $('#err_ms1').html('Mật khẩu phải lớn hơn 7 ký tự');
+                } else if (newPassword !== confirmPassword) {
+                    $('#err_ms1').html('');
+                    $('#err_ms2').html('Mật khẩu không khớp');
+                } else {
+                    $('#err_ms2').html('');
+                    $.post("./view_changpassword.php", {
+                        id: $("#id").val(),
+                        password: $("#currentPassword").val(),
+                        newpassword: $("#newPassword").val()
+                    }, function(data) {
+                        $("#dl_rs").html(data);
+                    })
+                }
             }
+
 
         });
     });

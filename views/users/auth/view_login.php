@@ -76,9 +76,9 @@
                 ?>
                 <form action="" class="form-login" method="post">
                     <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_POST['userName'])) echo $_POST['userName'];
-                                                                                            else '';  ?>" required />
-                    <input type="password" placeholder="Mật khẩu" name="password" value="<?php if (isset($_POST['password'])) echo $_POST['password'];
-                                                                                            else '';  ?>" id="password" required />
+                                                                                            else '';  ?>" required oninvalid="this.setCustomValidity('Vui lòng nhập tên đăng nhập !!!')" oninput="setCustomValidity('')" />
+                    <input type=" password" placeholder="Mật khẩu" name="password" value="<?php if (isset($_POST['password'])) echo $_POST['password'];
+                                                                                            else '';  ?>" id="password" required oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu !!!')" oninput="setCustomValidity('')" />
                     <i class="bi bi-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
                     <div id="err_dl" style="margin-bottom: 5px;"></div>
                     <button class="loginBtn" type="submit" name="login">Đăng nhập</button>
