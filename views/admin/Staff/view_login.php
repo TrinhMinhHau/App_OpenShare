@@ -101,8 +101,7 @@
                                                                                                                                     else ''  ?>" autocomplete="off" required>
                                             <div class="invalid-feedback">Vui lòng nhập mật khẩu!</div>
                                         </div>
-
-
+                                        <a href="./view_resetpassword.php">Quên mật khẩu ?</a>
                                         <div id="err_dl"></div>
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit" name="login">Đăng nhập</button>
