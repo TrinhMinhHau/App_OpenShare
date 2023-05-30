@@ -14,14 +14,14 @@
                             <div class="row mb-3">
                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tiêu đề</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input name="title" type="text" class="form-control" id="fullName" placeholder="Bếp ga cũ cầm cho ..." required>
+                                    <input name="title" type="text" class="form-control" id="fullName" placeholder="Bếp ga cũ cầm cho ..." required oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề!!!')" oninput="setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="description" class="col-md-4 col-lg-3 col-form-label">Mô tả</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <textarea class="form-control" id="description" name="description" placeholder="Mô tả ..." rows="3"></textarea>
-                                    <i class="bi bi-mic-fill mic" id="click_to_record"></i>
+                                    <textarea class="form-control" id="description" name="description" placeholder="Mô tả ..." rows="3" required oninvalid="this.setCustomValidity('Vui lòng nhập mô tả!!!')" oninput="setCustomValidity('')"></textarea>
+                                    <i class=" bi bi-mic-fill mic" id="click_to_record"></i>
                                     <div id="listening_indicator"></div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                             <div class="row mb-3">
                                 <label for="soluongdocho" class="col-md-4 col-lg-3 col-form-label">Số lượng</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input class="form-control" type="number" name="soluong" id="soluong" min=1 required placeholder="Nhập số lượng đồ cho">
+                                    <input class="form-control" type="number" name="soluong" id="soluong" min=1 required placeholder="Nhập số lượng đồ cho" oninvalid="this.setCustomValidity('Vui lòng nhập số lượng đồ cho!!!')" oninput="setCustomValidity('')">
                                 </div>
                             </div>
                             <input type="hidden" name="id" value="<?= $result['user']['idUser'] ?> " class=" form-control">
@@ -200,7 +200,7 @@
                                 <div class="row mb-3">
                                     <label for="" class="col-md-4 col-lg-3"></label>
                                     <div class="col-md-8 col-lg-9 input_field captch_input">
-                                        <input type="text" placeholder="Nhập capcha" required />
+                                        <input type="text" placeholder="Nhập capcha" required oninvalid="this.setCustomValidity('Vui lòng nhập capcha!!!')" oninput="setCustomValidity('')" />
                                     </div>
                                     <div class="message"></div>
                                 </div>

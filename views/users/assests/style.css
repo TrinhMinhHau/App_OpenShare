@@ -583,7 +583,7 @@ a.active1 i {
   border-radius: 4px;
   overflow: hidden;
   top: 100%;
-  right: 48%;
+  left: 25%;
   transition: max-height 0.3s;
   max-height: 0;
 }
@@ -627,7 +627,7 @@ a.active1 i {
 .post i {
   font-size: 20px;
   position: fixed;
-  bottom: 50px;
+  bottom: 86px;
   right: 100px;
   z-index: 10000;
   cursor: pointer;

@@ -303,7 +303,7 @@ if (isset($_SESSION['token'])) {
             <?php if (isset($_GET['keyword'])) : ?>
                 <?php
 
-                $keyword = isset($_GET['keyword']) ? str_replace(' ', '_', $_GET['keyword']) : '';
+                $keyword = isset($_GET['keyword']) ? str_replace(' ', '_', ($_GET['keyword'])) : '';
                 $url = 'http://localhost:8000/website_openshare/controllers/users/post/search.php?keyword=' . $keyword;
 
                 // Khởi tạo một cURL session
@@ -348,14 +348,16 @@ if (isset($_SESSION['token'])) {
                 $next_page = ($page < $total_pages) ? $page + 1 : $total_pages; // Trang kế tiếp
 
                 echo '<div class="pagination">';
-                echo '<a href="?keyword=' . $_GET['keyword'] . '&page=' . $prev_page . '">Trang trước</a>';
-
+                if ($page > 1) {
+                    echo '<a href="?keyword=' . $_GET['keyword'] . '&page=' . $prev_page . '">Trang trước</a>';
+                }
                 for ($i = 1; $i <= $total_pages; $i++) {
                     $active = ($i == $page) ? 'active' : '';
                     echo '<a href="?keyword=' . $_GET['keyword'] . '&page=' . $i . '" class="' . $active . '">' . $i . '</a>';
                 }
-
-                echo '<a href="?keyword=' . $_GET['keyword'] . '&page=' . $next_page . '">Trang kế tiếp</a>';
+                if ($page < $total_pages) {
+                    echo '<a href="?keyword=' . $_GET['keyword'] . '&page=' . $next_page . '">Trang kế tiếp</a>';
+                }
                 echo '</div>';
                 ?>
             <?php else : ?>
@@ -544,7 +546,7 @@ if (isset($_SESSION['token'])) {
     </style>
     <script>
         document.getElementById("search_microphone").addEventListener("click", function() {
-            var old_text = document.getElementById("keyword").value;
+            // var old_text = document.getElementById("keyword").value;
             var speech = true;
             window.SpeechRecognition = window.webkitSpeechRecognition;
             var listeningIndicator = document.getElementById("listening_indicator1");
@@ -567,8 +569,7 @@ if (isset($_SESSION['token'])) {
                     .map((result) => result[0])
                     .map((result) => result.transcript)
                     .join("");
-
-                document.getElementById("keyword").value = old_text + ' ' + transcript;
+                document.getElementById("keyword").value = transcript;
                 console.log(transcript);
             });
 

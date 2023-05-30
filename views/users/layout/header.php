@@ -264,7 +264,7 @@
                                     <div class="setting-notice isSeen">
                                         <img src="<?= $data_merge[$i]['photoURL'] ?>" class="settings-icon" alt="" />
                                         <a href="../post/view_displayReceiveRequestbyidPost.php?idPost=<?= $data_merge[$i]['idPost'] ?>&idNotice=<?= $data_merge[$i]['idNotice'] ?>">
-                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã xác nhận nhận đồ <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span> thành công</p>
+                                            <p>Bạn <span class="text-primary"><?= $data_merge[$i]['name'] ?></span> đã xác nhận, nhận đồ <span class=" text-primary"><?= $data_merge[$i]['title'] ?></span> thành công</p>
                                             <p><?php convert_time($data_merge[$i]['createAt_N']) ?></p>
                                         </a>
                                     </div>
