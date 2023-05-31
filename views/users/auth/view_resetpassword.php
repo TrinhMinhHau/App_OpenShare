@@ -10,62 +10,51 @@
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 </head>
 <?php
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require '../../PHPMailer/src/Exception.php';
-require '../../PHPMailer/src/PHPMailer.php';
-require '../../PHPMailer/src/SMTP.php';
-$mail = new PHPMailer(true);
-$db_connection = new db();
-$conn = $db_connection->connect();
 if (isset($_POST['resetpassword'])) {
     $tendangnhap = $_POST['userName'];
     $email = $_POST['email'];
-    $fetch_user_by_userName = "SELECT * FROM `user` WHERE `userName`=? and email=?";
-    $query_stmt = $conn->prepare($fetch_user_by_userName);
-    $query_stmt->execute([$tendangnhap, $email]);
-    if ($query_stmt->rowCount() == 0) {
-        $loi = "Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi";
+    // Dữ liệu của câu hỏi cần cập nhật
+
+    $data = array(
+        'userName' => $tendangnhap,
+        'email' => $email,
+    );
+
+    // Chuyển dữ liệu sang định dạng JSON
+    $json_data = json_encode($data);
+
+    // URL của API
+    $url = 'http://localhost:8000/website_openshare/controllers/users/auth/resetpassword.php';
+
+    // Khởi tạo một session cURL
+    $curl = curl_init($url);
+
+    // Cấu hình các tùy chọn cho session cURL
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $json_data);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($json_data),
+        "Accept: application/json",
+    ));
+
+    // Thực thi session cURL và lấy kết quả trả về
+    $result = curl_exec($curl);
+    $response = json_decode($result, true);
+    // Kiểm tra kết quả và hiển thị thông báo tương ứng
+    if ($response["success"] == 0) {
+        echo "<script>
+        alert('Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi');;
+        </script>";
+        // $_SESSION['cpw_error'] = "Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi";
     } else {
-        $loi = "";
-
-        $matkhaumoi = substr(md5(rand(0, 999999)), 0, 8);
-        $matkhaumahoa = password_hash($matkhaumoi, PASSWORD_DEFAULT);
-        $sql = "Update user SET password = ? where userName = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$matkhaumahoa, $tendangnhap]);
-        try {
-            //Server settings
-            $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-            $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-
-            $mail->SMTPAuth = true;
-            // Enable SMTP authentication
-            $mail->Username = 'tmhaunct2001@gmail.com';                 // SMTP username
-            $mail->Password = 'ooakwovagpxsevav';                           // SMTP password
-            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
-
-            //Recipients
-            $mail->setFrom('tmhaunct2001@gmail.com', "OpenShareApp");
-            $mail->addAddress($email, $tendangnhap);     // Add a recipient              // Name is optional
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = "Mail Reset Password From Open Share";
-            $mail->Body    = "Mật khẩu mới của bạn là:" . $matkhaumoi;
-            $mail->send();
-            echo "<script>
-            alert('Reset mật khẩu thành công, vui lòng kiểm tra email');;
-            </script>";
-        } catch (Exception $e) {
-            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-        }
+        echo "<script>
+        alert('Reset mật khẩu thành công, vui lòng kiểm tra email');;
+        </script>";
     }
-
-
-    // $insert_stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+    // Đóng session cURL
+    curl_close($curl);
 }
 ?>
 
