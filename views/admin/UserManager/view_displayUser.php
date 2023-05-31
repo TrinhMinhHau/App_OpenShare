@@ -93,7 +93,7 @@ curl_close($curl);
                                     );
                                     $json_data = json_encode($data);
 
-                                    $url = 'http://localhost:8000/website_openshare/controllers/users/post/displaynumberItemGiveSuccess.php';
+                                    $url = 'http://localhost:8000/website_openshare/controllers/admin/Staff/getNumberPoin.php';
 
 
                                     // Khởi tạo một cURL session
