@@ -46,8 +46,8 @@ if ($auth_info['success']) {
         'photoURL' => $photoURL,
         'messageResponse' => $messageResponse,
         'messageAfterReceiveGood' => $messageAfterReceiveGood,
-        'ratingStar' => $ratingStar
-
+        'ratingStar' => $ratingStar,
+        'isManeger' => "true",
       );
       array_push($question_array['data'], $ManagerType_item);
     }
