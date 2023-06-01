@@ -54,7 +54,7 @@
     <?php
         } else {
             if ($result["success"] == 1) {
-                $_SESSION['token'] = $result["token"];
+                $_SESSION['token_admin'] = $result["token"];
                 header('location:http://localhost:8000/website_openshare/Views/Admin/Trangchu/Trangchu.php');
             }
         }

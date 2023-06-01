@@ -14,8 +14,8 @@
 <body>
     <?php
     session_start();
-    if (isset($_SESSION['token'])) {
-        $token = $_SESSION['token'];
+    if (isset($_SESSION['token_admin'])) {
+        $token = $_SESSION['token_admin'];
     } else {
         header('location: ../Staff/view_login.php');
     }

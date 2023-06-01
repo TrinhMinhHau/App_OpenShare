@@ -501,8 +501,12 @@ a.active1 i {
 .footer {
   text-align: center;
   color: #9a9a9a;
-  padding: 10px 0 20px;
-  font-size: 13px;
+  /* padding: 10px 0 20px;
+  font-size: 13px; */
+  padding: 20px 0;
+  font-size: 14px;
+  transition: all 0.3s;
+  border-top: 1px solid #cddfff;
 }
 .settings-menu {
   position: absolute;
@@ -1126,4 +1130,46 @@ a.active1 i {
 #rating > label:hover ~ input:checked ~ label,
 #rating > input:checked ~ label:hover ~ label {
   color: #ffed85;
+}
+/* backtotop */
+.back-to-top.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.back-to-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background: #4154f1;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.4s;
+}
+.back-to-top i {
+  font-size: 24px;
+  color: #fff;
+  line-height: 0;
+}
+.align-items-center {
+  align-items: center !important;
+}
+.justify-content-center {
+  justify-content: center !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.back-to-top.active {
+  visibility: visible;
+  opacity: 1;
+}
+.active {
+  display: block;
+  transition-property: display;
+  transition-duration: 2s;
 }

@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 
 
 $url = 'http://localhost:8000/website_openshare/controllers/admin/Statistical/AccountUser.php';

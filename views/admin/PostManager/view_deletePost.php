@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 if (isset($_POST['deletePost'])) {
     if (isset($_POST['idPost'])) {
         $id = $_POST['idPost'];

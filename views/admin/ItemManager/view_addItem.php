@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 if (isset($_POST['addItem'])) {
     $nameType = $_POST['Them_LoaiDoDung'];
 

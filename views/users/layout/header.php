@@ -13,12 +13,11 @@
     <link rel="stylesheet" href="../assests/style.css" />
     <script src="https://kit.fontawesome.com/ed71b1744c.js" crossorigin="anonymous"></script>
     <script defer src="../assests/script.js"></script>
-
-
+    <script src="../../../assets/js/main.js" defer></script>
 </head>
 
 <body>
-
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
     <?php
     session_start();
     if (isset($_SESSION['token'])) {

@@ -7,7 +7,6 @@ if (isset($_SESSION['token'])) {
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,10 +24,12 @@ if (isset($_SESSION['token'])) {
     <!-- CSS của Images Grid -->
     <script src="https://cdn.jsdelivr.net/gh/taras-d/images-grid/src/images-grid.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/taras-d/images-grid/src/images-grid.min.css" />
-
+    <script src="./assets/js/main.js" defer></script>
 </head>
 
 <body>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
+
     <nav>
         <div class="nav-left">
             <a href="./index.php">
@@ -126,9 +127,9 @@ if (isset($_SESSION['token'])) {
         <!-- left-sidebar -->
         <div class="left-sidebar">
             <div class="shortcut-links">
-                <p> <i class="fa-solid fa-chart-bar"></i> Danh mục loại đồ cho</p>
+                <p id='toggle' style="cursor:pointer"> <i class="fa-solid fa-chart-bar"></i> Danh mục loại đồ cho <i class="bi bi-chevron-up up"></i> <i class="bi bi-chevron-down down" style="display :none;"></i></p>
 
-                <ul>
+                <ul class='handletoggle'>
                     <?php
                     $url = 'http://localhost:8000/website_openshare/controllers/users/type/getType.php';
 
@@ -532,6 +533,25 @@ if (isset($_SESSION['token'])) {
             text-decoration: none;
         }
 
+        .toggle_sidebar {
+            display: none !important;
+        }
+
+        #toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        #toggle i {
+            margin-right: 10px;
+        }
+
+
+
+        .down {
+            display: none;
+        }
+
         .pagination a.active {
             background-color: #333;
             color: #fff;
@@ -594,3 +614,24 @@ if (isset($_SESSION['token'])) {
             color: #333;
         }
     </style>
+    <script>
+        const toggleEl = document.getElementById('toggle');
+        const handletoggleEl = document.querySelector('.handletoggle');
+        const upEL = document.querySelector('.up');
+        const downEL = document.querySelector('.down');
+        let clickCount = 0;
+        toggleEl.onmousedown = function() {
+            clickCount++;
+            handletoggleEl.classList.toggle('toggle_sidebar');
+            if (clickCount % 2 === 1) {
+                upEL.style.display = 'none';
+                downEL.style.display = 'block';
+                downEL.style.marginLeft = '10px';
+            } else {
+                upEL.style.marginLeft = '10px';
+                upEL.style.display = 'block';
+                downEL.style.display = 'none';
+            }
+            event.preventDefault();
+        };
+    </script>

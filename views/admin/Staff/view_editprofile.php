@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 if (isset($_POST['editprofile'])) {
     $id = $_POST['id'];
     $name = $_POST['fullName'];

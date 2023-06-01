@@ -3,7 +3,7 @@
 
 <?php
 
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 $url = 'http://localhost:8000/website_openshare/controllers/admin/UserManager/displayUser.php';
 
 // Khởi tạo một cURL session
@@ -86,7 +86,7 @@ curl_close($curl);
                                 for ($i = 0; $i < count($data1); $i++) { ?>
                                     <?php
 
-                                    $token = $_SESSION['token'];
+                                    // $token = $_SESSION['token_admin'];
                                     $idUser = $data1[$i]['idUser'];
                                     $data = array(
                                         'idUser' => $idUser

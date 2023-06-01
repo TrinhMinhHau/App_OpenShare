@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 $name = $_POST['name'];
 
 $password = $_POST['password'];

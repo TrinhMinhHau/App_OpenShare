@@ -9,6 +9,21 @@
     <?php require __DIR__ . '/../../../configs/database.php'; ?>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 </head>
+<nav>
+    <div class="nav-left">
+        <a href="../../../index.php">
+            <img src="../../../views/users/assests/images/openshare_logo.png" alt="" height="41px" width="160px" /></a>
+        <ul>
+            <li>
+                <a href="../../../index.php"><i class="bi bi-house-door-fill" style="cursor: pointer; font-size:30px; color:#012970"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav-right">
+        <li><a href="./view_login.php">Đăng nhập</a></li>
+        <li><a href="./view_register.php">Đăng ký</a></li>
+    </div>
+</nav>
 <?php
 if (isset($_POST['resetpassword'])) {
     $tendangnhap = $_POST['userName'];
@@ -91,12 +106,30 @@ if (isset($_POST['resetpassword'])) {
             </div>
         </div>
     </div>
+    <?php include('../../../views/users/layout/footer.php'); ?>
+
 </body>
 
 </html>
 <script>
     document.getElementById('err_dl').innerHTML = document.getElementById('err_ms').value;
 </script>
+<style>
+    .nav-right li {
+        list-style: none;
+        padding: 10px;
+    }
+
+    .nav-right li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .nav-right li a:hover {
+        text-decoration: underline;
+        color: #333;
+    }
+</style>
 <style>
     #err_dl {
         color: red;

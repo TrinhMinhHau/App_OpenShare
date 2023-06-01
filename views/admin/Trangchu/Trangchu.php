@@ -1,7 +1,7 @@
 <?php include('../Layout/view_header.php') ?>
 <?php include('../Layout/view_sidebar.php') ?>
 <?php
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 
 // Các URL cần render
 $url1 = 'http://localhost:8000/website_openshare/controllers/admin/Statistical/sumofUser.php';

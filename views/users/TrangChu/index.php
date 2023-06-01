@@ -99,9 +99,10 @@
 
         </div>
         <div class="shortcut-links">
-            <p> <i class="fa-solid fa-chart-bar"></i> Danh mục loại đồ cho</p>
 
-            <ul>
+            <p id='toggle' style="cursor:pointer"> <i class="fa-solid fa-chart-bar"></i> Danh mục loại đồ cho <i class="bi bi-chevron-up up"></i> <i class="bi bi-chevron-down down" style="display :none;"></i></p>
+
+            <ul class='handletoggle'>
                 <?php
                 $token = $_SESSION['token'];
                 $url = 'http://localhost:8000/website_openshare/controllers/users/type/getType.php';
@@ -139,7 +140,6 @@
                     <li><a href="../post/view_displayPostWithType.php?idType=<?= $data3[$i]['idType'] ?>"><i class="fa-regular fa-circle"></i> <?= $data3[$i]['nameType'] ?></a></li>
                 <?php } ?>
             </ul>
-
         </div>
 
 
@@ -552,6 +552,25 @@
         text-decoration: none;
     }
 
+    .toggle_sidebar {
+        display: none !important;
+    }
+
+    #toggle {
+        display: flex;
+        align-items: center;
+    }
+
+    #toggle i {
+        margin-right: 10px;
+    }
+
+
+
+    .down {
+        display: none;
+    }
+
     .pagination a.active {
         background-color: #333;
         color: #fff;
@@ -598,4 +617,25 @@
             recognition.start();
         }
     });
+</script>
+<script>
+    const toggleEl = document.getElementById('toggle');
+    const handletoggleEl = document.querySelector('.handletoggle');
+    const upEL = document.querySelector('.up');
+    const downEL = document.querySelector('.down');
+    let clickCount = 0;
+    toggleEl.onmousedown = function() {
+        clickCount++;
+        handletoggleEl.classList.toggle('toggle_sidebar');
+        if (clickCount % 2 === 1) {
+            upEL.style.display = 'none';
+            downEL.style.display = 'block';
+            downEL.style.marginLeft = '10px';
+        } else {
+            upEL.style.marginLeft = '10px';
+            upEL.style.display = 'block';
+            downEL.style.display = 'none';
+        }
+        event.preventDefault();
+    };
 </script>

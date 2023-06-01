@@ -1,6 +1,6 @@
 <?php
 session_start();
-$token = $_SESSION['token'];
+$token = $_SESSION['token_admin'];
 if (isset($_POST['deletedata'])) {
     if (isset($_POST['Ban_User'])) {
         $id = $_POST['Ban_User'];
