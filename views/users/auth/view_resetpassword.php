@@ -25,9 +25,9 @@
     </div>
 </nav>
 <?php
-if (isset($_POST['resetpassword'])) {
-    $tendangnhap = $_POST['userName'];
-    $email = $_POST['email'];
+if (isset($_GET['resetpassword'])) {
+    $tendangnhap = $_GET['userName'];
+    $email = $_GET['email'];
     // Dữ liệu của câu hỏi cần cập nhật
 
     $data = array(
@@ -39,7 +39,7 @@ if (isset($_POST['resetpassword'])) {
     $json_data = json_encode($data);
 
     // URL của API
-    $url = 'http://localhost:8000/website_openshare/controllers/users/auth/resetpassword.php';
+    $url = 'http://localhost:8000/website_openshare/controllers/users/auth/sendOtp.php';
 
     // Khởi tạo một session cURL
     $curl = curl_init($url);
@@ -62,10 +62,10 @@ if (isset($_POST['resetpassword'])) {
         echo "<script>
         alert('Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi');;
         </script>";
-        // $_SESSION['cpw_error'] = "Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi";
     } else {
         echo "<script>
-        alert('Reset mật khẩu thành công, vui lòng kiểm tra email');;
+        alert('Đã gửi OTP, vui lòng kiểm tra email');
+        window.location.href = 'view_enter_otp.php?userName=' + encodeURIComponent('$tendangnhap') + '&email=' + encodeURIComponent('$email');
         </script>";
     }
     // Đóng session cURL
@@ -91,10 +91,10 @@ if (isset($_POST['resetpassword'])) {
                     unset($_SESSION['res_suc']);
                 }
                 ?>
-                <form action="" class="form-login" method="post">
-                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_POST['userName'])) echo $_POST['userName'];
+                <form action="" class="form-login" method="get">
+                    <input type="text" placeholder="Tên đăng nhập" name="userName" value="<?php if (isset($_GET['userName'])) echo $_GET['userName'];
                                                                                             else '';  ?>" required oninvalid="this.setCustomValidity('Vui lòng nhập tên đăng nhập !!!')" oninput="setCustomValidity('')" />
-                    <input type="email" placeholder="email" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];
+                    <input type="email" placeholder="email" name="email" value="<?php if (isset($_GET['email'])) echo $_GET['email'];
                                                                                 else '';  ?>" id="email" required oninvalid="this.setCustomValidity('Vui lòng nhập email!!!')" oninput="setCustomValidity('')" />
                     <div id="err_dl" style="margin-bottom: 5px;"><?php if (isset($loi)) echo $loi;
                                                                     else '' ?></div>

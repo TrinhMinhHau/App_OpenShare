@@ -1173,3 +1173,15 @@ a.active1 i {
   transition-property: display;
   transition-duration: 2s;
 }
+.settings-notice::-webkit-scrollbar {
+  width: 4px;
+}
+
+.settings-notice::-webkit-scrollbar-track {
+  background-color: #e5dfdf;
+}
+
+.settings-notice::-webkit-scrollbar-thumb {
+  background: #8c8790;
+  border-radius: 50px;
+}

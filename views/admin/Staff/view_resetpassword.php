@@ -15,9 +15,9 @@
 
 <body>
     <?php
-    if (isset($_POST['resetpassword'])) {
-        $tendangnhap = $_POST['userName'];
-        $email = $_POST['email'];
+    if (isset($_GET['resetpassword'])) {
+        $tendangnhap = $_GET['userName'];
+        $email = $_GET['email'];
         // Dữ liệu của câu hỏi cần cập nhật
 
         $data = array(
@@ -29,7 +29,7 @@
         $json_data = json_encode($data);
 
         // URL của API
-        $url = 'http://localhost:8000/website_openshare/controllers/admin/staff/resetpassword.php';
+        $url = 'http://localhost:8000/website_openshare/controllers/admin/staff/sendOtp.php';
 
         // Khởi tạo một session cURL
         $curl = curl_init($url);
@@ -52,11 +52,11 @@
             echo "<script>
         alert('Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi');;
     </script>";
-            // $_SESSION['cpw_error'] = "Tên đăng nhập hoặc email không trùng khớp với cơ sở dữ liệu của chúng tôi";
         } else {
             echo "<script>
-        alert('Reset mật khẩu thành công, vui lòng kiểm tra email');;
-    </script>";
+        alert('Gửi mã OTP thành công, vui lòng kiểm tra email');;
+        window.location.href = 'view_enter_otp.php?userName=' + encodeURIComponent('$tendangnhap') + '&email=' + encodeURIComponent('$email');
+        </script>";
         }
         // Đóng session cURL
         curl_close($curl);
@@ -85,13 +85,13 @@
                                         <p class="text-center small">Nhập tài khoản và email để lấy lại mật khẩu</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" method="post" novalidate>
+                                    <form class="row g-3 needs-validation" method="get" novalidate>
 
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Tên đăng nhập</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="text" name="userName" class="form-control" id="yourUsername" placeholder="Tên đăng nhập" value="<?php if (isset($_POST['userName'])) echo $_POST['userName'];
+                                                <input type="text" name="userName" class="form-control" id="yourUsername" placeholder="Tên đăng nhập" value="<?php if (isset($_GET['userName'])) echo $_GET['userName'];
                                                                                                                                                                 else ''  ?>" autocomplete="off" required>
                                                 <div class="invalid-feedback">Vui lòng nhập tên đăng nhập</div>
                                             </div>
@@ -99,7 +99,7 @@
 
                                         <div class="col-12">
                                             <label for="yourPassword" class="form-label">email</label>
-                                            <input type="email" name="email" class="form-control" id="yourPassword" placeholder="Nhập email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];
+                                            <input type="email" name="email" class="form-control" id="yourPassword" placeholder="Nhập email" value="<?php if (isset($_GET['email'])) echo $_GET['email'];
                                                                                                                                                     else ''  ?>" autocomplete="off" required>
                                             <div class="invalid-feedback">Vui lòng nhập email!</div>
                                         </div>
